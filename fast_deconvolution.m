@@ -33,7 +33,7 @@ B = [1 0; 0 1];
 
 for n = 2:M
     C = [C11(n) C12(n); C21(n) C22(n)];
-    H = (C_prev'*C+beta*B'*B)^(-1)*C_prev'; 
+    H = (C_prev'*C+beta*(B)'*B)^(-1)*C_prev'; 
     H11(n) = H(1, 1);
     H12(n) = H(1, 2);
     H21(n) = H(2, 1);
@@ -50,8 +50,8 @@ for n = 1:M
     Y(:,n) = [C11(n) C12(n); C21(n) C22(n)]*[H11(n) H12(n); H21(n) H22(n)]*[X1(n); X2(n)];
 end
 
-y1 = abs(ifft(Y(1,:)));
-y2 = abs(ifft(Y(2,:)));
+y1 = real(ifft(Y(1,:), M));
+y2 = real(ifft(Y(2,:), M));
 
 figure;
 plot(abs(X1)); hold on; plot(abs(Y(1,:)));
