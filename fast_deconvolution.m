@@ -1,18 +1,30 @@
+clc
 clear all;
 close all;
 
 L = 10000;    % lunghezza input x1 e x2 e output y1 e y2
-M = 256;      % lunghezza dei filtri c11, c12, c21, c22
+M = 512;      % lunghezza dei filtri c11, c12, c21, c22
 N = 1024;     % lunghezza dei filtri da calcolare h11, h12, h21, h22
 
-t = 0:L-1;
-x1 = sin(t)';
-x2 = cos(t)';
+x1 = 0.1*randn(L,1);  % input 1 (left)
+x2 = 0.1*randn(L,1);  % input 2 (right)
+% t = 0:L-1;
+% x1 = sin(t)';
+% x2 = cos(t)';
 
-c11 = fir1(M-1,0.3);    % HRIR input 1 output 1
-c12 = fir1(M-1,0.4);    % HRIR input 2 output 1
-c21 = fir1(M-1,0.3);    % HRIR input 1 output 2
-c22 = fir1(M-1,0.4);    % HRIR input 2 output 2
+% c11 = fir1(M-1,0.3);    % HRIR input 1 output 1
+% c12 = fir1(M-1,0.4);    % HRIR input 2 output 1
+% c21 = fir1(M-1,0.3);    % HRIR input 1 output 2
+% c22 = fir1(M-1,0.4);    % HRIR input 2 output 2
+
+% c11: HRIR left loudspeaker - left ear
+[c11,~] = audioread("HRTF_measurements/elev0/L0e330a.wav");  
+% c12: HRIR right loudspeaker - left ear
+[c12,~] = audioread("HRTF_measurements/elev0/L0e030a.wav");     
+% c21: HRIR left loudspeaker - right ear
+[c21,~] = audioread("HRTF_measurements/elev0/R0e330a.wav");    
+% c22: HRIR right loudspeaker - righ ear
+[c22,~] = audioread("HRTF_measurements/elev0/R0e030a.wav");   
 
 H11 = zeros(M,1);     % filtro da calcolare input 1 output 1
 H12 = zeros(M,1);     % filtro da calcolare input 2 output 1
@@ -41,10 +53,12 @@ for n = 2:M
     C_prev = C;
 end
 
-h11 = ifft(H11);
-h12 = ifft(H12);
-h21 = ifft(H21);
-h22 = ifft(H22);
+h11 = real(ifft(H11, M));
+h12 = real(ifft(H12, M));
+h21 = real(ifft(H21, M));
+h22 = real(ifft(H22, M));
+
+Y = zeros(2, M);
 
 for n = 1:M
     Y(:,n) = [C11(n) C12(n); C21(n) C22(n)]*[H11(n) H12(n); H21(n) H22(n)]*[X1(n); X2(n)];
@@ -53,16 +67,42 @@ end
 y1 = real(ifft(Y(1,:), M));
 y2 = real(ifft(Y(2,:), M));
 
-figure;
-plot(abs(X1)); hold on; plot(abs(Y(1,:)));
-legend('X_1(n)', 'Y_1(n)');
-figure;
-plot(abs(X2)); hold on; plot(abs(Y(2,:)));
-legend('X_2(n)', 'Y_2(n)'); 
-
-figure;
-plot(ifft(X1)); hold on; plot(y1);
+figure('Name','Confronto tra x_1 e y_1','NumberTitle','off');
+plot(ifft(X1)); 
+hold on; 
+plot(y1);
+title('Confronto tra x_1 e y_1');
+xlabel('Campioni')
+ylabel('Ampiezza')
 legend('x_1(n)', 'y_1(n)');
-figure;
-plot(ifft(X2)); hold on; plot(y2);
+
+figure('Name','Confronto tra x_2 e y_2','NumberTitle','off');
+plot(ifft(X2)); 
+hold on; 
+plot(y2);
+title('Confronto tra x_2 e y_2');
+xlabel('Campioni')
+ylabel('Ampiezza')
 legend('x_2(n)', 'y_2(n)'); 
+
+JL_num = C11.*H11+C12.*H21;
+JL_den = C21.*H11+C22.*H21;
+figure('Name','Left channel separation','NumberTitle','off');
+plot(20*log10(abs(JL_num)));
+hold on
+plot(20*log10(abs(JL_den)));
+title('Left channel separation');
+xlabel('Frequenza [Hz]');
+ylabel('Ampiezza [dB]');
+legend('JL_{num}', 'JL_{den}')
+
+JR_num = C22.*H22+C21.*H12;
+JR_den = C12.*H22+C11.*H12;
+figure('Name','Right channel separation','NumberTitle','off');
+plot(20*log10(abs(JR_num)));
+hold on
+plot(20*log10(abs(JR_den)));
+title('Right channel separation');
+xlabel('Frequenza [Hz]');
+ylabel('Ampiezza [dB]');
+legend('JR_{num}', 'JR_{den}')
