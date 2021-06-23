@@ -13,7 +13,7 @@ x2 = 0.1*randn(L,1);  % input 2 (right)
 %x2 = cos(t)';
 
 % il segnale desiderato è x ritardato di tau campioni
-tau = 0;   % ritardo temporale
+tau = 5;   % ritardo temporale
 d1 = [zeros(tau,1); x1(1:end-tau)]; % segnale desiderato 1 (left)
 d2 = [zeros(tau,1); x2(1:end-tau)]; % segnale desiderato 2 (right)
 
@@ -30,9 +30,14 @@ e2 = zeros(L,1);  % errore 2 (right)
 
 % https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.39.9751&rep=rep1&type=pdf
 % within "HRTF_measurements" folder, each filename has the format
-% "HEEeAAAa.
+% "XEEeAAAa.wav", where X is either "L" or "R" for left or right ear response, 
+% respectively, EE is the elevation angle of the source in degrees, 
+% from -40 to 90, and AAA is the azimuth of the source in degrees, from 0
+% to 355. Elevation and azimuth angles indicate the location of the source
+% relative to the KEMAR dummy head, for example elevation 0 azimuth 90 is
+% directly to the right of the KEMAR.
 % c11: HRIR left loudspeaker - left ear
-[c11,~] = audioread("HRTF_measurements/elev0/L0e330a.wav");  
+[c11,Fs] = audioread("HRTF_measurements/elev0/L0e330a.wav");  
 % c12: HRIR right loudspeaker - left ear
 [c12,~] = audioread("HRTF_measurements/elev0/L0e030a.wav");     
 % c21: HRIR left loudspeaker - right ear
@@ -55,9 +60,10 @@ r122 = zeros(L,1);    % uscita di x1 filtrato da c22 per output y2
 r121 = zeros(L,1);    % uscita di x1 filtrato da c21 per output y2
 
 %mu1 = 1/trace(x1*x1');
-%mu2 = 1/trace(x2*x2');
+% mu2 = 1/trace(x2*x2');
+
 mu1 = 2e-2; 
-mu2 = 5e-5; 
+mu2 = 1e-5; 
 
 for n = N:L
     for j = 1:M
@@ -119,23 +125,34 @@ H12 = fft(h12, M);
 H21 = fft(h21, M);
 H22 = fft(h22, M);
 
+% costruzione dell'asse delle frequenze
+f = Fs*(0:(M/2))/M;
+
+% Left channel separation
 JL_num = C11.*H11+C12.*H21;
 JL_den = C21.*H11+C22.*H21;
+% spettro monolaterale
+JL_num = JL_num(1:M/2+1);
+JL_den = JL_den(1:M/2+1);
 figure('Name','Left channel separation','NumberTitle','off');
-plot(20*log10(abs(JL_num)));
+plot(f, 20*log10(abs(JL_num)));
 hold on
-plot(20*log10(abs(JL_den)));
+plot(f, 20*log10(abs(JL_den)));
 title('Left channel separation');
 xlabel('Frequenza [Hz]');
 ylabel('Ampiezza [dB]');
 legend('JL_{num}', 'JL_{den}')
 
+% Right channel separation
 JR_num = C22.*H22+C21.*H12;
 JR_den = C12.*H22+C11.*H12;
+% spettro monolaterale
+JR_num = JR_num(1:M/2+1);
+JR_den = JR_den(1:M/2+1);
 figure('Name','Right channel separation','NumberTitle','off');
-plot(20*log10(abs(JR_num)));
+plot(f, 20*log10(abs(JR_num)));
 hold on
-plot(20*log10(abs(JR_den)));
+plot(f, 20*log10(abs(JR_den)));
 title('Right channel separation');
 xlabel('Frequenza [Hz]');
 ylabel('Ampiezza [dB]');
