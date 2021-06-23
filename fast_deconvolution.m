@@ -34,10 +34,10 @@ x2 = 0.1*randn(L,1);  % input 2 (right)
 % c22: HRIR right loudspeaker - righ ear
 [c22,~] = audioread("HRTF_measurements/elev0/R0e030a.wav");   
 
-H11 = zeros(M,1);     % filtro da calcolare input 1 output 1
-H12 = zeros(M,1);     % filtro da calcolare input 2 output 1
-H21 = zeros(M,1);     % filtro da calcolare input 1 output 2
-H22 = zeros(M,1);     % filtro da calcolare input 2 output 2
+H11 = zeros(M,1);     % filtro di cancellazione del crosstalk input 1 output 1
+H12 = zeros(M,1);     % filtro di cancellazione del crosstalk input 2 output 1
+H21 = zeros(M,1);     % filtro di cancellazione del crosstalk input 1 output 2
+H22 = zeros(M,1);     % filtro di cancellazione del crosstalk input 2 output 2
 
 C11 = fft(c11);     % HRTF left loudspeaker - left ear
 C12 = fft(c12);     % HRTF right loudspeaker - left ear
@@ -118,6 +118,23 @@ xlabel('Frequenza [Hz]');
 ylabel('Ampiezza [dB]');
 legend('JL_{num}', 'JL_{den}')
 
+% Confronto left channel separation con finestra rettangolare e con 
+% filtro di cancellazione del crosstalk
+W = ones(M,1);  % finestra rettangolare in frequenza
+JL_after = (C11.*H11+C12.*H21)./(C21.*H11+C22.*H21);
+JL_before = (C11.*W+C12.*W)./(C21.*W+C22.*W);
+% spettro monolaterale
+JL_after = JL_after(1:M/2+1);
+JL_before = JL_before(1:M/2+1);
+figure('Name','Left channel separation','NumberTitle','off');
+plot(f, 20*log10(abs(JL_after)));
+hold on
+plot(f, 20*log10(abs(JL_before)));
+title({'Confronto left channel separation con finestra rettangolare','e con filtro di cancellazione del xtalk'});
+xlabel('Frequenza [Hz]');
+ylabel('Ampiezza [dB]');
+legend('JL Cancellazione xtalk', 'JL Finestra rettangolare')
+
 % Right channel separation
 JR_num = C22.*H22+C21.*H12;
 JR_den = C12.*H22+C11.*H12;
@@ -132,3 +149,20 @@ title('Right channel separation');
 xlabel('Frequenza [Hz]');
 ylabel('Ampiezza [dB]');
 legend('JR_{num}', 'JR_{den}')
+
+% Confronto right channel separation con finestra rettangolare e con 
+% filtro di cancellazione del crosstalk
+W = ones(M,1);  % finestra rettangolare in frequenza
+JR_after = (C22.*H22+C21.*H12)./(C12.*H22+C11.*H12);
+JR_before = (C22.*W+C21.*W)./(C12.*W+C11.*W);
+% spettro monolaterale
+JR_after = JR_after(1:M/2+1);
+JR_before = JR_before(1:M/2+1);
+figure('Name','Right channel separation','NumberTitle','off');
+plot(f, 20*log10(abs(JR_after)));
+hold on
+plot(f, 20*log10(abs(JR_before)));
+title({'Confronto right channel separation con finestra rettangolare','e con filtro di cancellazione del xtalk'});
+xlabel('Frequenza [Hz]');
+ylabel('Ampiezza [dB]');
+legend('JR Cancellazione xtalk', 'JR Finestra rettangolare')

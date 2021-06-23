@@ -1,0 +1,90 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.0 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global}
+    \entry{Gardner:HRTF}{inproceedings}{}
+      \name{author}{1}{}{%
+        {{hash=68ad5c799d64dfae5cce5e75fc60e29d}{%
+           family={Gardner},
+           familyi={G\bibinitperiod},
+           given={B.},
+           giveni={B\bibinitperiod}}}%
+      }
+      \strng{namehash}{68ad5c799d64dfae5cce5e75fc60e29d}
+      \strng{fullhash}{68ad5c799d64dfae5cce5e75fc60e29d}
+      \strng{bibnamehash}{68ad5c799d64dfae5cce5e75fc60e29d}
+      \strng{authorbibnamehash}{68ad5c799d64dfae5cce5e75fc60e29d}
+      \strng{authornamehash}{68ad5c799d64dfae5cce5e75fc60e29d}
+      \strng{authorfullhash}{68ad5c799d64dfae5cce5e75fc60e29d}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{HRTF Measurements of a KEMAR Dummy-Head Microphone}
+      \field{year}{1994}
+      \true{nocite}
+    \endentry
+    \entry{Li:comprehensive_comparison}{inproceedings}{}
+      \name{author}{4}{}{%
+        {{hash=fc63986540b002fd74244549ce74082f}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Dan},
+           giveni={D\bibinitperiod}}}%
+        {{hash=a1db04b9485e3cbb08e125de5db2ff6f}{%
+           family={Fu},
+           familyi={F\bibinitperiod},
+           given={Zhong-Hua},
+           giveni={Z\bibinithyphendelim H\bibinitperiod}}}%
+        {{hash=d9501bb096bed7e71af1f43d9ee08d98}{%
+           family={Xie},
+           familyi={X\bibinitperiod},
+           given={Lei},
+           giveni={L\bibinitperiod}}}%
+        {{hash=571ef82b45c89300cf183470a54910e0}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Yanning},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{db381765d3f365bee3cf30f16e4588f4}
+      \strng{fullhash}{db381765d3f365bee3cf30f16e4588f4}
+      \strng{bibnamehash}{db381765d3f365bee3cf30f16e4588f4}
+      \strng{authorbibnamehash}{db381765d3f365bee3cf30f16e4588f4}
+      \strng{authornamehash}{db381765d3f365bee3cf30f16e4588f4}
+      \strng{authorfullhash}{db381765d3f365bee3cf30f16e4588f4}
+      \field{sortinit}{L}
+      \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2012 International Conference on Audio, Language and Image Processing}
+      \field{title}{Comprehensive comparison of the least mean square algorithm and the fast deconvolution algorithm for crosstalk cancellation}
+      \field{year}{2012}
+      \true{nocite}
+      \field{pages}{224\bibrangedash 229}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1109/ICALIP.2012.6376616
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
