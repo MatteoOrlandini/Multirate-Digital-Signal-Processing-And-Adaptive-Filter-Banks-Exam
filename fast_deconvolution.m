@@ -2,7 +2,7 @@ clc
 clear all;
 close all;
 
-L = 10000;    % lunghezza input x1 e x2 e output y1 e y2
+L = 10240;    % lunghezza input x1 e x2 e output y1 e y2
 M = 512;      % lunghezza dei filtri c11, c12, c21, c22
 N = 1024;     % lunghezza dei filtri da calcolare h11, h12, h21, h22
 
@@ -34,18 +34,18 @@ x2 = 0.1*randn(L,1);  % input 2 (right)
 % c22: HRIR right loudspeaker - righ ear
 [c22,~] = audioread("HRTF_measurements/elev0/R0e030a.wav");   
 
-H11 = zeros(M,1);     % filtro di cancellazione del crosstalk input 1 output 1
-H12 = zeros(M,1);     % filtro di cancellazione del crosstalk input 2 output 1
-H21 = zeros(M,1);     % filtro di cancellazione del crosstalk input 1 output 2
-H22 = zeros(M,1);     % filtro di cancellazione del crosstalk input 2 output 2
+H11 = zeros(N,1);     % filtro di cancellazione del crosstalk input 1 output 1
+H12 = zeros(N,1);     % filtro di cancellazione del crosstalk input 2 output 1
+H21 = zeros(N,1);     % filtro di cancellazione del crosstalk input 1 output 2
+H22 = zeros(N,1);     % filtro di cancellazione del crosstalk input 2 output 2
 
-C11 = fft(c11);     % HRTF left loudspeaker - left ear
-C12 = fft(c12);     % HRTF right loudspeaker - left ear
-C21 = fft(c21);     % HRTF left loudspeaker - right ear
-C22 = fft(c22);     % HRTF right loudspeaker - right ear
+C11 = fft(c11, N);     % HRTF left loudspeaker - left ear
+C12 = fft(c12, N);     % HRTF right loudspeaker - left ear
+C21 = fft(c21, N);     % HRTF left loudspeaker - right ear
+C22 = fft(c22, N);     % HRTF right loudspeaker - right ear
 
-X1 = fft(x1, M);    % fft input 1 (left)
-X2 = fft(x2, M);    % fft input 2 (right)
+X1 = fft(x1);    % fft input 1 (left)
+X2 = fft(x2);    % fft input 2 (right)
 
 C_prev = [C11(1) C12(1); C21(1) C22(1)];
 beta = 1;
@@ -61,40 +61,44 @@ for n = 2:M
     C_prev = C;
 end
 
-h11 = real(ifft(H11, M));
-h12 = real(ifft(H12, M));
-h21 = real(ifft(H21, M));
-h22 = real(ifft(H22, M));
+h11 = real(ifft(H11));
+h12 = real(ifft(H12));
+h21 = real(ifft(H21));
+h22 = real(ifft(H22));
 
-%Y = zeros(2, M);
-Y1 = zeros(1, M);
-Y2 = zeros(1, M);
+%Y = zeros(2, L);
+Y1 = zeros(1, L);
+Y2 = zeros(1, L);
 
 % for n = 1:M
 %     Y(:,n) = [C11(n) C12(n); C21(n) C22(n)]*[H11(n) H12(n); H21(n) H22(n)]*[X1(n); X2(n)];
 % end
 
-for n = 1:M
-    Y1(n) = (C11(n)*H11(n)+C12(n)*H21(n))*X1(n)+(C11(n)*H12(n)+C12(n)*H22(n))*X2(n);
-    Y2(n) = (C21(n)*H11(n)+C22(n)*H21(n))*X1(n)+(C21(n)*H12(n)+C22(n)*H22(n))*X2(n);
+for block = 0:L/M-1
+    for n = 1:M
+        Y1(block*M + n) = (C11(n)*H11(n)+C12(n)*H21(n))*X1(block*M + n)+(C11(n)*H12(n)+C12(n)*H22(n))*X2(block*M + n);
+        Y2(block*M + n) = (C21(n)*H11(n)+C22(n)*H21(n))*X1(block*M + n)+(C21(n)*H12(n)+C22(n)*H22(n))*X2(block*M + n);
+    end
 end
 
-y1 = real(ifft(Y1, M));
-y2 = real(ifft(Y2, M));
+y1 = real(ifft(Y1));
+y2 = real(ifft(Y2));
 
 figure('Name','Confronto tra x1 e y1','NumberTitle','off');
-plot(ifft(X1)); 
+plot(x1); 
 hold on; 
 plot(y1);
+xlim([0, L-1])
 title('Confronto tra x_1 e y_1');
 xlabel('Campioni')
 ylabel('Ampiezza')
 legend('x_1(n)', 'y_1(n)');
 
 figure('Name','Confronto tra x2 e y2','NumberTitle','off');
-plot(ifft(X2)); 
+plot(x2); 
 hold on; 
 plot(y2);
+xlim([0, L-1])
 title('Confronto tra x_2 e y_2');
 xlabel('Campioni')
 ylabel('Ampiezza')
@@ -120,7 +124,7 @@ legend('JL_{num}', 'JL_{den}')
 
 % Confronto left channel separation con finestra rettangolare e con 
 % filtro di cancellazione del crosstalk
-W = ones(M,1);  % finestra rettangolare in frequenza
+W = ones(N,1);  % finestra rettangolare in frequenza
 JL_after = (C11.*H11+C12.*H21)./(C21.*H11+C22.*H21);
 JL_before = (C11.*W+C12.*W)./(C21.*W+C22.*W);
 % spettro monolaterale
@@ -152,7 +156,7 @@ legend('JR_{num}', 'JR_{den}')
 
 % Confronto right channel separation con finestra rettangolare e con 
 % filtro di cancellazione del crosstalk
-W = ones(M,1);  % finestra rettangolare in frequenza
+W = ones(N,1);  % finestra rettangolare in frequenza
 JR_after = (C22.*H22+C21.*H12)./(C12.*H22+C11.*H12);
 JR_before = (C22.*W+C21.*W)./(C12.*W+C11.*W);
 % spettro monolaterale

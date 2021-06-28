@@ -13,7 +13,7 @@ x2 = 0.1*randn(L,1);  % input 2 (right)
 %x2 = cos(t)';
 
 % il segnale desiderato è x ritardato di tau campioni
-tau = 5;   % ritardo temporale
+tau = M+N;   % ritardo temporale
 d1 = [zeros(tau,1); x1(1:end-tau)]; % segnale desiderato 1 (left)
 d2 = [zeros(tau,1); x2(1:end-tau)]; % segnale desiderato 2 (right)
 
@@ -44,6 +44,13 @@ e2 = zeros(L,1);  % errore 2 (right)
 [c21,~] = audioread("HRTF_measurements/elev0/R0e330a.wav");    
 % c22: HRIR right loudspeaker - righ ear
 [c22,~] = audioread("HRTF_measurements/elev0/R0e030a.wav");  
+%{
+Fs = 44100;
+c11 = [1; zeros(M-1,1)];
+c12 = [zeros(100,1); 1; zeros(M-101,1)];
+c21 = [zeros(100,1); 1; zeros(M-101,1)];
+c22 = [1; zeros(M-1,1)];
+%}
 
 h11 = zeros(N,1);     % filtro da calcolare input 1 output 1
 h12 = zeros(N,1);     % filtro da calcolare input 2 output 1
@@ -62,8 +69,11 @@ r121 = zeros(L,1);    % uscita di x1 filtrato da c21 per output y2
 %mu1 = 1/trace(x1*x1');
 % mu2 = 1/trace(x2*x2');
 
-mu1 = 2e-2; 
-mu2 = 1e-5;
+% mu1 = 2e-2; 
+% mu2 = 1e-5;
+
+mu1 = 1e-4; 
+mu2 = 1e-4;
 
 
 for n = N:L
