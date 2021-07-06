@@ -72,25 +72,25 @@ r121 = zeros(L,1);    % uscita di x1 filtrato da c21 per output y2
 % mu1 = 2e-2; 
 % mu2 = 1e-5;
 
-mu1 = 1e-4; 
-mu2 = 1e-4;
+mu1 = 1e-2; 
+mu2 = 1e-2;
 
 
 for n = N:L
-    for j = 1:M
-        r111(n) = r111(n)+c11(j)*x1(n-j+1);
-        r112(n) = r112(n)+c12(j)*x1(n-j+1);
-        r211(n) = r211(n)+c11(j)*x2(n-j+1);
-        r212(n) = r212(n)+c12(j)*x2(n-j+1);
-        r222(n) = r222(n)+c22(j)*x2(n-j+1);
-        r221(n) = r221(n)+c21(j)*x2(n-j+1);
-        r122(n) = r122(n)+c22(j)*x1(n-j+1);
-        r121(n) = r121(n)+c21(j)+x1(n-j+1);
+    for k = 1:M
+        r111(n) = r111(n)+c11(k)*x1(n-k+1);
+        r112(n) = r112(n)+c12(k)*x1(n-k+1);
+        r211(n) = r211(n)+c11(k)*x2(n-k+1);
+        r212(n) = r212(n)+c12(k)*x2(n-k+1);
+        r222(n) = r222(n)+c22(k)*x2(n-k+1);
+        r221(n) = r221(n)+c21(k)*x2(n-k+1);
+        r122(n) = r122(n)+c22(k)*x1(n-k+1);
+        r121(n) = r121(n)+c21(k)*x1(n-k+1);
     end
 
-    for p = 1:N
-        y1(n) = y1(n)+r111(n-p+1)*h11(p)+r112(n-p+1)*h21(p)+r211(n-p+1)*h12(p)+r212(n-p+1)*h22(p);
-        y2(n) = y2(n)+r121(n-p+1)*h11(p)+r122(n-p+1)*h21(p)+r221(n-p+1)*h12(p)+r222(n-p+1)*h22(p);
+    for k = 1:N
+        y1(n) = y1(n)+r111(n-k+1)*h11(k)+r112(n-k+1)*h21(k)+r211(n-k+1)*h12(k)+r212(n-k+1)*h22(k);
+        y2(n) = y2(n)+r121(n-k+1)*h11(k)+r122(n-k+1)*h21(k)+r221(n-k+1)*h12(k)+r222(n-k+1)*h22(k);
     end
     
     e1(n) = d1(n)-y1(n);

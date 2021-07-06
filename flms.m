@@ -40,10 +40,10 @@ c21 = [zeros(100,1); 1; zeros(M-101,1)];
 c22 = [zeros(10,1); 1; zeros(M-10,1)];
 %}
 
-h11 = zeros(L,1);     % filtro da calcolare input 1 output 1
-h12 = zeros(L,1);     % filtro da calcolare input 2 output 1
-h21 = zeros(L,1);     % filtro da calcolare input 1 output 2
-h22 = zeros(L,1);     % filtro da calcolare input 2 output 2
+h11 = zeros(L,1);     % filtro da calcolsre input 1 output 1
+h12 = zeros(L,1);     % filtro da calcolsre input 2 output 1
+h21 = zeros(L,1);     % filtro da calcolsre input 1 output 2
+h22 = zeros(L,1);     % filtro da calcolsre input 2 output 2
 
 r111 = zeros(nPoints,1);    % uscita di x1 filtrato da c11 per output y1
 r112 = zeros(nPoints,1);    % uscita di x1 filtrato da c12 per output y1
@@ -69,66 +69,66 @@ mu2 = 1e-2;
 % H22 = fft([h22; zeros(L, 1)], 2*L);
 
 for k = 1 : floor(nPoints/L - 1)      
-    [r111(k*L+1 : k*L+L), X1_k, ~]= ola(x1((k-1)*L+1: (k-1)*L+L), ...
+    [r111(k*L+1 : k*L+L), X1_k, ~]= ols(x1((k-1)*L+1: (k-1)*L+L), ...
                                  x1(k*L+1 : k*L+L), c11, L);
     
-    [r112(k*L+1 : k*L+L), ~, ~] = ola(x1((k-1)*L+1: (k-1)*L+L), ...
+    [r112(k*L+1 : k*L+L), ~, ~] = ols(x1((k-1)*L+1: (k-1)*L+L), ...
                                  x1(k*L+1 : k*L+L), c12, L);
                              
-    [r211(k*L+1 : k*L+L), ~, ~] = ola(x2((k-1)*L+1: (k-1)*L+L), ...
+    [r211(k*L+1 : k*L+L), ~, ~] = ols(x2((k-1)*L+1: (k-1)*L+L), ...
                                  x2(k*L+1 : k*L+L), c11, L);
                              
-    [r212(k*L+1 : k*L+L), ~, ~] = ola(x2((k-1)*L+1: (k-1)*L+L), ...
+    [r212(k*L+1 : k*L+L), ~, ~] = ols(x2((k-1)*L+1: (k-1)*L+L), ...
                                  x2(k*L+1 : k*L+L), c12, L);
                              
-    [r222(k*L+1 : k*L+L), X2_k, ~] = ola(x2((k-1)*L+1: (k-1)*L+L), ...
+    [r222(k*L+1 : k*L+L), X2_k, ~] = ols(x2((k-1)*L+1: (k-1)*L+L), ...
                                  x2(k*L+1 : k*L+L), c22, L);
     
-    [r221(k*L+1 : k*L+L), ~, ~] = ola(x2((k-1)*L+1: (k-1)*L+L), ...
+    [r221(k*L+1 : k*L+L), ~, ~] = ols(x2((k-1)*L+1: (k-1)*L+L), ...
                                  x2(k*L+1 : k*L+L), c21, L);
                              
-    [r122(k*L+1 : k*L+L), ~, ~] = ola(x1((k-1)*L+1: (k-1)*L+L), ...
+    [r122(k*L+1 : k*L+L), ~, ~] = ols(x1((k-1)*L+1: (k-1)*L+L), ...
                                  x1(k*L+1 : k*L+L), c22, L);
                              
-    [r121(k*L+1 : k*L+L), ~, ~] = ola(x1((k-1)*L+1: (k-1)*L+L), ...
+    [r121(k*L+1 : k*L+L), ~, ~] = ols(x1((k-1)*L+1: (k-1)*L+L), ...
                                  x1(k*L+1 : k*L+L), c21, L);
                              
-    [y1_k, R111_k, H11] = ola(r111((k-1)*L+1: (k-1)*L+L), ...
+    [y1_k, R111_k, H11] = ols(r111((k-1)*L+1: (k-1)*L+L), ...
                                         r111(k*L+1 : k*L+L), h11, L);
                                         
     y1(k*L+1 : k*L+L) = y1(k*L+1 : k*L+L) + y1_k;
     
-    [y1_k, R112_k, H21] = ola(r112((k-1)*L+1: (k-1)*L+L), ...
+    [y1_k, R112_k, H21] = ols(r112((k-1)*L+1: (k-1)*L+L), ...
                                r112(k*L+1 : k*L+L), h21, L);
                            
     y1(k*L+1 : k*L+L) = y1(k*L+1 : k*L+L) + y1_k;  
     
-    [y1_k, R211_k, H12] = ola(r211((k-1)*L+1: (k-1)*L+L), ...
+    [y1_k, R211_k, H12] = ols(r211((k-1)*L+1: (k-1)*L+L), ...
                                r211(k*L+1 : k*L+L), h12, L);
                            
     y1(k*L+1 : k*L+L) = y1(k*L+1 : k*L+L) + y1_k;  
     
-    [y1_k, R212_k, H22] = ola(r212((k-1)*L+1: (k-1)*L+L), ...
+    [y1_k, R212_k, H22] = ols(r212((k-1)*L+1: (k-1)*L+L), ...
                                r212(k*L+1 : k*L+L), h22, L);
                            
     y1(k*L+1 : k*L+L) = y1(k*L+1 : k*L+L) + y1_k;
                            
-    [y2_k, R222_k, ~] = ola(r222((k-1)*L+1: (k-1)*L+L), ...
+    [y2_k, R222_k, ~] = ols(r222((k-1)*L+1: (k-1)*L+L), ...
                                     r222(k*L+1 : k*L+L), h22, L);
                                 
     y2(k*L+1 : k*L+L) = y2(k*L+1 : k*L+L) + y2_k;                       
     
-    [y2_k, R221_k, ~] = ola(r221((k-1)*L+1: (k-1)*L+L), ...
+    [y2_k, R221_k, ~] = ols(r221((k-1)*L+1: (k-1)*L+L), ...
                                r221(k*L+1 : k*L+L), h12, L);
                            
     y2(k*L+1 : k*L+L) = y2(k*L+1 : k*L+L) + y2_k;  
     
-    [y2_k, R122_k, ~] = ola(r122((k-1)*L+1: (k-1)*L+L), ...
+    [y2_k, R122_k, ~] = ols(r122((k-1)*L+1: (k-1)*L+L), ...
                                r122(k*L+1 : k*L+L), h21, L);
                            
     y2(k*L+1 : k*L+L) = y2(k*L+1 : k*L+L) + y2_k;  
     
-    [y2_k, R121_k, ~] = ola(r121((k-1)*L+1: (k-1)*L+L), ...
+    [y2_k, R121_k, ~] = ols(r121((k-1)*L+1: (k-1)*L+L), ...
                                r121(k*L+1 : k*L+L), h11, L);
                            
     y2(k*L+1 : k*L+L) = y2(k*L+1 : k*L+L) + y2_k;                        
@@ -193,12 +193,13 @@ xlabel('Frequenza [Hz]');
 ylabel('Ampiezza [dB]');
 legend('JL_{num}', 'JL_{den}')
 
+%{
 % Confronto left channel separation con finestra rettangolare e con 
 % filtro di cancellazione del crosstalk
 W = ones(2*L,1);  % finestra rettangolare in frequenza
 JL_after = (C11.*H11+C12.*H21)./(C21.*H11+C22.*H21);
 JL_before = (C11.*W+C12.*W)./(C21.*W+C22.*W);
-% spettro monolaterale
+% spettro monolsterale
 JL_after = JL_after(1:end/2+1);
 JL_before = JL_before(1:end/2+1);
 figure('Name','Left channel separation','NumberTitle','off');
@@ -209,11 +210,12 @@ title({'Confronto left channel separation con finestra rettangolare','e con filt
 xlabel('Frequenza [Hz]');
 ylabel('Ampiezza [dB]');
 legend('JL Cancellazione xtalk', 'JL Finestra rettangolare')
+%}
 
 % Right channel separation
 JR_num = C22.*H22+C21.*H12;
 JR_den = C12.*H22+C11.*H12;
-% spettro monolaterale
+% spettro monolsterale
 JR_num = JR_num(1:end/2+1);
 JR_den = JR_den(1:end/2+1);
 figure('Name','Right channel separation','NumberTitle','off');
@@ -225,12 +227,13 @@ xlabel('Frequenza [Hz]');
 ylabel('Ampiezza [dB]');
 legend('JR_{num}', 'JR_{den}')
 
+%{
 % Confronto right channel separation con finestra rettangolare e con 
 % filtro di cancellazione del crosstalk
 W = ones(2*L,1);  % finestra rettangolare in frequenza
 JR_after = (C22.*H22+C21.*H12)./(C12.*H22+C11.*H12);
 JR_before = (C22.*W+C21.*W)./(C12.*W+C11.*W);
-% spettro monolaterale
+% spettro monolsterale
 JR_after = JR_after(1:end/2+1);
 JR_before = JR_before(1:end/2+1);
 figure('Name','Right channel separation','NumberTitle','off');
@@ -241,3 +244,4 @@ title({'Confronto right channel separation con finestra rettangolare','e con fil
 xlabel('Frequenza [Hz]');
 ylabel('Ampiezza [dB]');
 legend('JR Cancellazione xtalk', 'JR Finestra rettangolare')
+%}
