@@ -4,7 +4,7 @@ close all;
 
 L = 10000;    % lunghezza input x1 e x2 e output y1 e y2
 M = 512;      % lunghezza dei filtri c11, c12, c21, c22
-N = 1024;     % lunghezza dei filtri da calcolare h11, h12, h21, h22
+%N = 1024;     % lunghezza dei filtri da calcolare h11, h12, h21, h22
 
 x1 = 0.1*randn(L,1);  % input 1 (left)
 x2 = 0.1*randn(L,1);  % input 2 (right)
@@ -13,7 +13,7 @@ x2 = 0.1*randn(L,1);  % input 2 (right)
 %x2 = cos(t)';
 
 % il segnale desiderato è x ritardato di tau campioni
-tau = M+N;   % ritardo temporale
+tau = M;   % ritardo temporale
 d1 = [zeros(tau,1); x1(1:end-tau)]; % segnale desiderato 1 (left)
 d2 = [zeros(tau,1); x2(1:end-tau)]; % segnale desiderato 2 (right)
 
@@ -52,10 +52,10 @@ c21 = [zeros(100,1); 1; zeros(M-101,1)];
 c22 = [1; zeros(M-1,1)];
 %}
 
-h11 = zeros(N,1);     % filtro da calcolare input 1 output 1
-h12 = zeros(N,1);     % filtro da calcolare input 2 output 1
-h21 = zeros(N,1);     % filtro da calcolare input 1 output 2
-h22 = zeros(N,1);     % filtro da calcolare input 2 output 2
+h11 = zeros(M,1);     % filtro da calcolare input 1 output 1
+h12 = zeros(M,1);     % filtro da calcolare input 2 output 1
+h21 = zeros(M,1);     % filtro da calcolare input 1 output 2
+h22 = zeros(M,1);     % filtro da calcolare input 2 output 2
 
 r111 = zeros(L,1);    % uscita di x1 filtrato da c11 per output y1
 r112 = zeros(L,1);    % uscita di x1 filtrato da c12 per output y1
@@ -75,7 +75,86 @@ r121 = zeros(L,1);    % uscita di x1 filtrato da c21 per output y2
 mu1 = 1e-2; 
 mu2 = 1e-2;
 
+x1buff = zeros(M, 1);
+x2buff = zeros(M, 1);
 
+r111buff = zeros(M,1);    
+r112buff = zeros(M,1);    
+r211buff = zeros(M,1);  
+r212buff = zeros(M,1);    
+r222buff = zeros(M,1);    
+r221buff = zeros(M,1);    
+r122buff = zeros(M,1);   
+r121buff = zeros(M,1);  
+
+e1buff = zeros(M,1);  
+e2buff = zeros(M,1);  
+%{
+for n=1:length(x1)
+    xbuff = [x1(n); xbuff(1:end-1)];
+   
+    r111(n)=c11'*xbuff;
+end
+r111_filter = filter(c11, 1, x1);
+%}
+
+for n = 1:L
+    x1buff = [x1(n); x1buff(1:end-1)];
+    x2buff = [x2(n); x2buff(1:end-1)];
+   
+    r111(n) = c11'*x1buff;
+    r112(n) = c12'*x1buff;
+    r211(n) = c11'*x2buff;
+    r212(n) = c12'*x2buff;
+    r222(n) = c22'*x2buff;
+    r221(n) = c21'*x2buff;
+    r122(n) = c22'*x1buff;
+    r121(n) = c21'*x1buff;
+
+    r111buff = [r111(n); r111buff(1:end-1)];
+    r112buff = [r112(n); r112buff(1:end-1)];
+    r211buff = [r211(n); r211buff(1:end-1)];
+    r212buff = [r212(n); r212buff(1:end-1)];
+    r222buff = [r222(n); r222buff(1:end-1)];
+    r221buff = [r221(n); r221buff(1:end-1)];
+    r122buff = [r122(n); r122buff(1:end-1)];
+    r121buff = [r121(n); r121buff(1:end-1)];
+    
+    y1(n) = h11'*r111buff+h21'*r112buff+h12'*r211buff+h22'*r212buff;
+    y2(n) = h11'*r121buff+h21'*r122buff+h12'*r221buff+h22'*r222buff;
+    
+    e1(n) = d1(n)-y1(n);
+    e2(n) = d2(n)-y2(n);
+    
+    for k = 1:M
+        h11(k) = h11(k)+mu1*e1(n)*r111buff(k);
+        h12(k) = h12(k)+mu1*e1(n)*r211buff(k);
+        h21(k) = h21(k)+mu1*e1(n)*r112buff(k);
+        h22(k) = h22(k)+mu1*e1(n)*r212buff(k);
+    end
+    
+    %{
+    for k = 1:M
+        h11(k) = h11(k)+mu1*e1(n)*r111buff(k)+mu2*e2(n)*r121buff(k);
+        h12(k) = h12(k)+mu1*e1(n)*r211buff(k)+mu2*e2(n)*r221buff(k);
+        h21(k) = h21(k)+mu1*e1(n)*r112buff(k)+mu2*e2(n)*r122buff(k);
+        h22(k) = h22(k)+mu1*e1(n)*r212buff(k)+mu2*e2(n)*r222buff(k);
+    end
+    %}
+    y2(n) = h11'*r121buff+h21'*r122buff+h12'*r221buff+h22'*r222buff;
+    
+    e2(n) = d2(n)-y2(n);
+    
+    for k = 1:M
+        h11(k) = h11(k)+mu2*e2(n)*r121buff(k);
+        h12(k) = h12(k)+mu2*e2(n)*r221buff(k);
+        h21(k) = h21(k)+mu2*e2(n)*r122buff(k);
+        h22(k) = h22(k)+mu2*e2(n)*r222buff(k);
+    end
+    
+end
+
+%{
 for n = N:L
     for k = 1:M
         r111(n) = r111(n)+c11(k)*x1(n-k+1);
@@ -103,7 +182,8 @@ for n = N:L
         h22(k) = h22(k)+mu1*e1(n)*r212(n-k+1)+mu2*e2(n)*r222(n-k+1);
     end
 end
-    
+%}
+
 figure('Name','Confronto tra d1 e y1','NumberTitle','off');
 plot(d1); 
 hold on; 
@@ -150,6 +230,7 @@ xlabel('Frequenza [Hz]');
 ylabel('Ampiezza [dB]');
 legend('JL_{num}', 'JL_{den}')
 
+%{
 % Confronto left channel separation con finestra rettangolare e con 
 % filtro di cancellazione del crosstalk
 W = ones(M,1);  % finestra rettangolare in frequenza
@@ -166,6 +247,7 @@ title({'Confronto left channel separation con finestra rettangolare','e con filt
 xlabel('Frequenza [Hz]');
 ylabel('Ampiezza [dB]');
 legend('JL Cancellazione xtalk', 'JL Finestra rettangolare')
+%}
 
 % Right channel separation
 JR_num = C22.*H22+C21.*H12;
@@ -182,6 +264,7 @@ xlabel('Frequenza [Hz]');
 ylabel('Ampiezza [dB]');
 legend('JR_{num}', 'JR_{den}')
 
+%{
 % Confronto right channel separation con finestra rettangolare e con 
 % filtro di cancellazione del crosstalk
 W = ones(M,1);  % finestra rettangolare in frequenza
@@ -198,3 +281,5 @@ title({'Confronto right channel separation con finestra rettangolare','e con fil
 xlabel('Frequenza [Hz]');
 ylabel('Ampiezza [dB]');
 legend('JR Cancellazione xtalk', 'JR Finestra rettangolare')
+%}
+%}
