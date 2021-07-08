@@ -127,31 +127,11 @@ for n = 1:L
     e2(n) = d2(n)-y2(n);
     
     for k = 1:M
-        h11(k) = h11(k)+mu1*e1(n)*r111buff(k);
-        h12(k) = h12(k)+mu1*e1(n)*r211buff(k);
-        h21(k) = h21(k)+mu1*e1(n)*r112buff(k);
-        h22(k) = h22(k)+mu1*e1(n)*r212buff(k);
-    end
-    
-    %{
-    for k = 1:M
         h11(k) = h11(k)+mu1*e1(n)*r111buff(k)+mu2*e2(n)*r121buff(k);
         h12(k) = h12(k)+mu1*e1(n)*r211buff(k)+mu2*e2(n)*r221buff(k);
         h21(k) = h21(k)+mu1*e1(n)*r112buff(k)+mu2*e2(n)*r122buff(k);
         h22(k) = h22(k)+mu1*e1(n)*r212buff(k)+mu2*e2(n)*r222buff(k);
     end
-    %}
-    y2(n) = h11'*r121buff+h21'*r122buff+h12'*r221buff+h22'*r222buff;
-    
-    e2(n) = d2(n)-y2(n);
-    
-    for k = 1:M
-        h11(k) = h11(k)+mu2*e2(n)*r121buff(k);
-        h12(k) = h12(k)+mu2*e2(n)*r221buff(k);
-        h21(k) = h21(k)+mu2*e2(n)*r122buff(k);
-        h22(k) = h22(k)+mu2*e2(n)*r222buff(k);
-    end
-    
 end
 
 %{
