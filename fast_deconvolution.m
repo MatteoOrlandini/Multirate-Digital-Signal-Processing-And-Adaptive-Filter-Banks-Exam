@@ -11,14 +11,12 @@ M = L/2;
 
 fs = L + M - 1; % frame size
 
-x1 = 0.1*randn(10*L,1);  % input 1 (left)
-x2 = 0.1*randn(10*L,1);  % input 2 (right)
+%x1 = 0.1*randn(10*L,1);  % input 1 (left)
+%x2 = 0.1*randn(10*L,1);  % input 2 (right)
+[x, Fsample] = audioread('Queen-Bohemian Rhapsody.mp3');
+x1 = x(200000:500000,1);
+x2 = x(200000:500000,2);
 nPoints = length(x1);
-
-% c11 = fir1(M-1,0.3);    % HRIR input 1 output 1
-% c12 = fir1(M-1,0.4);    % HRIR input 2 output 1
-% c21 = fir1(M-1,0.3);    % HRIR input 1 output 2
-% c22 = fir1(M-1,0.4);    % HRIR input 2 output 2
 
 % https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.39.9751&rep=rep1&type=pdf
 % within "HRTF_measurements" folder, each filename has the format
@@ -62,16 +60,6 @@ for n = 2:length(H11)
     H22(n) = H(2, 2);
     C_prev = C;
 end
-%{
-h11 = real(ifft(H11));
-h12 = real(ifft(H12));
-h21 = real(ifft(H21));
-h22 = real(ifft(H22));
-%}
-
-%Y = zeros(2, L);
-%Y1 = zeros(1, L);
-%Y2 = zeros(1, L);
 
 x1Buff = zeros(L, 1);
 x2Buff = zeros(L, 1);
@@ -87,7 +75,7 @@ for i = 1 : floor(nPoints/L)
     % processing
     %%%{
     Y1BUFF = (C11.*H11+C12.*H21).*X1BUFF+(C11.*H12+C12.*H22).*X2BUFF;
-    Y2BUFF = (C21.*H11+C22.*H21).*X1BUFF'+(C21.*H12+C22.*H22).*X2BUFF;
+    Y2BUFF = (C21.*H11+C22.*H21).*X1BUFF+(C21.*H12+C22.*H22).*X2BUFF;
     %}
     %{
     for n = 1:fftLen
@@ -145,7 +133,7 @@ title('Left channel separation');
 xlabel('Frequenza [Hz]');
 ylabel('Ampiezza [dB]');
 legend('JL_{num}', 'JL_{den}')
-
+%{
 % Confronto left channel separation con finestra rettangolare e con 
 % filtro di cancellazione del crosstalk
 W = ones(length(C11),1);  % finestra rettangolare in frequenza
@@ -162,7 +150,7 @@ title({'Confronto left channel separation con finestra rettangolare','e con filt
 xlabel('Frequenza [Hz]');
 ylabel('Ampiezza [dB]');
 legend('JL Cancellazione xtalk', 'JL Finestra rettangolare')
-
+%}
 % Right channel separation
 JR_num = C22.*H22+C21.*H12;
 JR_den = C12.*H22+C11.*H12;
@@ -178,6 +166,7 @@ xlabel('Frequenza [Hz]');
 ylabel('Ampiezza [dB]');
 legend('JR_{num}', 'JR_{den}')
 
+%{
 % Confronto right channel separation con finestra rettangolare e con 
 % filtro di cancellazione del crosstalk
 W = ones(length(C11),1);  % finestra rettangolare in frequenza
@@ -194,3 +183,17 @@ title({'Confronto right channel separation con finestra rettangolare','e con fil
 xlabel('Frequenza [Hz]');
 ylabel('Ampiezza [dB]');
 legend('JR Cancellazione xtalk', 'JR Finestra rettangolare')
+%}
+audioin = audioplayer([x1,x2],Fsample);
+play(audioin)
+pause(length([x1,x2])/Fsample + 1);
+
+z1 = filter(c11, 1, x1) + filter(c12, 1, x2);
+z2 = filter(c22, 1, x2) + filter(c21, 1, x1);
+audioz = audioplayer([z1,z2],Fsample);
+play(audioz);
+pause(length([z1,z2])/Fsample + 1);
+
+audioout = audioplayer([y1,y2],Fsample);
+play(audioout)
+pause(length([y1,y2])/Fsample + 1);

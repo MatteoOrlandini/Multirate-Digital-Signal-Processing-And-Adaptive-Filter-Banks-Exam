@@ -2,15 +2,16 @@ clc
 clear all;
 close all;
 
-L = 10000;    % lunghezza input x1 e x2 e output y1 e y2
+%L = 10000;    % lunghezza input x1 e x2 e output y1 e y2
 M = 512;      % lunghezza dei filtri c11, c12, c21, c22
 %N = 1024;     % lunghezza dei filtri da calcolare h11, h12, h21, h22
 
-x1 = 0.1*randn(L,1);  % input 1 (left)
-x2 = 0.1*randn(L,1);  % input 2 (right)
-%t = 0:L-1;
-%x1 = sin(t)';
-%x2 = cos(t)';
+%x1 = 0.1*randn(L,1);  % random input 1 (left)
+%x2 = 0.1*randn(L,1);  % random input 2 (right)
+[x, Fsample] = audioread('Queen-Bohemian Rhapsody.mp3');
+x1 = x(200000:500000,1);
+x2 = x(200000:500000,2);
+L = length(x1);
 
 % il segnale desiderato è x ritardato di tau campioni
 tau = M;   % ritardo temporale
@@ -22,11 +23,6 @@ y2 = zeros(L,1);  % output 2 (right)
 
 e1 = zeros(L,1);  % errore 1 (left)
 e2 = zeros(L,1);  % errore 2 (right)
-
-% c11 = fir1(M-1,0.3);    % HRIR input 1 output 1
-% c12 = fir1(M-1,0.4);    % HRIR input 2 output 1
-% c21 = fir1(M-1,0.3);    % HRIR input 1 output 2
-% c22 = fir1(M-1,0.4);    % HRIR input 2 output 2
 
 % https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.39.9751&rep=rep1&type=pdf
 % within "HRTF_measurements" folder, each filename has the format
@@ -44,13 +40,6 @@ e2 = zeros(L,1);  % errore 2 (right)
 [c21,~] = audioread("HRTF_measurements/elev0/R0e330a.wav");    
 % c22: HRIR right loudspeaker - righ ear
 [c22,~] = audioread("HRTF_measurements/elev0/R0e030a.wav");  
-%{
-Fs = 44100;
-c11 = [1; zeros(M-1,1)];
-c12 = [zeros(100,1); 1; zeros(M-101,1)];
-c21 = [zeros(100,1); 1; zeros(M-101,1)];
-c22 = [1; zeros(M-1,1)];
-%}
 
 h11 = zeros(M,1);     % filtro da calcolare input 1 output 1
 h12 = zeros(M,1);     % filtro da calcolare input 2 output 1
@@ -66,12 +55,6 @@ r221 = zeros(L,1);    % uscita di x2 filtrato da c21 per output y2
 r122 = zeros(L,1);    % uscita di x1 filtrato da c22 per output y2
 r121 = zeros(L,1);    % uscita di x1 filtrato da c21 per output y2
 
-%mu1 = 1/trace(x1*x1');
-% mu2 = 1/trace(x2*x2');
-
-% mu1 = 2e-2; 
-% mu2 = 1e-5;
-
 mu1 = 1e-2; 
 mu2 = 1e-2;
 
@@ -86,17 +69,6 @@ r222buff = zeros(M,1);
 r221buff = zeros(M,1);    
 r122buff = zeros(M,1);   
 r121buff = zeros(M,1);  
-
-e1buff = zeros(M,1);  
-e2buff = zeros(M,1);  
-%{
-for n=1:length(x1)
-    xbuff = [x1(n); xbuff(1:end-1)];
-   
-    r111(n)=c11'*xbuff;
-end
-r111_filter = filter(c11, 1, x1);
-%}
 
 for n = 1:L
     x1buff = [x1(n); x1buff(1:end-1)];
@@ -133,36 +105,6 @@ for n = 1:L
         h22(k) = h22(k)+mu1*e1(n)*r212buff(k)+mu2*e2(n)*r222buff(k);
     end
 end
-
-%{
-for n = N:L
-    for k = 1:M
-        r111(n) = r111(n)+c11(k)*x1(n-k+1);
-        r112(n) = r112(n)+c12(k)*x1(n-k+1);
-        r211(n) = r211(n)+c11(k)*x2(n-k+1);
-        r212(n) = r212(n)+c12(k)*x2(n-k+1);
-        r222(n) = r222(n)+c22(k)*x2(n-k+1);
-        r221(n) = r221(n)+c21(k)*x2(n-k+1);
-        r122(n) = r122(n)+c22(k)*x1(n-k+1);
-        r121(n) = r121(n)+c21(k)*x1(n-k+1);
-    end
-
-    for k = 1:N
-        y1(n) = y1(n)+r111(n-k+1)*h11(k)+r112(n-k+1)*h21(k)+r211(n-k+1)*h12(k)+r212(n-k+1)*h22(k);
-        y2(n) = y2(n)+r121(n-k+1)*h11(k)+r122(n-k+1)*h21(k)+r221(n-k+1)*h12(k)+r222(n-k+1)*h22(k);
-    end
-    
-    e1(n) = d1(n)-y1(n);
-    e2(n) = d2(n)-y2(n);
-    
-    for k = 1:N
-        h11(k) = h11(k)+mu1*e1(n)*r111(n-k+1)+mu2*e2(n)*r121(n-k+1);
-        h12(k) = h12(k)+mu1*e1(n)*r211(n-k+1)+mu2*e2(n)*r221(n-k+1);
-        h21(k) = h21(k)+mu1*e1(n)*r112(n-k+1)+mu2*e2(n)*r122(n-k+1);
-        h22(k) = h22(k)+mu1*e1(n)*r212(n-k+1)+mu2*e2(n)*r222(n-k+1);
-    end
-end
-%}
 
 figure('Name','Confronto tra d1 e y1','NumberTitle','off');
 plot(d1); 
@@ -263,3 +205,16 @@ ylabel('Ampiezza [dB]');
 legend('JR Cancellazione xtalk', 'JR Finestra rettangolare')
 %}
 %}
+audioin = audioplayer([x1,x2],Fsample);
+play(audioin)
+pause(length([x1,x2])/Fsample + 1);
+
+z1 = filter(c11, 1, x1) + filter(c12, 1, x2);
+z2 = filter(c22, 1, x2) + filter(c21, 1, x1);
+audioz = audioplayer([z1,z2],Fsample);
+play(audioz);
+pause(length([z1,z2])/Fsample + 1);
+
+audioout = audioplayer([y1,y2],Fsample);
+play(audioout)
+pause(length([y1,y2])/Fsample + 1);
