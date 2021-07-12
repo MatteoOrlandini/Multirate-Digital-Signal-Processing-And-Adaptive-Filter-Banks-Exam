@@ -13,9 +13,9 @@ fs = L + M - 1; % frame size
 
 %x1 = 0.1*randn(10*L,1);  % input 1 (left)
 %x2 = 0.1*randn(10*L,1);  % input 2 (right)
-[x, Fsample] = audioread('Queen-Bohemian Rhapsody.mp3');
-x1 = x(200000:500000,1);
-x2 = x(200000:500000,2);
+[x, Fsample] = audioread('Daft Punk - Get Lucky_cut.wav');
+x1 = x(:,1);
+x2 = x(:,2);
 nPoints = length(x1);
 
 % https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.39.9751&rep=rep1&type=pdf
@@ -185,15 +185,15 @@ ylabel('Ampiezza [dB]');
 legend('JR Cancellazione xtalk', 'JR Finestra rettangolare')
 %}
 audioin = audioplayer([x1,x2],Fsample);
-play(audioin)
-pause(length([x1,x2])/Fsample + 1);
+%play(audioin)
+%pause(length([x1,x2])/Fsample + 1);
 
 z1 = filter(c11, 1, x1) + filter(c12, 1, x2);
 z2 = filter(c22, 1, x2) + filter(c21, 1, x1);
 audioz = audioplayer([z1,z2],Fsample);
-play(audioz);
-pause(length([z1,z2])/Fsample + 1);
+%play(audioz);
+%pause(length([z1,z2])/Fsample + 1);
 
 audioout = audioplayer([y1,y2],Fsample);
-play(audioout)
-pause(length([y1,y2])/Fsample + 1);
+%play(audioout)
+%pause(length([y1,y2])/Fsample + 1);

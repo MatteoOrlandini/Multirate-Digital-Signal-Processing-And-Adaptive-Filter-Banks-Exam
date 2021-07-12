@@ -8,9 +8,9 @@ M = 512;      % lunghezza dei filtri c11, c12, c21, c22
 
 %x1 = 0.1*randn(L,1);  % random input 1 (left)
 %x2 = 0.1*randn(L,1);  % random input 2 (right)
-[x, Fsample] = audioread('Queen-Bohemian Rhapsody.mp3');
-x1 = x(200000:500000,1);
-x2 = x(200000:500000,2);
+[x, Fsample] = audioread('Daft Punk - Get Lucky_cut.wav');
+x1 = x(:,1);
+x2 = x(:,2);
 L = length(x1);
 
 % il segnale desiderato è x ritardato di tau campioni
@@ -206,15 +206,15 @@ legend('JR Cancellazione xtalk', 'JR Finestra rettangolare')
 %}
 %}
 audioin = audioplayer([x1,x2],Fsample);
-play(audioin)
-pause(length([x1,x2])/Fsample + 1);
+%play(audioin)
+%pause(length([x1,x2])/Fsample + 1);
 
 z1 = filter(c11, 1, x1) + filter(c12, 1, x2);
 z2 = filter(c22, 1, x2) + filter(c21, 1, x1);
 audioz = audioplayer([z1,z2],Fsample);
-play(audioz);
-pause(length([z1,z2])/Fsample + 1);
+%play(audioz);
+%pause(length([z1,z2])/Fsample + 1);
 
 audioout = audioplayer([y1,y2],Fsample);
-play(audioout)
-pause(length([y1,y2])/Fsample + 1);
+%play(audioout)
+%pause(length([y1,y2])/Fsample + 1);
