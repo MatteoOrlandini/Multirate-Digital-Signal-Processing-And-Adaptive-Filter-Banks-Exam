@@ -184,6 +184,9 @@ xlabel('Frequenza [Hz]');
 ylabel('Ampiezza [dB]');
 legend('JR Cancellazione xtalk', 'JR Finestra rettangolare')
 %}
+
+save("fast_deconvolution_filters.mat", "H11", "H12", "H21", "H22")
+
 audioin = audioplayer([x1,x2],Fsample);
 %play(audioin)
 %pause(length([x1,x2])/Fsample + 1);

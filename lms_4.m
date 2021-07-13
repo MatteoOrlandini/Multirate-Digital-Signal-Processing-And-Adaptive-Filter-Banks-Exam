@@ -55,8 +55,8 @@ r221 = zeros(L,1);    % uscita di x2 filtrato da c21 per output y2
 r122 = zeros(L,1);    % uscita di x1 filtrato da c22 per output y2
 r121 = zeros(L,1);    % uscita di x1 filtrato da c21 per output y2
 
-mu1 = 1e-2; 
-mu2 = 1e-2;
+mu1 = 1e-4; 
+mu2 = 1e-4;
 
 x1buff = zeros(M, 1);
 x2buff = zeros(M, 1);
@@ -205,6 +205,9 @@ ylabel('Ampiezza [dB]');
 legend('JR Cancellazione xtalk', 'JR Finestra rettangolare')
 %}
 %}
+
+save("lms_filters.mat", "H11", "H12", "H21", "H22")
+
 audioin = audioplayer([x1,x2],Fsample);
 %play(audioin)
 %pause(length([x1,x2])/Fsample + 1);
