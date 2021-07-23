@@ -1,6 +1,7 @@
 #pragma once
 #include "LEEffect.h"
 #include "ipp.h"
+#include "myLib.h"
 
 #define PLAYBUFFER_TXT "PlayBuffer"
 #define	SCALAR_TXT "Scalar"

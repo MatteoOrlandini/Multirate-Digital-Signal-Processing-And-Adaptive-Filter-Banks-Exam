@@ -24,6 +24,9 @@
     <ClCompile Include="Template.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="myLib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Template.def">
@@ -39,6 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="myLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

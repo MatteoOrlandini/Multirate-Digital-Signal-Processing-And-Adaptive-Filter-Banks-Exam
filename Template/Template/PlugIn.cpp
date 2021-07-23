@@ -21,6 +21,11 @@ PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffe
 	d1 = 0;
 	d2 = 0;
 
+	c11 = 0;
+	c12 = 0;
+	c21 = 0;
+	c22 = 0;
+
 	h11 = 0;
 	h12 = 0;
 	h21 = 0;
@@ -144,81 +149,126 @@ void __stdcall PlugIn::LEPlugin_Init()
 		y1 = ippsMalloc_64f(FrameSize);
 		ippsZero_64f(y1, FrameSize);
 	}
+
 	if (y2 == 0)
 	{
 		y2 = ippsMalloc_64f(FrameSize);
 		ippsZero_64f(y2, FrameSize);
 	}
+
 	if (ytmp == 0)
 	{
 		ytmp = ippsMalloc_64f(FrameSize);
 		ippsZero_64f(ytmp, FrameSize);
 	}
+	
 	if (d1 == 0)
 	{
 		d1 = ippsMalloc_64f(FrameSize);
 		ippsZero_64f(d1, FrameSize);
 	}
+	
 	if (d2 == 0)
 	{
 		d2 = ippsMalloc_64f(FrameSize);
 		ippsZero_64f(d2, FrameSize);
 	}
+	
+	if (c11 == 0)
+	{
+		c11 = ippsMalloc_64f(M);
+		ippsZero_64f(c11, M);
+	}
+
+	if (c12 == 0)
+	{
+		c12 = ippsMalloc_64f(M);
+		ippsZero_64f(c12, M);
+	}
+	
+	if (c21 == 0)
+	{
+		c21 = ippsMalloc_64f(M);
+		ippsZero_64f(c21, M);
+	}
+
+	if (c22 == 0)
+	{
+		c22 = ippsMalloc_64f(M);
+		ippsZero_64f(c22, M);
+	}
+	// load filter taps
+	read_dat("../c11.dat", c11, M);
+	read_dat("../c12.dat", c12, M);
+	read_dat("../c21.dat", c21, M);
+	read_dat("../c22.dat", c22, M);
+
 	if (h11 == 0)
 	{
 		h11 = ippsMalloc_64f(M);
 		ippsZero_64f(h11, M);
 	}
+	
 	if (h12 == 0)
 	{
 		h12 = ippsMalloc_64f(M);
 		ippsZero_64f(h12, M);
 	}
+	
 	if (h21 == 0)
 	{
 		h21 = ippsMalloc_64f(M);
 		ippsZero_64f(h21, M);
 	}
+	
 	if (h22 == 0)
 	{
 		h22 = ippsMalloc_64f(M);
 		ippsZero_64f(h22, M);
 	}
+	
 	if (r111 == 0)
 	{
 		r111 = ippsMalloc_64f(FrameSize);
 		ippsZero_64f(r111, FrameSize);
 	}
+	
 	if (r112 == 0)
 	{
 		r112 = ippsMalloc_64f(FrameSize);
 		ippsZero_64f(r112, FrameSize);
 	}
+	
 	if (r211 == 0)
 	{
 		r211 = ippsMalloc_64f(FrameSize);
 		ippsZero_64f(r211, FrameSize);
 	}
+	
 	if (r212 == 0)
 	{
 		r212 = ippsMalloc_64f(FrameSize);
 		ippsZero_64f(r212, FrameSize);
 	}
+	
 	if (r222 == 0)
 	{
 		r222 = ippsMalloc_64f(FrameSize);
 		ippsZero_64f(r222, FrameSize);
 	}
+	
 	if (r221 == 0)
 	{
 		r221 = ippsMalloc_64f(FrameSize);
 		ippsZero_64f(r221, FrameSize);
 	}
+	
 	if (r122 == 0)
 	{
 		r122 = ippsMalloc_64f(FrameSize);
 		ippsZero_64f(r122, FrameSize);
 	}
+	
 	if (r121 == 0)
 	{
 		r121 = ippsMalloc_64f(FrameSize);
