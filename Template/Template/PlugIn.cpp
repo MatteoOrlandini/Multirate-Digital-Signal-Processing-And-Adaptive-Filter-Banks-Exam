@@ -385,7 +385,7 @@ void __stdcall PlugIn::LEPlugin_Delete()
 		ippsFree(h22);
 		h22 = 0;
 	}
-	/*
+
 	if (c11 != 0)
 	{
 		ippsFree(c11);
@@ -409,7 +409,7 @@ void __stdcall PlugIn::LEPlugin_Delete()
 		ippsFree(c22);
 		c22 = 0;
 	}
-	*/
+
 	if (r111 != 0)
 	{
 		ippsFree(r111);
