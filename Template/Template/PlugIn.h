@@ -17,7 +17,7 @@
 
 #define WIDTHDEF 75
 
-#define NUTS_NAME	"Template"
+#define NUTS_NAME	"LMS Filter"
 
 
 class PlugIn :	public LEEffect

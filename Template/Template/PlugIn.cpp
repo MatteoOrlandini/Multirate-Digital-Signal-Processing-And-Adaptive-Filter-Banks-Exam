@@ -6,7 +6,11 @@ PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffe
 {
 	FrameSize = CBFunction(this,NUTS_GET_FS_SR,0,(LPVOID)AUDIOPROC);
 	SampleRate = CBFunction(this,NUTS_GET_FS_SR,1,(LPVOID)AUDIOPROC);
-	M = 512;
+
+	LESetNumInput(2);
+	LESetNumOutput(2);
+	
+	M = 512;	// filter length
 	tau = M;
 	mu = 1e-4;
 
@@ -39,47 +43,95 @@ int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID E
 	double* InputData2 = ((double*)Input[1]->DataBuffer);
 	double* OutputData2 = ((double*)Output[1]->DataBuffer);
 
-	//d1[0:tau] = x1[end - tau:end];
+	// d1[0:tau] = x1[end - tau:end];
 	ippsCopy_64f(x1 + FrameSize - tau - 1, d1, tau);
+	// copy InputData1 to x1
 	ippsCopy_64f(InputData1, x1, FrameSize);
+	//d1[tau + 1:end] = x1[0:FrameSize - tau];	
 	ippsCopy_64f(x1, d1 + tau, FrameSize - tau);
-	//d1[tau + 1:end] = x1[0:FrameSize - tau];
+	// d2[0:tau] = x2[end - tau:end];
 	ippsCopy_64f(x2 + FrameSize - tau - 1, d2, tau);
+	// copy InputData2 to x2
 	ippsCopy_64f(InputData2, x2, FrameSize);
+	//d2[tau + 1:end] = x2[0:FrameSize - tau];	
 	ippsCopy_64f(x2, d2 + tau, FrameSize - tau);
+
+	// initialize y1 and y2 with zeros
 	ippsZero_64f(y1, FrameSize);
 	ippsZero_64f(y2, FrameSize);
 
+	// filter x1 with c11 and store the result in r111
 	ippsFIRSR_64f(x1, r111, FrameSize, pSpecc11, dlyc11, dlyc11, bufc11);
+	// filter x1 with c12 and store the result in r112
 	ippsFIRSR_64f(x1, r112, FrameSize, pSpecc12, dlyc12, dlyc12, bufc12);
+	// filter x2 with c11 and store the result in r211
 	ippsFIRSR_64f(x2, r211, FrameSize, pSpecc11, dlyc11, dlyc11, bufc11);
+	// filter x2 with c12 and store the result in r212
 	ippsFIRSR_64f(x2, r212, FrameSize, pSpecc12, dlyc12, dlyc12, bufc12);
 
+	// filter x2 with c22 and store the result in r222
 	ippsFIRSR_64f(x2, r222, FrameSize, pSpecc22, dlyc22, dlyc22, bufc22);
+	// filter x2 with c21 and store the result in r221
 	ippsFIRSR_64f(x2, r221, FrameSize, pSpecc21, dlyc21, dlyc21, bufc21);
+	// filter x1 with c22 and store the result in r122
 	ippsFIRSR_64f(x1, r122, FrameSize, pSpecc22, dlyc22, dlyc22, bufc22);
+	// filter x1 with c21 and store the result in r121
 	ippsFIRSR_64f(x1, r121, FrameSize, pSpecc21, dlyc21, dlyc21, bufc21);
 
+	// filter r111 with h11 and store the result in ytmp
 	ippsFIRSR_64f(r111, ytmp, FrameSize, pSpech11, dlyh11, dlyh11, bufh11);
+	// y1 = y1 + ytmp
 	ippsAdd_64f_I(ytmp, y1, FrameSize);
+	// filter r112 with h21 and store the result in ytmp
 	ippsFIRSR_64f(r112, ytmp, FrameSize, pSpech21, dlyh21, dlyh21, bufh21);
+	// y1 = y1 + ytmp
 	ippsAdd_64f_I(ytmp, y1, FrameSize);
+	// filter r211 with h12 and store the result in ytmp
 	ippsFIRSR_64f(r211, ytmp, FrameSize, pSpech12, dlyh12, dlyh12, bufh12);
+	// y1 = y1 + ytmp
 	ippsAdd_64f_I(ytmp, y1, FrameSize);
+	// filter r212 with h22 and store the result in ytmp
 	ippsFIRSR_64f(r212, ytmp, FrameSize, pSpech22, dlyh22, dlyh22, bufh22);
+	// y1 = y1 + ytmp
 	ippsAdd_64f_I(ytmp, y1, FrameSize);
 
+	// filter r222 with h22 and store the result in ytmp
 	ippsFIRSR_64f(r222, ytmp, FrameSize, pSpech22, dlyh22, dlyh22, bufh22);
+	// y1 = y1 + ytmp
 	ippsAdd_64f_I(ytmp, y2, FrameSize);
+	// filter r221 with h12 and store the result in ytmp
 	ippsFIRSR_64f(r221, ytmp, FrameSize, pSpech12, dlyh12, dlyh12, bufh12);
+	// y1 = y1 + ytmp
 	ippsAdd_64f_I(ytmp, y2, FrameSize);
+	// filter r122 with h21 and store the result in ytmp
 	ippsFIRSR_64f(r122, ytmp, FrameSize, pSpech21, dlyh21, dlyh21, bufh21);
+	// y1 = y1 + ytmp
 	ippsAdd_64f_I(ytmp, y2, FrameSize);
+	// filter r121 with h11 and store the result in ytmp
 	ippsFIRSR_64f(r121, ytmp, FrameSize, pSpech11, dlyh11, dlyh11, bufh11);
+	// y1 = y1 + ytmp
 	ippsAdd_64f_I(ytmp, y2, FrameSize);
 
+	// e1 = d1 - y1
 	ippsSub_64f(y1, d1, e1, FrameSize);
+	// e2 = d2 - y2
 	ippsSub_64f(y2, d2, e2, FrameSize);
+
+	// update h11, h12, h21, h22 filters
+	for (int i = 0; i < FrameSize; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			h11[j] = h11[j] + mu * (e1[i] * r111[j] + e2[i] * r121[j]);
+			h12[j] = h12[j] + mu * (e1[i] * r211[j] + e2[i] * r221[j]);
+			h21[j] = h21[j] + mu * (e1[i] * r112[j] + e2[i] * r122[j]);
+			h22[j] = h22[j] + mu * (e1[i] * r212[j] + e2[i] * r222[j]);
+		}
+	}
+	// copy y1 to OutputData1
+	ippsCopy_64f(y1, OutputData1, FrameSize);
+	// copy y2 to OutputData2
+	ippsCopy_64f(y2, OutputData2, FrameSize);
 
 
 	return COMPLETED;
@@ -226,17 +278,6 @@ void __stdcall PlugIn::LEPlugin_Init()
 	ippsFIRSRInit_64f(c12, M, ippAlgDirect, pSpecc12);
 	ippsFIRSRInit_64f(c21, M, ippAlgDirect, pSpecc21);
 	ippsFIRSRInit_64f(c22, M, ippAlgDirect, pSpecc22);
-
-	for (int i = 0;i < FrameSize;i++) 
-	{
-		for (int j = 0;j < M;j++) 
-		{
-			h11[j] = h11[j] + mu * (e1[i] * r111[j] + e2[i] * r121[j]);
-			h12[j] = h12[j] + mu * (e1[i] * r211[j] + e2[i] * r221[j]);
-			h21[j] = h21[j] + mu * (e1[i] * r112[j] + e2[i] * r122[j]);
-			h22[j] = h22[j] + mu * (e1[i] * r212[j] + e2[i] * r222[j]);
-		}
-	}
 }
 
 void __stdcall PlugIn::LEPlugin_Delete()
