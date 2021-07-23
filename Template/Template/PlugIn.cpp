@@ -18,20 +18,49 @@ int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID E
 	double* InputData2 = ((double*)Input[1]->DataBuffer);
 	double* OutputData2 = ((double*)Output[1]->DataBuffer);
 
+	//d1[0:tau] = x1[end - tau:end];
+	ippsCopy_64f(x1 + FrameSize - tau - 1, d1, tau);
 	ippsCopy_64f(InputData1, x1, FrameSize);
+	ippsCopy_64f(x1, d1 + tau, FrameSize - tau);
+	//d1[tau + 1:end] = x1[0:FrameSize - tau];
+	ippsCopy_64f(x2 + FrameSize - tau - 1, d2, tau);
 	ippsCopy_64f(InputData2, x2, FrameSize);
+	ippsCopy_64f(x2, d2 + tau, FrameSize - tau);
 	ippsZero_64f(y1, FrameSize);
 	ippsZero_64f(y2, FrameSize);
 
-	ippsFIRSR_64f(x1, r111, FrameSize / M, pSpec3, dly3, dly3, buf3);
-	ippsFIRSR_64f(w00, u00, FrameSize / M, pSpec3, dly3, dly3, buf3);
-	ippsFIRSR_64f(w00, u00, FrameSize / M, pSpec3, dly3, dly3, buf3);
-	ippsFIRSR_64f(w00, u00, FrameSize / M, pSpec3, dly3, dly3, buf3);
+	ippsFIRSR_64f(x1, r111, FrameSize, pSpecc11, dlyc11, dlyc11, bufc11);
+	ippsFIRSR_64f(x1, r112, FrameSize, pSpecc12, dlyc12, dlyc12, bufc12);
+	ippsFIRSR_64f(x2, r211, FrameSize, pSpecc11, dlyc11, dlyc11, bufc11);
+	ippsFIRSR_64f(x2, r212, FrameSize, pSpecc12, dlyc12, dlyc12, bufc12);
 
-	ippsFIRSR_64f(w00, u00, FrameSize / M, pSpec3, dly3, dly3, buf3);
-	ippsFIRSR_64f(w00, u00, FrameSize / M, pSpec3, dly3, dly3, buf3);
-	ippsFIRSR_64f(w00, u00, FrameSize / M, pSpec3, dly3, dly3, buf3);
-	ippsFIRSR_64f(w00, u00, FrameSize / M, pSpec3, dly3, dly3, buf3);
+	ippsFIRSR_64f(x2, r222, FrameSize, pSpecc22, dlyc22, dlyc22, bufc22);
+	ippsFIRSR_64f(x2, r221, FrameSize, pSpecc21, dlyc21, dlyc21, bufc21);
+	ippsFIRSR_64f(x1, r122, FrameSize, pSpecc22, dlyc22, dlyc22, bufc22);
+	ippsFIRSR_64f(x1, r121, FrameSize, pSpecc21, dlyc21, dlyc21, bufc21);
+
+	ippsFIRSR_64f(r111, ytmp, FrameSize, pSpech11, dlyh11, dlyh11, bufh11);
+	ippsAdd_64f_I(ytmp, y1, FrameSize);
+	ippsFIRSR_64f(r112, ytmp, FrameSize, pSpech21, dlyh21, dlyh21, bufh21);
+	ippsAdd_64f_I(ytmp, y1, FrameSize);
+	ippsFIRSR_64f(r211, ytmp, FrameSize, pSpech12, dlyh12, dlyh12, bufh12);
+	ippsAdd_64f_I(ytmp, y1, FrameSize);
+	ippsFIRSR_64f(r212, ytmp, FrameSize, pSpech22, dlyh22, dlyh22, bufh22);
+	ippsAdd_64f_I(ytmp, y1, FrameSize);
+
+	ippsFIRSR_64f(r222, ytmp, FrameSize, pSpech22, dlyh22, dlyh22, bufh22);
+	ippsAdd_64f_I(ytmp, y2, FrameSize);
+	ippsFIRSR_64f(r221, ytmp, FrameSize, pSpech12, dlyh12, dlyh12, bufh12);
+	ippsAdd_64f_I(ytmp, y2, FrameSize);
+	ippsFIRSR_64f(r122, ytmp, FrameSize, pSpech21, dlyh21, dlyh21, bufh21);
+	ippsAdd_64f_I(ytmp, y2, FrameSize);
+	ippsFIRSR_64f(r121, ytmp, FrameSize, pSpech11, dlyh11, dlyh11, bufh11);
+	ippsAdd_64f_I(ytmp, y2, FrameSize);
+
+	ippsSub_64f(y1, d1, e1, FrameSize);
+	ippsSub_64f(y2, d2, e2, FrameSize);
+
+
 	return COMPLETED;
 }
 
@@ -46,6 +75,11 @@ void __stdcall PlugIn::LEPlugin_Init()
 	{
 		y2 = ippsMalloc_64f(FrameSize);
 		ippsZero_64f(y2, FrameSize);
+	}
+	if (ytmp == 0)
+	{
+		ytmp = ippsMalloc_64f(FrameSize);
+		ippsZero_64f(ytmp, FrameSize);
 	}
 	if (d1 == 0)
 	{
@@ -118,9 +152,15 @@ void __stdcall PlugIn::LEPlugin_Init()
 		ippsZero_64f(r121, FrameSize);
 	}
 	// initialization filtering structure
-	ippsFIRSRGetSize(M, ipp64f, &specSize1, &bufSize1);
-	ippsFIRSRGetSize(M, ipp64f, &specSize2, &bufSize2);
-
+	ippsFIRSRGetSize(M, ipp64f, &specSizeh11, &bufSizeh11);
+	ippsFIRSRGetSize(M, ipp64f, &specSizeh12, &bufSizeh12);
+	ippsFIRSRGetSize(M, ipp64f, &specSizeh21, &bufSizeh21);
+	ippsFIRSRGetSize(M, ipp64f, &specSizeh22, &bufSizeh22);
+	ippsFIRSRGetSize(M, ipp64f, &specSizec11, &bufSizec11);
+	ippsFIRSRGetSize(M, ipp64f, &specSizec12, &bufSizec12);
+	ippsFIRSRGetSize(M, ipp64f, &specSizec21, &bufSizec21);
+	ippsFIRSRGetSize(M, ipp64f, &specSizec22, &bufSizec22);
+	
 	dlyh11 = ippsMalloc_64f(M - 1);
 	dlyh12 = ippsMalloc_64f(M - 1);
 	dlyh21 = ippsMalloc_64f(M - 1);
@@ -130,26 +170,52 @@ void __stdcall PlugIn::LEPlugin_Init()
 	dlyc21 = ippsMalloc_64f(M - 1);
 	dlyc22 = ippsMalloc_64f(M - 1);
 
-	ippsZero_64f(dly1, M - 1);
-	ippsZero_64f(dly2, M - 1);
+	ippsZero_64f(dlyh11, M - 1);
+	ippsZero_64f(dlyh12, M - 1);
+	ippsZero_64f(dlyh21, M - 1);
+	ippsZero_64f(dlyh22, M - 1);
+	ippsZero_64f(dlyc11, M - 1);
+	ippsZero_64f(dlyc12, M - 1);
+	ippsZero_64f(dlyc21, M - 1);
+	ippsZero_64f(dlyc22, M - 1);
 
-	pSpec1 = (IppsFIRSpec_64f*)ippsMalloc_8u(specSize1);
-	pSpec2 = (IppsFIRSpec_64f*)ippsMalloc_8u(specSize2);
+	pSpech11 = (IppsFIRSpec_64f*)ippsMalloc_8u(specSizeh11);
+	pSpech12 = (IppsFIRSpec_64f*)ippsMalloc_8u(specSizeh12);
+	pSpech21 = (IppsFIRSpec_64f*)ippsMalloc_8u(specSizeh21);
+	pSpech22 = (IppsFIRSpec_64f*)ippsMalloc_8u(specSizeh22);
+	pSpecc11 = (IppsFIRSpec_64f*)ippsMalloc_8u(specSizec11);
+	pSpecc12 = (IppsFIRSpec_64f*)ippsMalloc_8u(specSizec12);
+	pSpecc21 = (IppsFIRSpec_64f*)ippsMalloc_8u(specSizec21);
+	pSpecc22 = (IppsFIRSpec_64f*)ippsMalloc_8u(specSizec22);
 
-	buf1 = ippsMalloc_8u(bufSize1);
-	buf2 = ippsMalloc_8u(bufSize2);
+	bufh11 = ippsMalloc_8u(bufSizeh11);
+	bufh12 = ippsMalloc_8u(bufSizeh12);
+	bufh21 = ippsMalloc_8u(bufSizeh21);
+	bufh22 = ippsMalloc_8u(bufSizeh22);
+	bufc11 = ippsMalloc_8u(bufSizec11);
+	bufc12 = ippsMalloc_8u(bufSizec12);
+	bufc21 = ippsMalloc_8u(bufSizec21);
+	bufc22 = ippsMalloc_8u(bufSizec22);
 
-	ippsFIRSRInit_64f(h11, M, ippAlgDirect, pSpec1);
-	ippsFIRSRInit_64f(h12, M, ippAlgDirect, pSpec1);
-	ippsFIRSRInit_64f(h21, M, ippAlgDirect, pSpec1);
-	ippsFIRSRInit_64f(h22, M, ippAlgDirect, pSpec1);
+	ippsFIRSRInit_64f(h11, M, ippAlgDirect, pSpech11);
+	ippsFIRSRInit_64f(h12, M, ippAlgDirect, pSpech12);
+	ippsFIRSRInit_64f(h21, M, ippAlgDirect, pSpech21);
+	ippsFIRSRInit_64f(h22, M, ippAlgDirect, pSpech22);
+	ippsFIRSRInit_64f(c11, M, ippAlgDirect, pSpecc11);
+	ippsFIRSRInit_64f(c12, M, ippAlgDirect, pSpecc12);
+	ippsFIRSRInit_64f(c21, M, ippAlgDirect, pSpecc21);
+	ippsFIRSRInit_64f(c22, M, ippAlgDirect, pSpecc22);
 
-	ippsFIRSRInit_64f(c11, M, ippAlgDirect, pSpec2);
-	ippsFIRSRInit_64f(c12, M, ippAlgDirect, pSpec2);
-	ippsFIRSRInit_64f(c21, M, ippAlgDirect, pSpec2);
-	ippsFIRSRInit_64f(c22, M, ippAlgDirect, pSpec2);
-
-
+	for (int i = 0;i < FrameSize;i++) 
+	{
+		for (int j = 0;j < M;j++) 
+		{
+			h11[j] = h11[j] + mu * (e1[i] * r111[j] + e2[i] * r121[j]);
+			h12[j] = h12[j] + mu * (e1[i] * r211[j] + e2[i] * r221[j]);
+			h21[j] = h21[j] + mu * (e1[i] * r112[j] + e2[i] * r122[j]);
+			h22[j] = h22[j] + mu * (e1[i] * r212[j] + e2[i] * r222[j]);
+		}
+	}
 }
 
 void __stdcall PlugIn::LEPlugin_Delete()

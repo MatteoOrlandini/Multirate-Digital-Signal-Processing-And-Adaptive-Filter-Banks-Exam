@@ -67,7 +67,7 @@ private:
 	int FrameSize,SampleRate;
 	int M, L, tau;
 	double mu;
-	double* x1, * x2, * d1, * d2, * y1, * y2, * e1, * e2;
+	double* x1, * x2, * d1, * d2, * y1, * y2, * e1, * e2, * ytmp;
 	double* c11, * c12, * c21, * c22;
 	double* h11, * h12, * h21, * h22;
 	double* r111, * r112, * r211, * r212, * r222, * r221, * r122, * r121;
