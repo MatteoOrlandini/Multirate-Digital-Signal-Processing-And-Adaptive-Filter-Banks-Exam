@@ -9,6 +9,27 @@ PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffe
 	M = 512;
 	tau = M;
 	mu = 1e-4;
+
+	y1 = 0;
+	y2 = 0;
+	ytmp = 0;
+
+	d1 = 0;
+	d2 = 0;
+
+	h11 = 0;
+	h12 = 0;
+	h21 = 0;
+	h22 = 0;
+	
+	r111 = 0;
+	r112 = 0;
+	r211 = 0;
+	r212 = 0;
+	r222 = 0;
+	r221 = 0;
+	r122 = 0;
+	r121 = 0;
 }
 
 int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID ExtraInfo)
@@ -220,7 +241,149 @@ void __stdcall PlugIn::LEPlugin_Init()
 
 void __stdcall PlugIn::LEPlugin_Delete()
 {
-	
+	if (y1 != 0)
+	{
+		ippsFree(y1);
+		y1 = 0;
+	}
+
+	if (y2 != 0)
+	{
+		ippsFree(y2);
+		y2 = 0;
+	}
+
+	if (ytmp != 0)
+	{
+		ippsFree(ytmp);
+		ytmp = 0;
+	}
+
+	if (d1 != 0)
+	{
+		ippsFree(d1);
+		d1 = 0;
+	}
+
+	if (d2 != 0)
+	{
+		ippsFree(d2);
+		d2 = 0;
+	}
+
+	if (h11 != 0)
+	{
+		ippsFree(h11);
+		h11 = 0;
+	}
+
+	if (h12 != 0)
+	{
+		ippsFree(h12);
+		h12 = 0;
+	}
+
+	if (h21 != 0)
+	{
+		ippsFree(h21);
+		h21 = 0;
+	}
+
+	if (h22 != 0)
+	{
+		ippsFree(h22);
+		h22 = 0;
+	}
+	/*
+	if (c11 != 0)
+	{
+		ippsFree(c11);
+		c11 = 0;
+	}
+
+	if (c12 != 0)
+	{
+		ippsFree(c12);
+		c12 = 0;
+	}
+
+	if (c21 != 0)
+	{
+		ippsFree(c21);
+		c21 = 0;
+	}
+
+	if (c22 != 0)
+	{
+		ippsFree(c22);
+		c22 = 0;
+	}
+	*/
+	if (r111 != 0)
+	{
+		ippsFree(r111);
+		r111 = 0;
+	}
+
+	if (r112 != 0)
+	{
+		ippsFree(r112);
+		r112 = 0;
+	}
+
+	if (r121 != 0)
+	{
+		ippsFree(r121);
+		r121 = 0;
+	}
+
+	if (r122 != 0)
+	{
+		ippsFree(r122);
+		r122 = 0;
+	}
+
+	if (r211 != 0)
+	{
+		ippsFree(r211);
+		r211 = 0;
+	}
+
+	if (r212 != 0)
+	{
+		ippsFree(r212);
+		r212 = 0;
+	}
+
+	if (r221 != 0)
+	{
+		ippsFree(r221);
+		r221 = 0;
+	}
+
+	if (r222 != 0)
+	{
+		ippsFree(r222);
+		r222 = 0;
+	}
+
+	ippsFree(dlyh11);
+	ippsFree(dlyh12);
+	ippsFree(dlyh21);
+	ippsFree(dlyh22);
+	ippsFree(dlyc11);
+	ippsFree(dlyc12);
+	ippsFree(dlyc21);
+	ippsFree(dlyc22);
+
+	ippsFree(bufh11);
+	ippsFree(bufh12);
+	ippsFree(bufh21);
+	ippsFree(bufh22);
+	ippsFree(bufc11);
+	ippsFree(bufc12);
+	ippsFree(bufc21);
+	ippsFree(bufc22);
 }
 
 PlugIn::~PlugIn(void)

@@ -97,12 +97,19 @@ for n = 1:L
     e1(n) = d1(n)-y1(n);
     e2(n) = d2(n)-y2(n);
     
+    h11 = h11 + mu*(e1(n)*r111buff + e2(n)*r121buff);
+    h12 = h12 + mu*(e1(n)*r211buff + e2(n)*r221buff);
+    h21 = h21 + mu*(e1(n)*r112buff + e2(n)*r122buff);
+    h22 = h22 + mu*(e1(n)*r212buff + e2(n)*r222buff);
+        
+    %{
     for k = 1:M
         h11(k) = h11(k)+mu*(e1(n)*r111buff(k)+e2(n)*r121buff(k));
         h12(k) = h12(k)+mu*(e1(n)*r211buff(k)+e2(n)*r221buff(k));
         h21(k) = h21(k)+mu*(e1(n)*r112buff(k)+e2(n)*r122buff(k));
         h22(k) = h22(k)+mu*(e1(n)*r212buff(k)+e2(n)*r222buff(k));
     end
+    %}
 end
 
 figure('Name','Confronto tra d1 e y1','NumberTitle','off');
@@ -208,15 +215,18 @@ legend('JR Cancellazione xtalk', 'JR Finestra rettangolare')
 save("lms_filters.mat", "H11", "H12", "H21", "H22")
 
 audioin = audioplayer([x1,x2],Fsample);
-%play(audioin)
-%pause(length([x1,x2])/Fsample + 1);
+%play(audioin);
+%pause(10);
+%stop(audioin);
 
 z1 = filter(c11, 1, x1) + filter(c12, 1, x2);
 z2 = filter(c22, 1, x2) + filter(c21, 1, x1);
 audioz = audioplayer([z1,z2],Fsample);
 %play(audioz);
-%pause(length([z1,z2])/Fsample + 1);
+%pause(10);
+%stop(audioz);
 
 audioout = audioplayer([y1,y2],Fsample);
-%play(audioout)
-%pause(length([y1,y2])/Fsample + 1);
+%play(audioout);
+%pause(10);
+%stop(audioout);
