@@ -48,7 +48,7 @@ C21 = fft(c21, fftLen);     % HRTF left loudspeaker - right ear
 C22 = fft(c22, fftLen);     % HRTF right loudspeaker - right ear
 
 C_prev = [C11(1) C12(1); C21(1) C22(1)];
-beta = 1;
+beta = 0.1;
 B = [1 0; 0 1];
 
 for n = 2:length(H11)

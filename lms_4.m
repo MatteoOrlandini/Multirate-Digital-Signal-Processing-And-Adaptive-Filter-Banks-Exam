@@ -55,8 +55,7 @@ r221 = zeros(L,1);    % uscita di x2 filtrato da c21 per output y2
 r122 = zeros(L,1);    % uscita di x1 filtrato da c22 per output y2
 r121 = zeros(L,1);    % uscita di x1 filtrato da c21 per output y2
 
-mu1 = 1e-4; 
-mu2 = 1e-4;
+mu = 1e-4; 
 
 x1buff = zeros(M, 1);
 x2buff = zeros(M, 1);
@@ -99,10 +98,10 @@ for n = 1:L
     e2(n) = d2(n)-y2(n);
     
     for k = 1:M
-        h11(k) = h11(k)+mu1*e1(n)*r111buff(k)+mu2*e2(n)*r121buff(k);
-        h12(k) = h12(k)+mu1*e1(n)*r211buff(k)+mu2*e2(n)*r221buff(k);
-        h21(k) = h21(k)+mu1*e1(n)*r112buff(k)+mu2*e2(n)*r122buff(k);
-        h22(k) = h22(k)+mu1*e1(n)*r212buff(k)+mu2*e2(n)*r222buff(k);
+        h11(k) = h11(k)+mu*(e1(n)*r111buff(k)+e2(n)*r121buff(k));
+        h12(k) = h12(k)+mu*(e1(n)*r211buff(k)+e2(n)*r221buff(k));
+        h21(k) = h21(k)+mu*(e1(n)*r112buff(k)+e2(n)*r122buff(k));
+        h22(k) = h22(k)+mu*(e1(n)*r212buff(k)+e2(n)*r222buff(k));
     end
 end
 
