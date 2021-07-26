@@ -18,6 +18,9 @@ PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffe
 	y2 = 0;
 	ytmp = 0;
 
+	x1 = 0;
+	x2 = 0;
+
 	d1 = 0;
 	d2 = 0;
 
@@ -42,12 +45,12 @@ PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffe
 }
 
 int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID ExtraInfo)
-{ 
+{ /*
 	double* InputData1 = ((double*)Input[0]->DataBuffer);
 	double* OutputData1 = ((double*)Output[0]->DataBuffer);
 	double* InputData2 = ((double*)Input[1]->DataBuffer);
 	double* OutputData2 = ((double*)Output[1]->DataBuffer);
-
+	
 	// d1[0:tau] = x1[end - tau:end];
 	ippsCopy_64f(x1 + FrameSize - tau - 1, d1, tau);
 	// copy InputData1 to x1
@@ -60,7 +63,7 @@ int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID E
 	ippsCopy_64f(InputData2, x2, FrameSize);
 	//d2[tau + 1:end] = x2[0:FrameSize - tau];	
 	ippsCopy_64f(x2, d2 + tau, FrameSize - tau);
-
+	
 	// initialize y1 and y2 with zeros
 	ippsZero_64f(y1, FrameSize);
 	ippsZero_64f(y2, FrameSize);
@@ -137,8 +140,11 @@ int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID E
 	ippsCopy_64f(y1, OutputData1, FrameSize);
 	// copy y2 to OutputData2
 	ippsCopy_64f(y2, OutputData2, FrameSize);
-
-
+	*/
+	// copy y1 to OutputData1
+	ippsCopy_64f((double*)Input[0]->DataBuffer, (double*)Output[0]->DataBuffer, FrameSize);
+	// copy y2 to OutputData2
+	ippsCopy_64f((double*)Input[0]->DataBuffer, (double*)Output[0]->DataBuffer, FrameSize);
 	return COMPLETED;
 }
 
@@ -161,13 +167,25 @@ void __stdcall PlugIn::LEPlugin_Init()
 		ytmp = ippsMalloc_64f(FrameSize);
 		ippsZero_64f(ytmp, FrameSize);
 	}
-	
+
+	if (x1 == 0)
+	{
+		x1 = ippsMalloc_64f(FrameSize);
+		ippsZero_64f(x1, FrameSize);
+	}
+
+	if (x2 == 0)
+	{
+		x2 = ippsMalloc_64f(FrameSize);
+		ippsZero_64f(x2, FrameSize);
+	}
+
 	if (d1 == 0)
 	{
 		d1 = ippsMalloc_64f(FrameSize);
 		ippsZero_64f(d1, FrameSize);
 	}
-	
+
 	if (d2 == 0)
 	{
 		d2 = ippsMalloc_64f(FrameSize);
@@ -198,10 +216,18 @@ void __stdcall PlugIn::LEPlugin_Init()
 		ippsZero_64f(c22, M);
 	}
 	// load filter taps
-	read_dat("../c11.dat", c11, M);
-	read_dat("../c12.dat", c12, M);
-	read_dat("../c21.dat", c21, M);
-	read_dat("../c22.dat", c22, M);
+	memset(fileName, 0, MAX_FILE_NAME_LENGTH * sizeof(char));
+	strcpy(fileName, "../c11.dat");
+	read_dat(fileName, c11, M);
+	memset(fileName, 0, MAX_FILE_NAME_LENGTH * sizeof(char));
+	strcpy(fileName, "../c12.dat");
+	read_dat(fileName, c12, M); 
+	memset(fileName, 0, MAX_FILE_NAME_LENGTH * sizeof(char));
+	strcpy(fileName, "../c21.dat");
+	read_dat(fileName, c21, M);
+	memset(fileName, 0, MAX_FILE_NAME_LENGTH * sizeof(char));
+	strcpy(fileName, "../c22.dat");
+	read_dat(fileName, c22, M);
 
 	if (h11 == 0)
 	{
@@ -350,6 +376,18 @@ void __stdcall PlugIn::LEPlugin_Delete()
 		ytmp = 0;
 	}
 
+	if (x1 != 0)
+	{
+		ippsFree(x1);
+		x1 = 0;
+	}
+
+	if (x2 != 0)
+	{
+		ippsFree(x2);
+		x2 = 0;
+	}
+
 	if (d1 != 0)
 	{
 		ippsFree(d1);
@@ -485,8 +523,8 @@ PlugIn::~PlugIn(void)
 
 bool __stdcall PlugIn::LEInfoIO(int index,int type, char *StrInfo)
 {
-	if(type==INPUT) sprintf(StrInfo,"In[%d]",index);
-	if(type==OUTPUT) sprintf(StrInfo,"Out[%d]",index);
+	if ((type == INPUT)) sprintf(StrInfo, "FilterIn[%d]", index);
+	if ((type == OUTPUT)) sprintf(StrInfo, "FilterOut[%d]", index);
 	return true;
 }
 
@@ -605,8 +643,8 @@ void __stdcall LENUTSDefProps(char *NameEffect,int *Width, void *data)
 	if (data!=0)
 	{
 		StartUpNUTSProps *Info=(StartUpNUTSProps *)data;
-		Info->NumInStartUp=1;
-		Info->NumOutStartUp=1;
+		Info->NumInStartUp=2;
+		Info->NumOutStartUp=2;
 		Info->BitMaskProc = AUDIOPROC;
 		Info->BitMaskDriver = OFFLINEDRIVER | DIRECTDRIVER | ASIODRIVER;
 	}

@@ -73,6 +73,8 @@ private:
 	double* h11, * h12, * h21, * h22;
 	double* r111, * r112, * r211, * r212, * r222, * r221, * r122, * r121;
 	
+	char fileName[MAX_FILE_NAME_LENGTH];
+
 	int specSizeh11;
 	int specSizeh12;
 	int specSizeh21;
