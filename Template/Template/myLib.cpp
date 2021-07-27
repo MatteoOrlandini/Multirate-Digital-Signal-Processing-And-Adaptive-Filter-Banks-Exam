@@ -21,10 +21,9 @@ void read_dat(char *name, double *data, int dim) {
 	char *c;
 	c=(char *)(void *)data;
 
-	fstream File;
-	File.open(name,ios::in | ios::binary);
-	File.read(c,dim*sizeof(double));
+	ifstream File;
+	File.open(name, ios::in | ios::binary);
+	File.read(c, dim * sizeof(double));
 	File.close();
+
 }
-
-

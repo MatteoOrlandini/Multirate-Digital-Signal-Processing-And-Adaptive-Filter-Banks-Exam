@@ -20,6 +20,9 @@ PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffe
 
 	x1 = 0;
 	x2 = 0;
+	
+	e1 = 0;
+	e2 = 0;
 
 	d1 = 0;
 	d2 = 0;
@@ -45,7 +48,7 @@ PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffe
 }
 
 int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID ExtraInfo)
-{ /*
+{ 
 	double* InputData1 = ((double*)Input[0]->DataBuffer);
 	double* OutputData1 = ((double*)Output[0]->DataBuffer);
 	double* InputData2 = ((double*)Input[1]->DataBuffer);
@@ -55,12 +58,16 @@ int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID E
 	ippsCopy_64f(x1 + FrameSize - tau - 1, d1, tau);
 	// copy InputData1 to x1
 	ippsCopy_64f(InputData1, x1, FrameSize);
+	// divide each element of the vector x1 by a 32768 and store the result in x2
+	ippsDivC_64f_I(32768.0, x1, FrameSize);
 	//d1[tau + 1:end] = x1[0:FrameSize - tau];	
 	ippsCopy_64f(x1, d1 + tau, FrameSize - tau);
 	// d2[0:tau] = x2[end - tau:end];
 	ippsCopy_64f(x2 + FrameSize - tau - 1, d2, tau);
 	// copy InputData2 to x2
 	ippsCopy_64f(InputData2, x2, FrameSize);
+	// divide each element of the vector x2 by a 32768 and store the result in x2
+	ippsDivC_64f_I(32768.0, x2, FrameSize);
 	//d2[tau + 1:end] = x2[0:FrameSize - tau];	
 	ippsCopy_64f(x2, d2 + tau, FrameSize - tau);
 	
@@ -136,15 +143,20 @@ int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID E
 			h22[j] = h22[j] + mu * (e1[i] * r212[j] + e2[i] * r222[j]);
 		}
 	}
+	// multiply each element of the vector y1 by a 32768 and store the result in y1
+	ippsMulC_64f_I(32768.0, y1, FrameSize);
 	// copy y1 to OutputData1
 	ippsCopy_64f(y1, OutputData1, FrameSize);
+	// multiply each element of the vector y2 by a 32768 and store the result in y2
+	ippsMulC_64f_I(32768.0, y2, FrameSize);
 	// copy y2 to OutputData2
 	ippsCopy_64f(y2, OutputData2, FrameSize);
-	*/
-	// copy y1 to OutputData1
-	ippsCopy_64f((double*)Input[0]->DataBuffer, (double*)Output[0]->DataBuffer, FrameSize);
-	// copy y2 to OutputData2
-	ippsCopy_64f((double*)Input[0]->DataBuffer, (double*)Output[0]->DataBuffer, FrameSize);
+
+	ippsFIRSRInit_64f(h11, M, ippAlgDirect, pSpech11);
+	ippsFIRSRInit_64f(h12, M, ippAlgDirect, pSpech12);
+	ippsFIRSRInit_64f(h21, M, ippAlgDirect, pSpech21);
+	ippsFIRSRInit_64f(h22, M, ippAlgDirect, pSpech22);
+
 	return COMPLETED;
 }
 
@@ -180,6 +192,17 @@ void __stdcall PlugIn::LEPlugin_Init()
 		ippsZero_64f(x2, FrameSize);
 	}
 
+	if (e1 == 0)
+	{
+		e1 = ippsMalloc_64f(FrameSize);
+		ippsZero_64f(e1, FrameSize);
+	}
+
+	if (e2 == 0)
+	{
+		e2 = ippsMalloc_64f(FrameSize);
+		ippsZero_64f(e2, FrameSize);
+	}
 	if (d1 == 0)
 	{
 		d1 = ippsMalloc_64f(FrameSize);
@@ -217,16 +240,19 @@ void __stdcall PlugIn::LEPlugin_Init()
 	}
 	// load filter taps
 	memset(fileName, 0, MAX_FILE_NAME_LENGTH * sizeof(char));
-	strcpy(fileName, "../c11.dat");
+	strcpy(fileName, "c11.dat");
 	read_dat(fileName, c11, M);
+
 	memset(fileName, 0, MAX_FILE_NAME_LENGTH * sizeof(char));
-	strcpy(fileName, "../c12.dat");
-	read_dat(fileName, c12, M); 
+	strcpy(fileName, "c12.dat");
+	read_dat(fileName, c12, M);
+
 	memset(fileName, 0, MAX_FILE_NAME_LENGTH * sizeof(char));
-	strcpy(fileName, "../c21.dat");
+	strcpy(fileName, "c21.dat");
 	read_dat(fileName, c21, M);
+
 	memset(fileName, 0, MAX_FILE_NAME_LENGTH * sizeof(char));
-	strcpy(fileName, "../c22.dat");
+	strcpy(fileName, "c22.dat");
 	read_dat(fileName, c22, M);
 
 	if (h11 == 0)
@@ -388,6 +414,18 @@ void __stdcall PlugIn::LEPlugin_Delete()
 		x2 = 0;
 	}
 
+	if (e1 != 0)
+	{
+		ippsFree(e1);
+		e1 = 0;
+	}
+
+	if (e2 != 0)
+	{
+		ippsFree(e2);
+		e2 = 0;
+	}
+
 	if (d1 != 0)
 	{
 		ippsFree(d1);
@@ -533,7 +571,7 @@ int __stdcall PlugIn::LESetDefPin(int index,int type, PinType *Info)
 	if (type==OUTPUT) 
 	{
 		Info->DataType=PLAYBUFFER;
-		Info->Exclusive=true; 
+		Info->Exclusive=false; 
 		Info->DataLen=FrameSize;
 		Info->MaxDataLen=FrameSize;
 		return OUTPUT; 

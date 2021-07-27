@@ -1,7 +1,8 @@
 #include <math.h>
-#include "io.h"
-#include <fstream>
+#include <cstdlib>
 #include <iostream>
+#include <fstream>
+#include <iomanip>
 using namespace std;
 
 #define MAX_FILE_NAME_LENGTH 255
