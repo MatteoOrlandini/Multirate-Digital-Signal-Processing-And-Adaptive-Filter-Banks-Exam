@@ -571,7 +571,7 @@ int __stdcall PlugIn::LESetDefPin(int index,int type, PinType *Info)
 	if (type==OUTPUT) 
 	{
 		Info->DataType=PLAYBUFFER;
-		Info->Exclusive=false; 
+		Info->Exclusive=true; 
 		Info->DataLen=FrameSize;
 		Info->MaxDataLen=FrameSize;
 		return OUTPUT; 
