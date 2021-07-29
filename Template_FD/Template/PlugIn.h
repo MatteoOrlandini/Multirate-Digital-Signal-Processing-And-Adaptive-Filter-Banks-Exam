@@ -73,6 +73,7 @@ private:
 	double* H11, * H12, * H21, * H22;
 	double* r111, * r112, * r211, * r212, * r222, * r221, * r122, * r121;
 	double* r111buff, * r112buff, * r211buff, * r212buff, * r222buff, * r221buff, * r122buff, * r121buff;
+	double Cprev[2][2], C[2][2], B[2][2];
 	
 	char fileName[MAX_FILE_NAME_LENGTH];
 

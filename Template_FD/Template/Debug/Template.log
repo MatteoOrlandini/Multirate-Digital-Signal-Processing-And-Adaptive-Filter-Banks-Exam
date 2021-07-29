@@ -1,5 +1,13 @@
 ﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  stdafx.cpp
+cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  Template.cpp
   PlugIn.cpp
-D:\OneDrive - Università Politecnica delle Marche\Università\Magistrale\Secondo anno\Multirate Digital Signal Processing And Adaptive Filter Banks\Progetto\Template_FD\Template\LEEffect.h(249,2): warning C4091: 'typedef ': ignored on left of 'WatchDataType' when no variable is declared
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(1363,5): warning MSB8012: TargetPath(D:\OneDrive - Università Politecnica delle Marche\Università\Magistrale\Secondo anno\Multirate Digital Signal Processing And Adaptive Filter Banks\Progetto\Template_FD\Debug\Template.dll) does not match the Linker's OutputFile property value (C:\Program Files (x86)\Leaff\NU-Tech\PlugIn\debug\Template.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
-  Template.vcxproj -> D:\OneDrive - Università Politecnica delle Marche\Università\Magistrale\Secondo anno\Multirate Digital Signal Processing And Adaptive Filter Banks\Progetto\Template_FD\Debug\Template.dll
+C:\Users\pagli\Desktop\Progetti Github\Multirate-Digital-Signal-Processing-And-Adaptive-Filter-Banks-Exam\Template_FD\Template\LEEffect.h(249,2): warning C4091: 'typedef ': ignored on left of 'WatchDataType' when no variable is declared
+  myLib.cpp
+  Generating Code...
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(1274,5): warning MSB8012: TargetPath(C:\Users\pagli\Desktop\Progetti Github\Multirate-Digital-Signal-Processing-And-Adaptive-Filter-Banks-Exam\Template_FD\Debug\Template.dll) does not match the Linker's OutputFile property value (C:\Program Files (x86)\Leaff\NU-Tech\PlugIn\debug\Template.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+  LINK : C:\Program Files (x86)\Leaff\NU-Tech\PlugIn\debug\Template.dll not found or not built by the last incremental link; performing full link
+myLib.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+     Creating library C:\Users\pagli\Desktop\Progetti Github\Multirate-Digital-Signal-Processing-And-Adaptive-Filter-Banks-Exam\Template_FD\Debug\Template.lib and object C:\Users\pagli\Desktop\Progetti Github\Multirate-Digital-Signal-Processing-And-Adaptive-Filter-Banks-Exam\Template_FD\Debug\Template.exp
+  Template.vcxproj -> C:\Users\pagli\Desktop\Progetti Github\Multirate-Digital-Signal-Processing-And-Adaptive-Filter-Banks-Exam\Template_FD\Debug\Template.dll

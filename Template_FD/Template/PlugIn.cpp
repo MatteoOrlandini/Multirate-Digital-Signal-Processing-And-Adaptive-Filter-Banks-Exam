@@ -202,7 +202,6 @@ void __stdcall PlugIn::LEPlugin_Init()
 	ippsFFTFwd_RToPack_64f(c21, C21, fftState, pBuffer);
 	ippsFFTFwd_RToPack_64f(c22, C22, fftState, pBuffer);
 
-
 	if (H11 == 0)
 	{
 		H11 = ippsMalloc_64f(M);
@@ -226,6 +225,41 @@ void __stdcall PlugIn::LEPlugin_Init()
 		H22 = ippsMalloc_64f(M);
 		ippsZero_64f(H22, M);
 	}
+
+	Cprev[0][0] = C11[0];
+	Cprev[0][1] = C12[0];
+	Cprev[1][0] = C21[0];
+	Cprev[1][1] = C22[0];
+
+	beta = 0.1;
+
+	B[0][0] = 1;
+	B[0][1] = 0;
+	B[1][0] = 0;
+	B[1][1] = 1;
+
+	for (int n = 1; n < M; n++) {
+		C[0][0] = C11[n];
+		C[0][1] = C12[n];
+		C[1][0] = C21[n];
+		C[1][1] = C22[n];
+
+
+		Cprev[0][0] = C[0][0];
+		Cprev[0][1] = C[0][1];
+		Cprev[1][0] = C[1][0];
+		Cprev[1][1] = C[1][1];
+
+		Ctemp[0][0] = Cprev[1][1] * C[1][1] + Cprev[2][1] * C[2][1] + beta;
+	}
+		C = [C11(n) C12(n); C21(n) C22(n)];
+	H = (C_prev'*C+beta*(B)' * B) ^ (-1) * C_prev'; 
+		H11(n) = H(1, 1);
+	H12(n) = H(1, 2);
+	H21(n) = H(2, 1);
+	H22(n) = H(2, 2);
+	C_prev = C;
+	
 
 	if (r111 == 0)
 	{

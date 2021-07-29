@@ -1,2 +1,2 @@
-PlatformToolSet=v142:VCToolArchitecture=Native32Bit:VCToolsVersion=14.29.30037:VCServicingVersionATL=14.29.30038:VCServicingVersionCrtHeaders=14.29.30040:VCServicingVersionCompilers=14.29.30040:TargetPlatformVersion=10.0.19041.0:
-Debug|Win32|D:\OneDrive - Università Politecnica delle Marche\Università\Magistrale\Secondo anno\Multirate Digital Signal Processing And Adaptive Filter Banks\Progetto\Template_FD\|
+#TargetFrameworkVersion=v4.0:PlatformToolSet=v142:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=10.0
+Debug|Win32|C:\Users\pagli\Desktop\Progetti Github\Multirate-Digital-Signal-Processing-And-Adaptive-Filter-Banks-Exam\Template_FD\|
