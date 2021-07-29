@@ -1,0 +1,10 @@
+; Template.def : Declares the module parameters for the DLL.
+
+LIBRARY      "Template"
+
+EXPORTS
+	; Explicit exports can go here
+	LoadEffect 		@1
+	LENUTSDefProps 	@2
+	UnLoadEffect	@3
+   
