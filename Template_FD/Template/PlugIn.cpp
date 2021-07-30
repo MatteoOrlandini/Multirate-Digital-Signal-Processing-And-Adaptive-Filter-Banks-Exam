@@ -51,7 +51,7 @@ PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffe
 	pBuffer = 0;
 	pmemInit = 0;
 
-	fftLen = 512;		// NextPow2(fs + tapsLen - 1)
+	fftLen = 514;		// NextPow2(fs + tapsLen - 1)
 	fftOrd = (int)(log10((double)fftLen) / log10(2.0));
 }
 
@@ -197,10 +197,10 @@ void __stdcall PlugIn::LEPlugin_Init()
 	pmemInit = ippsMalloc_8u(sizeInit);
 	ippsFFTInit_R_64f(&fftState, fftOrd, IPP_FFT_DIV_INV_BY_N, ippAlgHintNone, pSpecMem, pmemInit);
 
-	ippsFFTFwd_RToPack_64f(c11, C11, fftState, pBuffer);
-	ippsFFTFwd_RToPack_64f(c12, C12, fftState, pBuffer);
-	ippsFFTFwd_RToPack_64f(c21, C21, fftState, pBuffer);
-	ippsFFTFwd_RToPack_64f(c22, C22, fftState, pBuffer);
+	ippsFFTFwd_RToCCS_64f(c11, C11, fftState, pBuffer);
+	ippsFFTFwd_RToCCS_64f(c12, C12, fftState, pBuffer);
+	ippsFFTFwd_RToCCS_64f(c21, C21, fftState, pBuffer);
+	ippsFFTFwd_RToCCS_64f(c22, C22, fftState, pBuffer);
 
 	if (H11 == 0)
 	{
@@ -226,10 +226,10 @@ void __stdcall PlugIn::LEPlugin_Init()
 		ippsZero_64f(H22, M);
 	}
 
-	Cprev[0][0] = C11[0];
-	Cprev[0][1] = C12[0];
-	Cprev[1][0] = C21[0];
-	Cprev[1][1] = C22[0];
+	Cprev[0][0] = C11[0] + C11[1] * 1i;
+	Cprev[0][1] = C12[0] + C12[1] * 1i;
+	Cprev[1][0] = C21[0] + C21[1] * 1i;
+	Cprev[1][1] = C22[0] + C22[1] * 1i;
 
 	beta = 0.1;
 
@@ -238,27 +238,44 @@ void __stdcall PlugIn::LEPlugin_Init()
 	B[1][0] = 0;
 	B[1][1] = 1;
 
-	for (int n = 1; n < M; n++) {
-		C[0][0] = C11[n];
-		C[0][1] = C12[n];
-		C[1][0] = C21[n];
-		C[1][1] = C22[n];
+	for (int n = 2; n < M; n = n + 2) {
+		C[0][0] = C11[n] + C11[n + 1] * 1i;
+		C[0][1] = C12[n] + C12[n + 1] * 1i;
+		C[1][0] = C21[n] + C21[n + 1] * 1i;
+		C[1][1] = C22[n] + C22[n + 1] * 1i;
+
+		Ctemp[0][0] = Cprev[0][0] * C[0][0] + Cprev[1][0] * C[1][0] + beta;
+		Ctemp[0][1] = Cprev[0][0] * C[0][1] + Cprev[1][0] * C[1][1];
+		Ctemp[1][0] = Cprev[0][1] * C[0][0] + Cprev[1][1] * C[1][0];
+		Ctemp[1][1] = Cprev[0][1] * C[0][1] + Cprev[1][1] * C[1][1] + beta;
+
+		det = Ctemp[0][0] * Ctemp[1][1] - Ctemp[0][1] * Ctemp[1][0];
+
+		invtemp = Ctemp[0][0];
+		Ctemp[0][0] = Ctemp[1][1] / det;
+		Ctemp[1][1] = invtemp / det;
+		Ctemp[0][1] = -Ctemp[0][1] / det;
+		Ctemp[1][0] = -Ctemp[1][0] / det;
+
+		invtemp = Ctemp[0][0] * Cprev[0][0] + Ctemp[0][1] * Cprev[0][1];
+		H11[n] = invtemp.real();
+		H11[n+1] = invtemp.imag();
+		invtemp = Ctemp[0][0] * Cprev[1][0] + Ctemp[0][1] * Cprev[1][1];
+		H12[n] = invtemp.real();
+		H12[n + 1] = invtemp.imag();
+		invtemp = Ctemp[1][0] * Cprev[0][0] + Ctemp[1][1] * Cprev[0][1];
+		H21[n] = invtemp.real();
+		H21[n + 1] = invtemp.imag();
+		invtemp = Ctemp[1][0] * Cprev[1][0] + Ctemp[1][1] * Cprev[1][1];
+		H22[n] = invtemp.real();
+		H22[n + 1] = invtemp.imag();
 
 
 		Cprev[0][0] = C[0][0];
 		Cprev[0][1] = C[0][1];
 		Cprev[1][0] = C[1][0];
 		Cprev[1][1] = C[1][1];
-
-		Ctemp[0][0] = Cprev[1][1] * C[1][1] + Cprev[2][1] * C[2][1] + beta;
 	}
-		C = [C11(n) C12(n); C21(n) C22(n)];
-	H = (C_prev'*C+beta*(B)' * B) ^ (-1) * C_prev'; 
-		H11(n) = H(1, 1);
-	H12(n) = H(1, 2);
-	H21(n) = H(2, 1);
-	H22(n) = H(2, 2);
-	C_prev = C;
 	
 
 	if (r111 == 0)

@@ -2,6 +2,8 @@
 #include "LEEffect.h"
 #include "ipp.h"
 #include "myLib.h"
+#include <math.h>
+#include <complex>
 
 #define PLAYBUFFER_TXT "PlayBuffer"
 #define	SCALAR_TXT "Scalar"
@@ -73,7 +75,8 @@ private:
 	double* H11, * H12, * H21, * H22;
 	double* r111, * r112, * r211, * r212, * r222, * r221, * r122, * r121;
 	double* r111buff, * r112buff, * r211buff, * r212buff, * r222buff, * r221buff, * r122buff, * r121buff;
-	double Cprev[2][2], C[2][2], B[2][2];
+	std::complex<double> Cprev[2][2], C[2][2], B[2][2], Ctemp[2][2];
+	std::complex<double> det, invtemp;
 	
 	char fileName[MAX_FILE_NAME_LENGTH];
 
