@@ -173,6 +173,30 @@ void __stdcall PlugIn::LEPlugin_Init()
 		C22 = ippsMalloc_64f(fftLen);
 		ippsZero_64f(C22, fftLen);
 	}
+
+	if (H11 == 0)
+	{
+		H11 = ippsMalloc_64f(M);
+		ippsZero_64f(H11, M);
+	}
+
+	if (H12 == 0)
+	{
+		H12 = ippsMalloc_64f(M);
+		ippsZero_64f(H12, M);
+	}
+
+	if (H21 == 0)
+	{
+		H21 = ippsMalloc_64f(M);
+		ippsZero_64f(H21, M);
+	}
+
+	if (H22 == 0)
+	{
+		H22 = ippsMalloc_64f(M);
+		ippsZero_64f(H22, M);
+	}
 	// load filter taps
 	memset(fileName, 0, MAX_FILE_NAME_LENGTH * sizeof(char));
 	strcpy(fileName, "c11.dat");
@@ -202,36 +226,10 @@ void __stdcall PlugIn::LEPlugin_Init()
 	ippsFFTFwd_RToCCS_64f(c21, C21, fftState, pBuffer);
 	ippsFFTFwd_RToCCS_64f(c22, C22, fftState, pBuffer);
 
-	if (H11 == 0)
-	{
-		H11 = ippsMalloc_64f(M);
-		ippsZero_64f(H11, M);
-	}
-	
-	if (H12 == 0)
-	{
-		H12 = ippsMalloc_64f(M);
-		ippsZero_64f(H12, M);
-	}
-	
-	if (H21 == 0)
-	{
-		H21 = ippsMalloc_64f(M);
-		ippsZero_64f(H21, M);
-	}
-	
-	if (H22 == 0)
-	{
-		H22 = ippsMalloc_64f(M);
-		ippsZero_64f(H22, M);
-	}
-
 	Cprev[0][0] = C11[0] + C11[1] * 1i;
 	Cprev[0][1] = C12[0] + C12[1] * 1i;
 	Cprev[1][0] = C21[0] + C21[1] * 1i;
 	Cprev[1][1] = C22[0] + C22[1] * 1i;
-
-	beta = 0.1;
 
 	B[0][0] = 1;
 	B[0][1] = 0;
@@ -259,7 +257,7 @@ void __stdcall PlugIn::LEPlugin_Init()
 
 		invtemp = Ctemp[0][0] * Cprev[0][0] + Ctemp[0][1] * Cprev[0][1];
 		H11[n] = invtemp.real();
-		H11[n+1] = invtemp.imag();
+		H11[n + 1] = invtemp.imag();
 		invtemp = Ctemp[0][0] * Cprev[1][0] + Ctemp[0][1] * Cprev[1][1];
 		H12[n] = invtemp.real();
 		H12[n + 1] = invtemp.imag();
@@ -270,109 +268,21 @@ void __stdcall PlugIn::LEPlugin_Init()
 		H22[n] = invtemp.real();
 		H22[n + 1] = invtemp.imag();
 
-
 		Cprev[0][0] = C[0][0];
 		Cprev[0][1] = C[0][1];
 		Cprev[1][0] = C[1][0];
 		Cprev[1][1] = C[1][1];
 	}
-	
+	// CCS format to Pack format
+	ippsMove_64f(C11 + 2, C11 + 1, fftLen);
+	ippsMove_64f(C12 + 2, C12 + 1, fftLen);
+	ippsMove_64f(C21 + 2, C21 + 1, fftLen);
+	ippsMove_64f(C22 + 2, C22 + 1, fftLen);
 
-	if (r111 == 0)
-	{
-		r111 = ippsMalloc_64f(FrameSize);
-		ippsZero_64f(r111, FrameSize);
-	}
-
-	if (r112 == 0)
-	{
-		r112 = ippsMalloc_64f(FrameSize);
-		ippsZero_64f(r112, FrameSize);
-	}
-
-	if (r211 == 0)
-	{
-		r211 = ippsMalloc_64f(FrameSize);
-		ippsZero_64f(r211, FrameSize);
-	}
-
-	if (r212 == 0)
-	{
-		r212 = ippsMalloc_64f(FrameSize);
-		ippsZero_64f(r212, FrameSize);
-	}
-
-	if (r222 == 0)
-	{
-		r222 = ippsMalloc_64f(FrameSize);
-		ippsZero_64f(r222, FrameSize);
-	}
-
-	if (r221 == 0)
-	{
-		r221 = ippsMalloc_64f(FrameSize);
-		ippsZero_64f(r221, FrameSize);
-	}
-
-	if (r122 == 0)
-	{
-		r122 = ippsMalloc_64f(FrameSize);
-		ippsZero_64f(r122, FrameSize);
-	}
-
-	if (r121 == 0)
-	{
-		r121 = ippsMalloc_64f(FrameSize);
-		ippsZero_64f(r121, FrameSize);
-	}
-
-	if (r111buff == 0)
-	{
-		r111buff = ippsMalloc_64f(M);
-		ippsZero_64f(r111buff, M);
-	}
-
-	if (r112buff == 0)
-	{
-		r112buff = ippsMalloc_64f(M);
-		ippsZero_64f(r112buff, M);
-	}
-
-	if (r211buff == 0)
-	{
-		r211buff = ippsMalloc_64f(M);
-		ippsZero_64f(r211buff, M);
-	}
-
-	if (r212buff == 0)
-	{
-		r212buff = ippsMalloc_64f(M);
-		ippsZero_64f(r212buff, M);
-	}
-
-	if (r222buff == 0)
-	{
-		r222buff = ippsMalloc_64f(M);
-		ippsZero_64f(r222buff, M);
-	}
-
-	if (r221buff == 0)
-	{
-		r221buff = ippsMalloc_64f(M);
-		ippsZero_64f(r221buff, M);
-	}
-
-	if (r122buff == 0)
-	{
-		r122buff = ippsMalloc_64f(M);
-		ippsZero_64f(r122buff, M);
-	}
-
-	if (r121buff == 0)
-	{
-		r121buff = ippsMalloc_64f(M);
-		ippsZero_64f(r121buff, M);
-	}
+	ippsMove_64f(H11 + 2, H11 + 1, fftLen);
+	ippsMove_64f(H12 + 2, H12 + 1, fftLen);
+	ippsMove_64f(H21 + 2, H21 + 1, fftLen);
+	ippsMove_64f(H22 + 2, H22 + 1, fftLen);
 }
 
 void __stdcall PlugIn::LEPlugin_Delete()
@@ -461,100 +371,52 @@ void __stdcall PlugIn::LEPlugin_Delete()
 		c22 = 0;
 	}
 
-	if (r111 != 0)
+	if (H11 != 0)
 	{
-		ippsFree(r111);
-		r111 = 0;
+		ippsFree(H11);
+		H11 = 0;
 	}
 
-	if (r112 != 0)
+	if (H12 != 0)
 	{
-		ippsFree(r112);
-		r112 = 0;
+		ippsFree(H12);
+		H12 = 0;
 	}
 
-	if (r121 != 0)
+	if (H21 != 0)
 	{
-		ippsFree(r121);
-		r121 = 0;
+		ippsFree(H21);
+		H21 = 0;
 	}
 
-	if (r122 != 0)
+	if (H22 != 0)
 	{
-		ippsFree(r122);
-		r122 = 0;
+		ippsFree(H22);
+		H22 = 0;
 	}
 
-	if (r211 != 0)
+	if (C11 != 0)
 	{
-		ippsFree(r211);
-		r211 = 0;
+		ippsFree(C11);
+		C11 = 0;
 	}
 
-	if (r212 != 0)
+	if (C12 != 0)
 	{
-		ippsFree(r212);
-		r212 = 0;
+		ippsFree(C12);
+		C12 = 0;
 	}
 
-	if (r221 != 0)
+	if (C21 != 0)
 	{
-		ippsFree(r221);
-		r221 = 0;
+		ippsFree(C21);
+		C21 = 0;
 	}
 
-	if (r222 != 0)
+	if (C22 != 0)
 	{
-		ippsFree(r222);
-		r222 = 0;
-	}
-
-	if (r111buff != 0)
-	{
-		ippsFree(r111buff);
-		r111buff = 0;
-	}
-
-	if (r112buff != 0)
-	{
-		ippsFree(r112buff);
-		r112buff = 0;
-	}
-
-	if (r121buff != 0)
-	{
-		ippsFree(r121buff);
-		r121buff = 0;
-	}
-
-	if (r122buff != 0)
-	{
-		ippsFree(r122buff);
-		r122buff = 0;
-	}
-
-	if (r211buff != 0)
-	{
-		ippsFree(r211buff);
-		r211buff = 0;
-	}
-
-	if (r212buff != 0)
-	{
-		ippsFree(r212buff);
-		r212buff = 0;
-	}
-
-	if (r221buff != 0)
-	{
-		ippsFree(r221buff);
-		r221buff = 0;
-	}
-
-	if (r222buff != 0)
-	{
-		ippsFree(r222buff);
-		r222buff = 0;
+		ippsFree(C22);
+		C22 = 0;
 	}
 }
 
