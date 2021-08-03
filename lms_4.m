@@ -2,6 +2,9 @@ clc
 clear all;
 close all;
 
+format long
+%digits(32)
+
 %L = 10000;    % lunghezza input x1 e x2 e output y1 e y2
 M = 512;      % lunghezza dei filtri c11, c12, c21, c22
 %N = 1024;     % lunghezza dei filtri da calcolare h11, h12, h21, h22
@@ -69,6 +72,8 @@ r221buff = zeros(M,1);
 r122buff = zeros(M,1);   
 r121buff = zeros(M,1);  
 
+buffernum = 0;
+
 for n = 1:L
     x1buff = [x1(n); x1buff(1:end-1)];
     x2buff = [x2(n); x2buff(1:end-1)];
@@ -96,20 +101,24 @@ for n = 1:L
     
     e1(n) = d1(n)-y1(n);
     e2(n) = d2(n)-y2(n);
-    
-    h11 = h11 + mu*(e1(n)*r111buff + e2(n)*r121buff);
-    h12 = h12 + mu*(e1(n)*r211buff + e2(n)*r221buff);
-    h21 = h21 + mu*(e1(n)*r112buff + e2(n)*r122buff);
-    h22 = h22 + mu*(e1(n)*r212buff + e2(n)*r222buff);
-        
     %{
+    h11 = h11 + mu.*(e1(n).*r111buff + e2(n).*r121buff);
+    h12 = h12 + mu.*(e1(n).*r211buff + e2(n).*r221buff);
+    h21 = h21 + mu.*(e1(n).*r112buff + e2(n).*r122buff);
+    h22 = h22 + mu.*(e1(n).*r212buff + e2(n).*r222buff);
+    %}
+    
     for k = 1:M
         h11(k) = h11(k)+mu*(e1(n)*r111buff(k)+e2(n)*r121buff(k));
         h12(k) = h12(k)+mu*(e1(n)*r211buff(k)+e2(n)*r221buff(k));
         h21(k) = h21(k)+mu*(e1(n)*r112buff(k)+e2(n)*r122buff(k));
         h22(k) = h22(k)+mu*(e1(n)*r212buff(k)+e2(n)*r222buff(k));
     end
-    %}
+    
+    if (mod(n,4096) == 0)
+        buffernum = buffernum + 1;
+        %disp(buffernum);
+    end
 end
 
 figure('Name','Confronto tra d1 e y1','NumberTitle','off');

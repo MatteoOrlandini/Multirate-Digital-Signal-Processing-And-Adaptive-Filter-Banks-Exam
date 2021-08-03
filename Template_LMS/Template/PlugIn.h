@@ -65,66 +65,74 @@ public:
 
 private:
 
-	int FrameSize,SampleRate;
+	int FrameSize, SampleRate;
 	int M, L, tau;
 	double mu;
-	double ytmp;
 	double* x1, * x2, * d1, * d2, * y1, * y2, * e1, * e2, * x1buff, * x2buff;
 	double* c11, * c12, * c21, * c22;
 	double* h11, * h12, * h21, * h22;
 	double* r111, * r112, * r211, * r212, * r222, * r221, * r122, * r121;
 	double* r111buff, * r112buff, * r211buff, * r212buff, * r222buff, * r221buff, * r122buff, * r121buff;
 	
-	char fileName[MAX_FILE_NAME_LENGTH];
+	int bufferNumber;
 	/*
 	int specSizeh11;
 	int specSizeh12;
 	int specSizeh21;
 	int specSizeh22;
 	*/
+	/*
 	int specSizec11;
 	int specSizec12;
 	int specSizec21;
 	int specSizec22;
+	*/
 	/*
 	int bufSizeh11;
 	int bufSizeh12;
 	int bufSizeh21;
 	int bufSizeh22;
 	*/
+	/*
 	int bufSizec11;
 	int bufSizec12;
 	int bufSizec21;
 	int bufSizec22;
+	*/
 	/*
 	double* dlyh11;
 	double* dlyh12;
 	double* dlyh21;
 	double* dlyh22;
 	*/
+	/*
 	double* dlyc11;
 	double* dlyc12;
 	double* dlyc21;
 	double* dlyc22;
+	*/
 	/*
 	IppsFIRSpec_64f* pSpech11;
 	IppsFIRSpec_64f* pSpech12;
 	IppsFIRSpec_64f* pSpech21;
 	IppsFIRSpec_64f* pSpech22;
 	*/
+	/*
 	IppsFIRSpec_64f* pSpecc11;
 	IppsFIRSpec_64f* pSpecc12;
 	IppsFIRSpec_64f* pSpecc21;
 	IppsFIRSpec_64f* pSpecc22;
+	*/
 	/*
 	Ipp8u* bufh11;
 	Ipp8u* bufh12;
 	Ipp8u* bufh21;
 	Ipp8u* bufh22;
 	*/
+	/*
 	Ipp8u* bufc11;
 	Ipp8u* bufc12;
 	Ipp8u* bufc21;
 	Ipp8u* bufc22;
-
+	*/
 };

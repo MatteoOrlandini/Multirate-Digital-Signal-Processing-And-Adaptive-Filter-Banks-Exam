@@ -6,10 +6,11 @@ close all;
 %M = 512;      % lunghezza dei filtri c11, c12, c21, c22
 %N = 1024;     % lunghezza dei filtri da calcolare h11, h12, h21, h22
 
-L = 1024;
+L = 4096;
 M = L/2;
 
 fs = L + M - 1; % frame size
+%fs = 512;
 
 %x1 = 0.1*randn(10*L,1);  % input 1 (left)
 %x2 = 0.1*randn(10*L,1);  % input 2 (right)
@@ -53,7 +54,7 @@ B = [1 0; 0 1];
 
 for n = 2:length(H11)
     C = [C11(n) C12(n); C21(n) C22(n)];
-    H = (C_prev'*C+beta*(B)'*B)^(-1)*C_prev'; 
+    H = (C_prev.'*C+beta*(B).'*B)^(-1)*C_prev.'; 
     H11(n) = H(1, 1);
     H12(n) = H(1, 2);
     H21(n) = H(2, 1);
@@ -61,8 +62,8 @@ for n = 2:length(H11)
     C_prev = C;
 end
 
-x1Buff = zeros(L, 1);
-x2Buff = zeros(L, 1);
+x1Buff = zeros(fs, 1);
+x2Buff = zeros(fs, 1);
 
 for i = 1 : floor(nPoints/L)
     % analysis
@@ -71,7 +72,7 @@ for i = 1 : floor(nPoints/L)
     x2Buff(fs - L + 1 : fs) = x2((i - 1) * L + 1 : i * L); 
     X1BUFF = fft(x1Buff, fftLen);
     X2BUFF = fft(x2Buff, fftLen);
-    
+   
     % processing
     %%%{
     Y1BUFF = (C11.*H11+C12.*H21).*X1BUFF+(C11.*H12+C12.*H22).*X2BUFF;
