@@ -72,8 +72,6 @@ r221buff = zeros(M,1);
 r122buff = zeros(M,1);   
 r121buff = zeros(M,1);  
 
-buffernum = 0;
-
 for n = 1:L
     x1buff = [x1(n); x1buff(1:end-1)];
     x2buff = [x2(n); x2buff(1:end-1)];
@@ -113,11 +111,6 @@ for n = 1:L
         h12(k) = h12(k)+mu*(e1(n)*r211buff(k)+e2(n)*r221buff(k));
         h21(k) = h21(k)+mu*(e1(n)*r112buff(k)+e2(n)*r122buff(k));
         h22(k) = h22(k)+mu*(e1(n)*r212buff(k)+e2(n)*r222buff(k));
-    end
-    
-    if (mod(n,4096) == 0)
-        buffernum = buffernum + 1;
-        %disp(buffernum);
     end
 end
 
@@ -221,7 +214,7 @@ legend('JR Cancellazione xtalk', 'JR Finestra rettangolare')
 %}
 %}
 
-save("lms_filters.mat", "H11", "H12", "H21", "H22")
+save("lms_data.mat", "h11", "h12", "h21", "h22", "y1", "y2", "e1", "e2")
 
 audioin = audioplayer([x1,x2],Fsample);
 %play(audioin);

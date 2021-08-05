@@ -2,6 +2,8 @@ clc
 clear all;
 close all;
 
+format long
+
 %L = 10240;    % lunghezza input x1 e x2 e output y1 e y2
 %M = 512;      % lunghezza dei filtri c11, c12, c21, c22
 %N = 1024;     % lunghezza dei filtri da calcolare h11, h12, h21, h22
@@ -67,7 +69,7 @@ x2Buff = zeros(fs, 1);
 
 for i = 1 : floor(nPoints/L)
     % analysis
-    % copy L values of x vector from M - 1 onwards
+    % cop263827967156455y L values of x vector from M - 1 onwards
     x1Buff(fs - L + 1 : fs) = x1((i - 1) * L + 1 : i * L); 
     x2Buff(fs - L + 1 : fs) = x2((i - 1) * L + 1 : i * L); 
     X1BUFF = fft(x1Buff, fftLen);
@@ -186,7 +188,7 @@ ylabel('Ampiezza [dB]');
 legend('JR Cancellazione xtalk', 'JR Finestra rettangolare')
 %}
 
-save("fast_deconvolution_filters.mat", "H11", "H12", "H21", "H22")
+save("fast_deconvolution_data.mat", "H11", "H12", "H21", "H22", "y1", "y2")
 
 audioin = audioplayer([x1,x2],Fsample);
 %play(audioin)

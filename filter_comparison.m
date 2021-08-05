@@ -5,18 +5,22 @@ clc
 close all 
 clear all
 
-load ("fast_deconvolution_filters.mat");
+load ("fast_deconvolution_data.mat");
 H11_fd = H11;
 H12_fd = H12;
 H21_fd = H21;
 H22_fd = H22;
 
-load ("lms_filters.mat");
-H11_lms = H11;
-H12_lms = H12;
-H21_lms = H21;
-H22_lms = H22;
+load ("lms_data.mat");
+h11_lms = h11;
+h12_lms = h12;
+h21_lms = h21;
+h22_lms = h22;
 
+H11_lms = fft(h11, length(H11_fd));
+H12_lms = fft(h12, length(H11_fd));
+H21_lms = fft(h21, length(H11_fd));
+H22_lms = fft(h22, length(H11_fd));
 
 %frequency axes
 f_df = linspace(0, 1, length(H11_fd(1:end/2)));
@@ -61,3 +65,23 @@ title('H22 comparison');
 xlabel('Normalized Frequency (x\pi rad/sample)');
 ylabel('Magnitude [dB]');
 legend('FD', 'LMS')
+
+fileID = fopen('e1.dat','rb');
+e1_NuTech = fread(fileID, Inf, 'float64');
+fclose(fileID);
+
+fileID = fopen('e2.dat','rb');
+e2_NuTech = fread(fileID, Inf, 'float64');
+fclose(fileID);
+
+figure('Name','LMS error e1','NumberTitle','off');
+plot(e1);
+title('LMS error e_1');
+xlabel('Samples');
+ylabel('Amplitude');
+
+figure('Name','LMS error e2','NumberTitle','off');
+plot(e2);
+title('LMS error e_2');
+xlabel('Samples');
+ylabel('Amplitude');
