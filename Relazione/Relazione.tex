@@ -375,8 +375,7 @@ Nel codice dell'algoritmo LMS in Matlab si carica il file audio in formato wav `
 x1 = x(:, 1);
 x2 = x(:, 2);
 \end{lstlisting}
-
-Allo stesso modo vendono caricate le quattro HRIR \texttt{c11}, \texttt{c12}, \texttt{c21} e \texttt{c22}.
+Allo stesso modo vengono caricate le quattro HRIR \texttt{c11}, \texttt{c12}, \texttt{c21} e \texttt{c22}.
 
 \begin{lstlisting}[label=code:caricamento_hrir_lms, caption=Caricamento delle HRIR, captionpos=b]
 % c11: HRIR left loudspeaker - left ear
@@ -388,7 +387,110 @@ Allo stesso modo vendono caricate le quattro HRIR \texttt{c11}, \texttt{c12}, \t
 % c22: HRIR right loudspeaker - righ ear
 [c22,~] = audioread("HRTF_measurements/elev0/R0e030a.wav");  
 \end{lstlisting}
+Vengono inizializzati i vettori e le variabili che saranno utilizzate nell'algoritmo.
+La lunghezza dei filtri e dei buffer è pari a M=512 in modo da poter effettuare le convoluzioni tra segnali aventi la stessa lunghezza.
+I segnali intermedi r hanno invece dimensione pari a x: L.ùù
+\begin{lstlisting}[label=code:init_lms, caption=Init variabili, captionpos=b]
+% il segnale desiderato x ritardato di tau campioni
+tau = M;   % ritardo temporale
+d1 = [zeros(tau,1); x1(1:end-tau)]; % segnale desiderato 1 (left)
+d2 = [zeros(tau,1); x2(1:end-tau)]; % segnale desiderato 2 (right)
 
+y1 = zeros(L,1);  % output 1 (left)
+y2 = zeros(L,1);  % output 2 (right)
+
+e1 = zeros(L,1);  % errore 1 (left)
+e2 = zeros(L,1);  % errore 2 (right)
+
+h11 = zeros(M,1);     % filtro da calcolare input 1 output 1
+h12 = zeros(M,1);     % filtro da calcolare input 2 output 1
+h21 = zeros(M,1);     % filtro da calcolare input 1 output 2
+h22 = zeros(M,1);     % filtro da calcolare input 2 output 2
+
+r111 = zeros(L,1);    % uscita di x1 filtrato da c11 per output y1
+r112 = zeros(L,1);    % uscita di x1 filtrato da c12 per output y1
+r211 = zeros(L,1);    % uscita di x2 filtrato da c11 per output y1
+r212 = zeros(L,1);    % uscita di x2 filtrato da c12 per output y1
+r222 = zeros(L,1);    % uscita di x2 filtrato da c22 per output y2
+r221 = zeros(L,1);    % uscita di x2 filtrato da c21 per output y2
+r122 = zeros(L,1);    % uscita di x1 filtrato da c22 per output y2
+r121 = zeros(L,1);    % uscita di x1 filtrato da c21 per output y2
+
+mu = 1e-4; 
+
+x1buff = zeros(M, 1);
+x2buff = zeros(M, 1);
+
+r111buff = zeros(M,1);    
+r112buff = zeros(M,1);    
+r211buff = zeros(M,1);  
+r212buff = zeros(M,1);    
+r222buff = zeros(M,1);    
+r221buff = zeros(M,1);    
+r122buff = zeros(M,1);   
+r121buff = zeros(M,1);  
+\end{lstlisting}
+Nel ciclo for principale viene utilizzato un buffer che aggiunge in testa il campione entrante invertendo il segnale di ingresso.
+Il buffer viene poi moltiplicato per la serie di filtri c: in questo modo si ottiene la convoluzione desiderata.
+
+Lo stesso avviene per i segnali intermedi r che vanno a costituire un buffer e attraversano i filtri h.
+Le 4 componenti risultanti vengono quindi sommate per ottenere y1 e y2.
+
+Viene quindi calcolato l'errore come la differenza fra il segnale desiderato e le y.
+Questo valore viene poi utilizzato per aggiornare i tappi del filtro h tramite un altro ciclo for.
+\begin{lstlisting}[label=code:caricamento_hrir_lms, caption=Caricamento delle HRIR, captionpos=b]
+for n = 1:L
+    x1buff = [x1(n); x1buff(1:end-1)];
+    x2buff = [x2(n); x2buff(1:end-1)];
+   
+    r111(n) = c11'*x1buff;
+    r112(n) = c12'*x1buff;
+    r211(n) = c11'*x2buff;
+    r212(n) = c12'*x2buff;
+    r222(n) = c22'*x2buff;
+    r221(n) = c21'*x2buff;
+    r122(n) = c22'*x1buff;
+    r121(n) = c21'*x1buff;
+
+    r111buff = [r111(n); r111buff(1:end-1)];
+    r112buff = [r112(n); r112buff(1:end-1)];
+    r211buff = [r211(n); r211buff(1:end-1)];
+    r212buff = [r212(n); r212buff(1:end-1)];
+    r222buff = [r222(n); r222buff(1:end-1)];
+    r221buff = [r221(n); r221buff(1:end-1)];
+    r122buff = [r122(n); r122buff(1:end-1)];
+    r121buff = [r121(n); r121buff(1:end-1)];
+    
+    y1(n) = h11'*r111buff+h21'*r112buff+h12'*r211buff+h22'*r212buff;
+    y2(n) = h11'*r121buff+h21'*r122buff+h12'*r221buff+h22'*r222buff;
+    
+    e1(n) = d1(n)-y1(n);
+    e2(n) = d2(n)-y2(n);
+    
+    for k = 1:M
+        h11(k) = h11(k)+mu*(e1(n)*r111buff(k)+e2(n)*r121buff(k));
+        h12(k) = h12(k)+mu*(e1(n)*r211buff(k)+e2(n)*r221buff(k));
+        h21(k) = h21(k)+mu*(e1(n)*r112buff(k)+e2(n)*r122buff(k));
+        h22(k) = h22(k)+mu*(e1(n)*r212buff(k)+e2(n)*r222buff(k));
+    end
+end
+\end{lstlisting}
+Vengono poi calcolate le fft dei due filtri in modo da poter visualizzare il loro comportamento in frequenza.
+\begin{lstlisting}[label=code:caricamento_hrir_lms, caption=Caricamento delle HRIR, captionpos=b]
+C11 = fft(c11);
+C12 = fft(c12);
+C21 = fft(c21);
+C22 = fft(c22);
+
+H11 = fft(h11, M);
+H12 = fft(h12, M);
+H21 = fft(h21, M);
+H22 = fft(h22, M);
+\end{lstlisting}
+
+\begin{lstlisting}[label=code:caricamento_hrir_lms, caption=Caricamento delle HRIR, captionpos=b]
+
+\end{lstlisting}
 \subsection{Fast Deconvolution}
 \label{subsec:codice_matlab_fd}
 Nella Fast Deconvolution, come per il codice della LMS, si carica il file audio e le risposte impulsive \texttt{c11}, \texttt{c12}, \texttt{c21} e \texttt{c22} come mostrato nei codici~\ref{code:caricamento_audio_lms} e~\ref{code:caricamento_hrir_lms}. A differenza dell'algoritmo LMS, nella Fast Deconvolution si usa un overlap and save quindi occorre scegliere come dividere in blocchi il segnale di ingresso. Si implementa l'overlap and save come descritto nel capitolo~\ref{subsec:FD_teoria}, con dei blocchi di lunghezza $L = 4096$, pari alla lunghezza di default del frame di Nu-Tech, e un overlap al 50\%, quindi $M = L/2 = 2048$. La lunghezza totale del frame con overlap sarà quindi $\text{fs} = L + M - 1 = 4096+2048-1 = 6143$, per una FFT efficiente si sceglie la potenza di 2 più vicina a $6143$, quindi $\text{fftLen} = 2^{13} = 8192$.
