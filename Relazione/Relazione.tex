@@ -11,9 +11,10 @@
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{siunitx}
-\usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{mcode} % matlab code
+\usepackage{amsmath}
+\usepackage[autolinebreaks]{mcode} % matlab code
+%\usepackage[numbered]{mcode} % matlab code
 %inizio impostazioni bibliografia
 \usepackage[autostyle,italian=guillemets]{csquotes} 
 %autostyle adatta lo stile delle citazioni alla lingua corrente del documento;
@@ -147,7 +148,7 @@ H_{22}\\
 \end{bmatrix}
 \end{equation}
 Le sequenze $r_{ilm}[n]$ corrispondono ai segnali di riferimento filtrati ottenuti facendo passare le sequenze $x_i[n]$ attraverso le funzioni di trasferimento $C_{lm}$.
-\begin{equation}
+\begin{equation}\label{eq:r_ilm}
 r_{ilm}[n]=\sum_{j=0}^{J-1}c_{lm}(j)x_i(n-j)
 \end{equation}
 Il segnale ricevuto ad ogni orecchio è dato da:
@@ -180,7 +181,7 @@ y_2[n]
 \end{equation}
 La minimizzazione di $J$ avviene con il metodo steepest descend.
 Nel dominio del tempo discreto il sistema si può scrivere come
-\begin{equation}
+\begin{equation}\label{eq:y_lms}
 \begin{bmatrix}
 	y_1[n]     \\
 	y_2[n]    
@@ -196,10 +197,10 @@ Nel dominio del tempo discreto il sistema si può scrivere come
 	h_{21}[n] \\
 	h_{12}[n] \\
 	h_{22}[n]  
-\end{bmatrix} 
+\end{bmatrix}
 \end{equation}
-
-\begin{equation}
+Usando~\eqref{eq:r_ilm}, l'equazione~\eqref{eq:y_lms} diventa
+\begin{equation}\label{eq:y_lms2}
 \begin{bmatrix}
 	y_1[n]     \\
 	y_2[n]    
@@ -222,10 +223,10 @@ Per ottenere l'errore si calcola la differenza fra il segnale desiderato è l'us
 e_1^{(1)} = d_1 - (r_{111} \circledast h_{11} + r_{112} \circledast h_{21} + r_{211} \circledast h_{12} + r_{212} \circledast h_{22})
 \]
 l'aggiornamento avviene come di seguito:
-\[
-h^{(k+1)} = h^{(k)} - \mu e_i^{(k)} \mathbf{r}_i^T
-\]
-dove $\mathbf{r}_i$ è l'i-esima riga di r e $e_i^{(k)}$ è l'errore k-esimo step e all'i-esima riga.
+\begin{equation}\label{eq:aggiornamento_lms}
+h^{(k+1)} = h^{(k)} - \mu e_i^{(k)} \circledast \mathbf{r}_i^T
+\end{equation}
+dove $\mathbf{r}_i$ è l'i-esima riga della matrice che contiene le $r_{ilm}$ nell'equazione~\eqref{eq:y_lms2} e $e_i^{(k)}$ è l'errore k-esimo step e all'i-esima riga. Esplicitando l'equazione~\eqref{eq:aggiornamento_lms}, si ottiene
 \[
 \begin{split}
 h_{11} \leftarrow h_{11} - \mu e_1^{(1)} \circledast r_{111}[n]\\
@@ -234,7 +235,7 @@ h_{12} \leftarrow h_{12} - \mu e_1^{(1)} \circledast r_{211}[n]\\
 h_{22} \leftarrow h_{22} - \mu e_1^{(1)} \circledast r_{212}[n]
 \end{split}
 \]
-Allo stesso modo per il secondo canale:
+Allo stesso modo, per il secondo canale l'errore è definito come:
 \[e_2^{(2)} = d_2- (r_{121} \circledast h_{11} + r_{122} \circledast h_{21} + r_{221} \circledast h_{12} + r_{222} \circledast h_{22})
 \]
 
@@ -246,9 +247,6 @@ h_{12} \leftarrow h_{12} - \mu e_2^{(2)} \circledast r_{221}[n]\\
 h_{22} \leftarrow h_{22} - \mu e_2^{(2)} \circledast r_{222}[n]\\
 \end{split}
 \]
-
-
-
 
 \subsection{Fast Deconvolution}
 \label{subsec:FD_teoria}
@@ -364,9 +362,66 @@ Un'implementazione più efficiente è invece quella descritta di seguito, in cui
 	\label{fig:ols}
 \end{figure}
 
+\clearpage
+
 \section{Codice Matlab}
+\label{sec:codice_matlab}
+\subsection{LMS}
+\label{subsec:codice_matlab_lms}
+Nel codice dell'algoritmo LMS in Matlab si carica il file audio in formato wav ``Daft Punk - Get Lucky\_cut.wav''. Poiché questo formato contiene i campioni del canale sinistro e di quello destro, si dividono i due canali salvando il primo nella variabile \texttt{x1} e il secondo in \texttt{x2}.
+
+\begin{lstlisting}[label=code:caricamento_audio_lms, caption=Caricamento del file audio, captionpos=b, firstnumber=1]
+[x, Fsample] = audioread('Daft Punk - Get Lucky_cut.wav');
+x1 = x(:, 1);
+x2 = x(:, 2);
+\end{lstlisting}
+
+Allo stesso modo vendono caricate le quattro HRIR \texttt{c11}, \texttt{c12}, \texttt{c21} e \texttt{c22}.
+
+\begin{lstlisting}[label=code:caricamento_hrir_lms, caption=Caricamento delle HRIR, captionpos=b]
+% c11: HRIR left loudspeaker - left ear
+[c11,Fs] = audioread("HRTF_measurements/elev0/L0e330a.wav"); 
+% c12: HRIR right loudspeaker - left ear
+[c12,~] = audioread("HRTF_measurements/elev0/L0e030a.wav");     
+% c21: HRIR left loudspeaker - right ear
+[c21,~] = audioread("HRTF_measurements/elev0/R0e330a.wav");    
+% c22: HRIR right loudspeaker - righ ear
+[c22,~] = audioread("HRTF_measurements/elev0/R0e030a.wav");  
+\end{lstlisting}
+
+\subsection{Fast Deconvolution}
+\label{subsec:codice_matlab_fd}
+Nella Fast Deconvolution, come per il codice della LMS, si carica il file audio e le risposte impulsive \texttt{c11}, \texttt{c12}, \texttt{c21} e \texttt{c22} come mostrato nei codici~\ref{code:caricamento_audio_lms} e~\ref{code:caricamento_hrir_lms}. A differenza dell'algoritmo LMS, nella Fast Deconvolution si usa un overlap and save quindi occorre scegliere come dividere in blocchi il segnale di ingresso. Si implementa l'overlap and save come descritto nel capitolo~\ref{subsec:FD_teoria}, con dei blocchi di lunghezza $L = 4096$, pari alla lunghezza di default del frame di Nu-Tech, e un overlap al 50\%, quindi $M = L/2 = 2048$. La lunghezza totale del frame con overlap sarà quindi $\text{fs} = L + M - 1 = 4096+2048-1 = 6143$, per una FFT efficiente si sceglie la potenza di 2 più vicina a $6143$, quindi $\text{fftLen} = 2^{13} = 8192$.
+
+\begin{lstlisting}[label=code:parametri_ols, caption=Parametri overlap and save, captionpos=b]
+L = 4096;
+M = L/2;
+fs = L + M - 1; % frame size
+fftLen = 2.^nextpow2(fs);
+\end{lstlisting}
+
+Per eseguire l'overlap and save è necessaria la FFT di lunghezza pari a \texttt{fftLen} dei filtri C e H. Poiché i filtri H non sono ancora stati calcolati, vengono inizializzati a zero.
+
+\begin{lstlisting}[label=code:fft_hrir, caption=FFT delle risposte impulsive del canale e inizializzazione dei filtri di cancellazione del crosstalk, captionpos=b]
+C11 = fft(c11, fftLen);     % HRTF left loudspeaker - left ear
+C12 = fft(c12, fftLen);     % HRTF right loudspeaker - left ear
+C21 = fft(c21, fftLen);     % HRTF left loudspeaker - right ear
+C22 = fft(c22, fftLen);     % HRTF right loudspeaker - right ear
+
+H11 = zeros(fftLen,1);     % filtro di cancellazione del crosstalk input 1 output 1
+H12 = zeros(fftLen,1);     % filtro di cancellazione del crosstalk input 2 output 1
+H21 = zeros(fftLen,1);     % filtro di cancellazione del crosstalk input 1 output 2
+H22 = zeros(fftLen,1);     % filtro di cancellazione del crosstalk input 2 output 2
+\end{lstlisting}
+
+\clearpage
 
 \section{Codice C}
+\label{sec:codice_c}
+\subsection{LMS}
+\label{sec:codice_c_lms}
+\subsection{Fast Deconvolution}
+\label{sec:codice_c_fd}
 
 \clearpage
 

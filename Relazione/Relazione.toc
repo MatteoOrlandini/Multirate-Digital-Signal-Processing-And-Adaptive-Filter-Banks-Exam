@@ -6,5 +6,9 @@
 \contentsline {section}{\numberline {3}Descrizione teorica degli algoritmi}{3}{section.3}% 
 \contentsline {subsection}{\numberline {3.1}LMS}{3}{subsection.3.1}% 
 \contentsline {subsection}{\numberline {3.2}Fast Deconvolution}{5}{subsection.3.2}% 
-\contentsline {section}{\numberline {4}Codice Matlab}{8}{section.4}% 
-\contentsline {section}{\numberline {5}Codice C}{8}{section.5}% 
+\contentsline {section}{\numberline {4}Codice Matlab}{10}{section.4}% 
+\contentsline {subsection}{\numberline {4.1}LMS}{10}{subsection.4.1}% 
+\contentsline {subsection}{\numberline {4.2}Fast Deconvolution}{10}{subsection.4.2}% 
+\contentsline {section}{\numberline {5}Codice C}{12}{section.5}% 
+\contentsline {subsection}{\numberline {5.1}LMS}{12}{subsection.5.1}% 
+\contentsline {subsection}{\numberline {5.2}Fast Deconvolution}{12}{subsection.5.2}% 
