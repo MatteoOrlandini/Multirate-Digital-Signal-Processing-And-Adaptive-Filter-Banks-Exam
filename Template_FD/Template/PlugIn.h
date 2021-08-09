@@ -3,7 +3,7 @@
 #include "ipp.h"
 #include "myLib.h"
 #include "math.h"
-#include <complex>
+//#include <complex>
 
 #define PLAYBUFFER_TXT "PlayBuffer"
 #define	SCALAR_TXT "Scalar"
@@ -21,6 +21,8 @@
 #define WIDTHDEF 75
 
 #define NUTS_NAME	"Fast Deconvolution"
+
+#define ID_BETA 0
 
 
 class PlugIn :	public LEEffect
@@ -73,7 +75,7 @@ private:
 	Ipp64fc* x1buff, * x2buff, * X1BUFF, * X2BUFF, * y1buff, * y2buff, * Y1BUFF, * Y2BUFF;
 	Ipp64fc* c11, * c12, * c21, * c22, * C11, * C12, * C21, * C22;
 	Ipp64fc* H11, * H12, * H21, * H22;
-	Ipp64fc det, invtemp, invtemp2, Cprev[2][2], C[2][2], B[2][2], Ctemp[2][2], Ctemp2[2][2];
+	Ipp64fc det, invtemp, invtemp2, Cconj[2][2], C[2][2], B[2][2], Ctemp[2][2], Ctemp2[2][2];
 	//double* temp, * temp2, * temp3;
 	//std::complex<double> Cprev[2][2], C[2][2], B[2][2], Ctemp[2][2];
 	/************** CCS FORMAT ****************/
@@ -101,5 +103,7 @@ private:
 	int sizeSpec, sizeInit, sizeBuffer;
 
 	int fftLen, fftOrd;
+
+	bool isRunning;
 
 };

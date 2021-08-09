@@ -30,7 +30,7 @@ nPoints = length(x1);
 % relative to the KEMAR dummy head, for example elevation 0 azimuth 90 is
 % directly to the right of the KEMAR.
 % c11: HRIR left loudspeaker - left ear
-[c11,Fs] = audioread("HRTF_measurements/elev0/L0e330a.wav");  
+[c11,Fs] = audioread("HRTF_measurements/elev0/L0e330a.wav"); 
 % c12: HRIR right loudspeaker - left ear
 [c12,~] = audioread("HRTF_measurements/elev0/L0e030a.wav");     
 % c21: HRIR left loudspeaker - right ear
@@ -50,18 +50,30 @@ C12 = fft(c12, fftLen);     % HRTF right loudspeaker - left ear
 C21 = fft(c21, fftLen);     % HRTF left loudspeaker - right ear
 C22 = fft(c22, fftLen);     % HRTF right loudspeaker - right ear
 
+%{
 C_prev = [C11(1) C12(1); C21(1) C22(1)];
-beta = 0.1;
+beta = .1;
 B = [1 0; 0 1];
 
 for n = 2:length(H11)
     C = [C11(n) C12(n); C21(n) C22(n)];
-    H = (C_prev.'*C+beta*(B).'*B)^(-1)*C_prev.'; 
+    H = (C_prev'*C+beta*(B'*B))^(-1)*C_prev'; 
     H11(n) = H(1, 1);
     H12(n) = H(1, 2);
     H21(n) = H(2, 1);
     H22(n) = H(2, 2);
     C_prev = C;
+end
+%}
+beta = 0.1;
+B = [1 0; 0 1];
+for n = 1:length(H11)
+    C = [C11(n) C12(n); C21(n) C22(n)];
+    H = (C'*C+beta*(B'*B))^(-1)*C'; 
+    H11(n) = H(1, 1);
+    H12(n) = H(1, 2);
+    H21(n) = H(2, 1);
+    H22(n) = H(2, 2);
 end
 
 x1Buff = zeros(fs, 1);
@@ -136,6 +148,7 @@ title('Left channel separation');
 xlabel('Frequenza [Hz]');
 ylabel('Ampiezza [dB]');
 legend('JL_{num}', 'JL_{den}')
+
 %{
 % Confronto left channel separation con finestra rettangolare e con 
 % filtro di cancellazione del crosstalk
@@ -188,7 +201,10 @@ ylabel('Ampiezza [dB]');
 legend('JR Cancellazione xtalk', 'JR Finestra rettangolare')
 %}
 
-save("fast_deconvolution_data.mat", "H11", "H12", "H21", "H22", "y1", "y2")
+save("fast_deconvolution_data.mat", "H11", "H12", "H21", "H22", "y1", "y2", "JL_num", "JL_den", "JR_num", "JR_den")
+
+%figure;
+%plot(abs(C11.*H11+C12.*H21+C21.*H12+C22.*H22));
 
 audioin = audioplayer([x1,x2],Fsample);
 %play(audioin)

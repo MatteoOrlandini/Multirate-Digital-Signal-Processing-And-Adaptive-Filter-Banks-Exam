@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include ".\plugin.h"
+#include "ipp.h"
 
 PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffect(_CBFunction,_PlugRef,ParentDlg)
 {
@@ -9,6 +10,8 @@ PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffe
 	LESetNumInput(2);
 	LESetNumOutput(2);
 	
+	isRunning = false;
+
 	//M = 512;	// filter length
 	L = FrameSize;
 	M = int(L / 2);
@@ -235,6 +238,8 @@ int __stdcall PlugIn::LEPlugin_Process(PinType** Input, PinType** Output, LPVOID
 
 void __stdcall PlugIn::LEPlugin_Init()
 {
+	isRunning = true;
+
 	if (x1buff == 0)
 	{
 		x1buff = ippsMalloc_64fc(fftLen);
@@ -456,17 +461,12 @@ void __stdcall PlugIn::LEPlugin_Init()
 	*/
 	
 	/* with CCS format
-	Cprev[0][0] = C11[0] + C11[1] * 1i;
-	Cprev[0][1] = C12[0] + C12[1] * 1i;
-	Cprev[1][0] = C21[0] + C21[1] * 1i;
-	Cprev[1][1] = C22[0] + C22[1] * 1i;
+	Cconj[0][0] = C11[0] + C11[1] * 1i;
+	Cconj[0][1] = C12[0] + C12[1] * 1i;
+	Cconj[1][0] = C21[0] + C21[1] * 1i;
+	Cconj[1][1] = C22[0] + C22[1] * 1i;
 	*/
 
-
-	Cprev[0][0] = C11[0];
-	Cprev[0][1] = C12[0];
-	Cprev[1][0] = C21[0];
-	Cprev[1][1] = C22[0];
 
 	/*
 	B[0][0].re = 1.0, B[0][0].im = 0.0;
@@ -487,29 +487,34 @@ void __stdcall PlugIn::LEPlugin_Init()
 	ippsZero_64fc(H22ext, fftLen);
 	*/
 
-	for (int n = 1; n < fftLen; n++)
+	for (int n = 0; n < fftLen; n++)
 	{
 		C[0][0] = C11[n];
 		C[0][1] = C12[n];
 		C[1][0] = C21[n];
 		C[1][1] = C22[n];
 
-		//Ctemp[0][0] = Cprev[0][0] * C[0][0] + Cprev[1][0] * C[1][0] + beta;
-		ippsMul_64fc(&(Cprev[0][0]), &(C[0][0]), &(Ctemp[0][0]), 1);
-		ippsMul_64fc(&(Cprev[1][0]), &(C[1][0]), &(Ctemp2[0][0]), 1);
+		ippsConj_64fc(&(C[0][0]), &(Cconj[0][0]), 1);
+		ippsConj_64fc(&(C[0][1]), &(Cconj[0][1]), 1);
+		ippsConj_64fc(&(C[1][0]), &(Cconj[1][0]), 1);
+		ippsConj_64fc(&(C[1][1]), &(Cconj[1][1]), 1);
+
+		//Ctemp[0][0] = Cconj[0][0] * C[0][0] + Cconj[1][0] * C[1][0] + beta;
+		ippsMul_64fc(&(Cconj[0][0]), &(C[0][0]), &(Ctemp[0][0]), 1);
+		ippsMul_64fc(&(Cconj[1][0]), &(C[1][0]), &(Ctemp2[0][0]), 1);
 		ippsAdd_64fc_I(&(Ctemp2[0][0]), &(Ctemp[0][0]), 1);
 		ippsAddC_64fc_I({ beta, 0 }, &(Ctemp[0][0]), 1);
-		//Ctemp[0][1] = Cprev[0][0] * C[0][1] + Cprev[1][0] * C[1][1];
-		ippsMul_64fc(&(Cprev[0][0]), &(C[0][1]), &(Ctemp[0][1]), 1);
-		ippsMul_64fc(&(Cprev[1][0]), &(C[1][1]), &(Ctemp2[0][1]), 1);
+		//Ctemp[0][1] = Cconj[0][0] * C[0][1] + Cconj[1][0] * C[1][1];
+		ippsMul_64fc(&(Cconj[0][0]), &(C[0][1]), &(Ctemp[0][1]), 1);
+		ippsMul_64fc(&(Cconj[1][0]), &(C[1][1]), &(Ctemp2[0][1]), 1);
 		ippsAdd_64fc_I(&(Ctemp2[0][1]), &(Ctemp[0][1]), 1);
-		//Ctemp[1][0] = Cprev[0][1] * C[0][0] + Cprev[1][1] * C[1][0];
-		ippsMul_64fc(&(Cprev[0][1]), &(C[0][0]), &(Ctemp[1][0]), 1);
-		ippsMul_64fc(&(Cprev[1][1]), &(C[1][0]), &(Ctemp2[1][0]), 1);
+		//Ctemp[1][0] = Cconj[0][1] * C[0][0] + Cconj[1][1] * C[1][0];
+		ippsMul_64fc(&(Cconj[0][1]), &(C[0][0]), &(Ctemp[1][0]), 1);
+		ippsMul_64fc(&(Cconj[1][1]), &(C[1][0]), &(Ctemp2[1][0]), 1);
 		ippsAdd_64fc_I(&(Ctemp2[1][0]), &(Ctemp[1][0]), 1);
-		//Ctemp[1][1] = Cprev[0][1] * C[0][1] + Cprev[1][1] * C[1][1] + beta;
-		ippsMul_64fc(&(Cprev[0][1]), &(C[0][1]), &(Ctemp[1][1]), 1);
-		ippsMul_64fc(&(Cprev[1][1]), &(C[1][1]), &(Ctemp2[1][1]), 1);
+		//Ctemp[1][1] = Cconj[0][1] * C[0][1] + Cconj[1][1] * C[1][1] + beta;
+		ippsMul_64fc(&(Cconj[0][1]), &(C[0][1]), &(Ctemp[1][1]), 1);
+		ippsMul_64fc(&(Cconj[1][1]), &(C[1][1]), &(Ctemp2[1][1]), 1);
 		ippsAdd_64fc_I(&(Ctemp2[1][1]), &(Ctemp[1][1]), 1);
 		ippsAddC_64fc_I({ beta, 0 }, &(Ctemp[1][1]), 1);
 
@@ -529,35 +534,30 @@ void __stdcall PlugIn::LEPlugin_Init()
 		//Ctemp[1][0] = -Ctemp[1][0] / det;
 		ippsDivC_64fc_I(det, &(Ctemp[1][0]), 1);
 
-		//invtemp = Ctemp[0][0] * Cprev[0][0] + Ctemp[0][1] * Cprev[0][1];
-		ippsMul_64fc(&(Ctemp[0][0]), &(Cprev[0][0]), &invtemp2, 1);
-		ippsMul_64fc(&(Ctemp[0][1]), &(Cprev[0][1]), &invtemp, 1);
+		//invtemp = Ctemp[0][0] * Cconj[0][0] + Ctemp[0][1] * Cconj[0][1];
+		ippsMul_64fc(&(Ctemp[0][0]), &(Cconj[0][0]), &invtemp2, 1);
+		ippsMul_64fc(&(Ctemp[0][1]), &(Cconj[0][1]), &invtemp, 1);
 		ippsAdd_64fc_I(&invtemp2, &invtemp, 1);
 		H11[n].re = invtemp.re;
 		H11[n].im = invtemp.im;
-		//invtemp = Ctemp[0][0] * Cprev[1][0] + Ctemp[0][1] * Cprev[1][1];
-		ippsMul_64fc(&(Ctemp[0][0]), &(Cprev[1][0]), &invtemp2, 1);
-		ippsMul_64fc(&(Ctemp[0][1]), &(Cprev[1][1]), &invtemp, 1);
+		//invtemp = Ctemp[0][0] * Cconj[1][0] + Ctemp[0][1] * Cconj[1][1];
+		ippsMul_64fc(&(Ctemp[0][0]), &(Cconj[1][0]), &invtemp2, 1);
+		ippsMul_64fc(&(Ctemp[0][1]), &(Cconj[1][1]), &invtemp, 1);
 		ippsAdd_64fc_I(&invtemp2, &invtemp, 1);
 		H12[n].re = invtemp.re;
 		H12[n].im = invtemp.im;
-		//invtemp = Ctemp[1][0] * Cprev[0][0] + Ctemp[1][1] * Cprev[0][1];
-		ippsMul_64fc(&(Ctemp[1][0]), &(Cprev[0][0]), &invtemp2, 1);
-		ippsMul_64fc(&(Ctemp[1][1]), &(Cprev[0][1]), &invtemp, 1);
+		//invtemp = Ctemp[1][0] * Cconj[0][0] + Ctemp[1][1] * Cconj[0][1];
+		ippsMul_64fc(&(Ctemp[1][0]), &(Cconj[0][0]), &invtemp2, 1);
+		ippsMul_64fc(&(Ctemp[1][1]), &(Cconj[0][1]), &invtemp, 1);
 		ippsAdd_64fc_I(&invtemp2, &invtemp, 1);
 		H21[n].re = invtemp.re;
 		H21[n].im = invtemp.im;
-		//invtemp = Ctemp[1][0] * Cprev[1][0] + Ctemp[1][1] * Cprev[1][1];
-		ippsMul_64fc(&(Ctemp[1][0]), &(Cprev[1][0]), &invtemp2, 1);
-		ippsMul_64fc(&(Ctemp[1][1]), &(Cprev[1][1]), &invtemp, 1);
+		//invtemp = Ctemp[1][0] * Cconj[1][0] + Ctemp[1][1] * Cconj[1][1];
+		ippsMul_64fc(&(Ctemp[1][0]), &(Cconj[1][0]), &invtemp2, 1);
+		ippsMul_64fc(&(Ctemp[1][1]), &(Cconj[1][1]), &invtemp, 1);
 		ippsAdd_64fc_I(&invtemp2, &invtemp, 1);
 		H22[n].re = invtemp.re;
 		H22[n].im = invtemp.im;
-
-		Cprev[0][0] = C[0][0];
-		Cprev[0][1] = C[0][1];
-		Cprev[1][0] = C[1][0];
-		Cprev[1][1] = C[1][1];		
 	}
 
 	// extended format to pack format
@@ -591,10 +591,10 @@ void __stdcall PlugIn::LEPlugin_Init()
 		C[1][0] = C21[n] + C21[n + 1] * 1i;
 		C[1][1] = C22[n] + C22[n + 1] * 1i;
 
-		Ctemp[0][0] = Cprev[0][0] * C[0][0] + Cprev[1][0] * C[1][0] + beta;
-		Ctemp[0][1] = Cprev[0][0] * C[0][1] + Cprev[1][0] * C[1][1];
-		Ctemp[1][0] = Cprev[0][1] * C[0][0] + Cprev[1][1] * C[1][0];
-		Ctemp[1][1] = Cprev[0][1] * C[0][1] + Cprev[1][1] * C[1][1] + beta;
+		Ctemp[0][0] = Cconj[0][0] * C[0][0] + Cconj[1][0] * C[1][0] + beta;
+		Ctemp[0][1] = Cconj[0][0] * C[0][1] + Cconj[1][0] * C[1][1];
+		Ctemp[1][0] = Cconj[0][1] * C[0][0] + Cconj[1][1] * C[1][0];
+		Ctemp[1][1] = Cconj[0][1] * C[0][1] + Cconj[1][1] * C[1][1] + beta;
 
 		det = Ctemp[0][0] * Ctemp[1][1] - Ctemp[0][1] * Ctemp[1][0];
 
@@ -604,23 +604,23 @@ void __stdcall PlugIn::LEPlugin_Init()
 		Ctemp[0][1] = -Ctemp[0][1] / det;
 		Ctemp[1][0] = -Ctemp[1][0] / det;
 
-		invtemp = Ctemp[0][0] * Cprev[0][0] + Ctemp[0][1] * Cprev[0][1];
+		invtemp = Ctemp[0][0] * Cconj[0][0] + Ctemp[0][1] * Cconj[0][1];
 		H11[n] = invtemp.real();
 		H11[n + 1] = invtemp.imag();
-		invtemp = Ctemp[0][0] * Cprev[1][0] + Ctemp[0][1] * Cprev[1][1];
+		invtemp = Ctemp[0][0] * Cconj[1][0] + Ctemp[0][1] * Cconj[1][1];
 		H12[n] = invtemp.real();
 		H12[n + 1] = invtemp.imag();
-		invtemp = Ctemp[1][0] * Cprev[0][0] + Ctemp[1][1] * Cprev[0][1];
+		invtemp = Ctemp[1][0] * Cconj[0][0] + Ctemp[1][1] * Cconj[0][1];
 		H21[n] = invtemp.real();
 		H21[n + 1] = invtemp.imag();
-		invtemp = Ctemp[1][0] * Cprev[1][0] + Ctemp[1][1] * Cprev[1][1];
+		invtemp = Ctemp[1][0] * Cconj[1][0] + Ctemp[1][1] * Cconj[1][1];
 		H22[n] = invtemp.real();
 		H22[n + 1] = invtemp.imag();
 
-		Cprev[0][0] = C[0][0];
-		Cprev[0][1] = C[0][1];
-		Cprev[1][0] = C[1][0];
-		Cprev[1][1] = C[1][1];
+		Cconj[0][0] = C[0][0];
+		Cconj[0][1] = C[0][1];
+		Cconj[1][0] = C[1][0];
+		Cconj[1][1] = C[1][1];
 	}
 	*/
 
@@ -653,6 +653,8 @@ void __stdcall PlugIn::LEPlugin_Init()
 
 void __stdcall PlugIn::LEPlugin_Delete()
 {
+	isRunning = false;
+
 	if (x1buff != 0)
 	{
 		ippsFree(x1buff);
@@ -884,10 +886,32 @@ void __stdcall PlugIn::LESetName(char *Name)
 void __stdcall PlugIn::LESetParameter(int Index,void *Data,LPVOID bBroadCastInfo)
 {
 
+	CBFunction(this, NUTS_GETSECURETIME, NUTSSECURE, 0);
+
+	if(Index == ID_BETA)
+	{
+		if (!isRunning)
+		{
+			memcpy(&beta, (double*)Data, sizeof(double));
+			CBFunction(this, NUTS_UPDATERTWATCH, ID_BETA, 0);
+		}
+		
+	}
+
+	CBFunction(this, NUTS_RELEASESECURETIME, NUTSSECURE, 0);
 }
 
 int  __stdcall PlugIn::LEGetParameter(int Index,void *Data)
 {
+
+	CBFunction(this, NUTS_GETSECURETIME, NUTSSECURE, 0);
+
+	if (Index == ID_BETA)
+	{
+		memcpy((double*)Data, &beta, sizeof(double));
+	}
+
+	CBFunction(this, NUTS_RELEASESECURETIME, NUTSSECURE, 0);
 	return 0;
 }
 
@@ -903,7 +927,15 @@ void __stdcall PlugIn::LELoadSetUp()
 
 void __stdcall PlugIn::LERTWatchInit()
 {
+	WatchType NewWatch;
 
+	memset(&NewWatch, 0, sizeof(WatchType));
+	NewWatch.EnableWrite = true;
+	NewWatch.LenByte = sizeof(double);
+	NewWatch.TypeVar = WTC_DOUBLE;
+	NewWatch.IDVar = ID_BETA;
+	sprintf(NewWatch.VarName, "Beta\0");
+	CBFunction(this, NUTS_ADDRTWATCH, 0, &NewWatch);
 }
 
 void __stdcall PlugIn::LESampleRateChange(int NewVal,int TrigType)
