@@ -41,6 +41,125 @@
       \field{year}{1994}
       \true{nocite}
     \endentry
+    \entry{kirkeby:deconvolution_regularization}{article}{}
+      \name{author}{4}{}{%
+        {{hash=2aaa7f7a176d3d4ed5d0303a5579be58}{%
+           family={Kirkeby},
+           familyi={K\bibinitperiod},
+           given={O.},
+           giveni={O\bibinitperiod}}}%
+        {{hash=1b5d7ff3c46a2f605aaf756d00c1c252}{%
+           family={Nelson},
+           familyi={N\bibinitperiod},
+           given={P.A.},
+           giveni={P\bibinitperiod}}}%
+        {{hash=08758bafdb9130ec0225725f9dd89522}{%
+           family={Hamada},
+           familyi={H\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+        {{hash=559a691e02c0d8ba8df83f94f9c74a50}{%
+           family={Orduna-Bustamante},
+           familyi={O\bibinithyphendelim B\bibinitperiod},
+           given={F.},
+           giveni={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{1d5bf3c2bba36e66c8805f61143d3cfc}
+      \strng{fullhash}{1d5bf3c2bba36e66c8805f61143d3cfc}
+      \strng{bibnamehash}{1d5bf3c2bba36e66c8805f61143d3cfc}
+      \strng{authorbibnamehash}{1d5bf3c2bba36e66c8805f61143d3cfc}
+      \strng{authornamehash}{1d5bf3c2bba36e66c8805f61143d3cfc}
+      \strng{authorfullhash}{1d5bf3c2bba36e66c8805f61143d3cfc}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Speech and Audio Processing}
+      \field{number}{2}
+      \field{title}{Fast deconvolution of multichannel systems using regularization}
+      \field{volume}{6}
+      \field{year}{1998}
+      \true{nocite}
+      \field{pages}{189\bibrangedash 194}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1109/89.661479
+      \endverb
+    \endentry
+    \entry{kirkeby:deconvolution_analysis}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{hash=2aaa7f7a176d3d4ed5d0303a5579be58}{%
+           family={Kirkeby},
+           familyi={K\bibinitperiod},
+           given={O.},
+           giveni={O\bibinitperiod}}}%
+        {{hash=ea8ced9a959571752969b917929a9583}{%
+           family={Rubak},
+           familyi={R\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod}}}%
+        {{hash=5a71914fbfe680b72a7c8dbe7fe84128}{%
+           family={Farina},
+           familyi={F\bibinitperiod},
+           given={Angelo},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{240cfd147184930319a480d67ad282c0}
+      \strng{fullhash}{240cfd147184930319a480d67ad282c0}
+      \strng{bibnamehash}{240cfd147184930319a480d67ad282c0}
+      \strng{authorbibnamehash}{240cfd147184930319a480d67ad282c0}
+      \strng{authornamehash}{240cfd147184930319a480d67ad282c0}
+      \strng{authorfullhash}{240cfd147184930319a480d67ad282c0}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{0-7803-5612-8}
+      \field{month}{02}
+      \field{title}{Analysis of ill-conditioning of multi-channel deconvolution problems}
+      \field{year}{1999}
+      \true{nocite}
+      \field{pages}{155\bibrangedash 158}
+      \range{pages}{4}
+    \endentry
+    \entry{kirkeby:deconvolution_design}{article}{}
+      \name{author}{4}{}{%
+        {{hash=c93fcd74997ec3f1ba120e994f4c5951}{%
+           family={Kirkeby},
+           familyi={K\bibinitperiod},
+           given={Ole},
+           giveni={O\bibinitperiod}}}%
+        {{hash=5d59d5846974b55151e5d06874fb84a5}{%
+           family={Rubak},
+           familyi={R\bibinitperiod},
+           given={Per},
+           giveni={P\bibinitperiod}}}%
+        {{hash=863383fd24e83eff57a68dc09a7d4fce}{%
+           family={Nelson},
+           familyi={N\bibinitperiod},
+           given={Philip},
+           giveni={P\bibinitperiod}}}%
+        {{hash=5a71914fbfe680b72a7c8dbe7fe84128}{%
+           family={Farina},
+           familyi={F\bibinitperiod},
+           given={Angelo},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{ee1dbf693e3b6ba0a8255e9088eb313e}
+      \strng{fullhash}{ee1dbf693e3b6ba0a8255e9088eb313e}
+      \strng{bibnamehash}{ee1dbf693e3b6ba0a8255e9088eb313e}
+      \strng{authorbibnamehash}{ee1dbf693e3b6ba0a8255e9088eb313e}
+      \strng{authornamehash}{ee1dbf693e3b6ba0a8255e9088eb313e}
+      \strng{authorfullhash}{ee1dbf693e3b6ba0a8255e9088eb313e}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{11}
+      \field{title}{Design of Cross-Talk Cancellation Networks by Using Fast Deconvolution}
+      \field{year}{2000}
+      \true{nocite}
+    \endentry
     \entry{Li:comprehensive_comparison}{inproceedings}{}
       \name{author}{4}{}{%
         {{hash=fc63986540b002fd74244549ce74082f}{%
