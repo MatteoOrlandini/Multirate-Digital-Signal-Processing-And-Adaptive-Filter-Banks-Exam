@@ -8,10 +8,6 @@ format long
 %M = 512;      % lunghezza dei filtri c11, c12, c21, c22
 %N = 1024;     % lunghezza dei filtri da calcolare h11, h12, h21, h22
 
-L = 4096;
-M = L/2;
-
-fs = L + M - 1; % frame size
 %fs = 512;
 
 %x1 = 0.1*randn(10*L,1);  % input 1 (left)
@@ -19,7 +15,6 @@ fs = L + M - 1; % frame size
 [x, Fsample] = audioread('Daft Punk - Get Lucky_cut.wav');
 x1 = x(:,1);
 x2 = x(:,2);
-nPoints = length(x1);
 
 % https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.39.9751&rep=rep1&type=pdf
 % within "HRTF_measurements" folder, each filename has the format
@@ -38,18 +33,20 @@ nPoints = length(x1);
 % c22: HRIR right loudspeaker - righ ear
 [c22,~] = audioread("HRTF_measurements/elev0/R0e030a.wav");   
 
+L = 4096;
+M = L/2;
+fs = L + M - 1; % frame size
 fftLen = 2.^nextpow2(fs);
-
-H11 = zeros(fftLen,1);     % filtro di cancellazione del crosstalk input 1 output 1
-H12 = zeros(fftLen,1);     % filtro di cancellazione del crosstalk input 2 output 1
-H21 = zeros(fftLen,1);     % filtro di cancellazione del crosstalk input 1 output 2
-H22 = zeros(fftLen,1);     % filtro di cancellazione del crosstalk input 2 output 2
 
 C11 = fft(c11, fftLen);     % HRTF left loudspeaker - left ear
 C12 = fft(c12, fftLen);     % HRTF right loudspeaker - left ear
 C21 = fft(c21, fftLen);     % HRTF left loudspeaker - right ear
 C22 = fft(c22, fftLen);     % HRTF right loudspeaker - right ear
 
+H11 = zeros(fftLen,1);     % filtro di cancellazione del crosstalk input 1 output 1
+H12 = zeros(fftLen,1);     % filtro di cancellazione del crosstalk input 2 output 1
+H21 = zeros(fftLen,1);     % filtro di cancellazione del crosstalk input 1 output 2
+H22 = zeros(fftLen,1);     % filtro di cancellazione del crosstalk input 2 output 2
 %{
 C_prev = [C11(1) C12(1); C21(1) C22(1)];
 beta = .1;
@@ -79,15 +76,14 @@ end
 x1Buff = zeros(fs, 1);
 x2Buff = zeros(fs, 1);
 
+nPoints = length(x1);
 for i = 1 : floor(nPoints/L)
-    % analysis
-    % cop263827967156455y L values of x vector from M - 1 onwards
+    % copy L values of x vector into the buffer from M onwards
     x1Buff(fs - L + 1 : fs) = x1((i - 1) * L + 1 : i * L); 
     x2Buff(fs - L + 1 : fs) = x2((i - 1) * L + 1 : i * L); 
     X1BUFF = fft(x1Buff, fftLen);
     X2BUFF = fft(x2Buff, fftLen);
    
-    % processing
     %%%{
     Y1BUFF = (C11.*H11+C12.*H21).*X1BUFF+(C11.*H12+C12.*H22).*X2BUFF;
     Y2BUFF = (C21.*H11+C22.*H21).*X1BUFF+(C21.*H12+C22.*H22).*X2BUFF;
@@ -98,7 +94,6 @@ for i = 1 : floor(nPoints/L)
         Y2BUFF(n) = (C21(n)*H11(n)+C22(n)*H21(n))*X1BUFF(n)+(C21(n)*H12(n)+C22(n)*H22(n))*X2BUFF(n);
     end
     %}
-    % synthesis
     y1Buff = real(ifft(Y1BUFF));
     y2Buff = real(ifft(Y2BUFF));
     

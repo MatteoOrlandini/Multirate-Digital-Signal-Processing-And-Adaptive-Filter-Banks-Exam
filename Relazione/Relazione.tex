@@ -49,6 +49,15 @@
 	urlcolor={cyan}
 } 
 
+\lstdefinelanguage{cpp}{
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#},
+                language=C++,
+}
+
 \renewcommand{\lstlistingname}{Codice}
 
 \addbibresource{Bibliografia.bib}
@@ -105,6 +114,7 @@ Una tipica situazione di ascolto con due altoparlanti con cancellazione del clos
 La rappresentazione in frequenza dei segnali desiderati binaurali è indicata con $X_1$ e $X_2$ per suoni che raggiungono rispettivamente orecchio destro e sinistro.
 Con $Y_1$ e $Y_2$ invece, si indicano i suoni che effettivamente raggiungono l'ascoltatore, attraversando il sistema.
 Il sistema può essere rappresentato come:
+
 \begin{equation}
 \textbf{Y=CHX}
 \end{equation}
@@ -128,9 +138,11 @@ X_1\\
 X_2
 \end{bmatrix}
 \end{equation}
+
 Per avere il segnale in uscita uguale a quello desiderato $H$ dovrebbe essere l'inversa di $C$. La diretta inversa di $C$ però non garantisce la cancellazione del crosstalk in quanto gli elementi non soddisfano la condizione di fase minima.
 La'approccio utilizzato è quindi quello dell'algoritmo LMS.
 La precedente equazione viene riscritta come:
+
 \begin{equation}
 \begin{bmatrix}
 Y_1\\
@@ -147,14 +159,27 @@ H_{12}\\
 H_{22}\\
 \end{bmatrix}
 \end{equation}
-Le sequenze $r_{ilm}[n]$ corrispondono ai segnali di riferimento filtrati ottenuti facendo passare le sequenze $x_i[n]$ attraverso le funzioni di trasferimento $C_{lm}$.
-\begin{equation}\label{eq:r_ilm}
-r_{ilm}[n]=\sum_{j=0}^{J-1}c_{lm}(j)x_i(n-j)
+
+In generale, si può scrivere il filtraggio nell'$n$-esimo istante di un segnale $\mathbf{a[n]} = \left[a[n], a[n-1], \dots, a[n - M + 1]\right]^T$ con un filtro $\mathbf{b[n]} =  \left[b_{0}[n], b_{1}[n], \dots, b_{M-1}[n]\right]^T$ di lunghezza $M$ come
+\begin{equation}\label{eq:filtraggio_prodotto_scalare}
+y[n] = \sum_{j=0}^{M-1}b_{j}[n]a[n-j] = \mathbf{b}^T[\mathbf{n}] \cdot \mathbf{a}^T[\mathbf{n}].
 \end{equation}
+
+Il filtraggio dei segnali di riferimento $x_i[n]$ con le hrir $c_{lm}$ è dato dalla seguente equazione
+\begin{equation}\label{eq:r_ilm}
+r_{ilm}[n]=\sum_{j=0}^{M-1}c_{lm}[j]x_i[n-j].
+\end{equation}
+
+Si può applicare la formula~\eqref{eq:filtraggio_prodotto_scalare} all'equazione~\eqref{eq:r_ilm} per calcolare le $r_{ilm}[n]$ nel seguente modo:
+
+\begin{equation}\label{eq:r_ilm_prodotto_scalare}
+r_{ilm}[n]=\sum_{j=0}^{M-1}c_{lm,j}[n]x_i[n-j] = \mathbf{c_{lm}}^T[\mathbf{n}] \cdot \mathbf{x_i}^T[\mathbf{n}].
+\end{equation}
+
 Il segnale ricevuto ad ogni orecchio è dato da:
-\begin{equation}
-y_i[n]=r_{1i1}[n]*h_{11}[n]+r_{1i2}[n]*h_{21}[n]+
-r_{2i1}[n]*h_{12}[n]+r_{2i2}[n]*h_{22}[n]
+\begin{equation}\label{eq:y_i_lms}
+y_i[n]=r_{1i1}[n] \circledast h_{11}[n]+r_{1i2}[n] \circledast h_{21}[n]+
+r_{2i1}[n] \circledast h_{12}[n]+r_{2i2}[n] \circledast h_{22}[n]
 \end{equation}
 dove $i,l,m$ assumono i valori 1 o 2.
 Il criterio dell'algoritmo LMS è la minimizzazione della funzione costo
@@ -224,7 +249,7 @@ e_1^{(1)} = d_1 - (r_{111} \circledast h_{11} + r_{112} \circledast h_{21} + r_{
 \]
 l'aggiornamento avviene come di seguito:
 \begin{equation}\label{eq:aggiornamento_lms}
-h^{(k+1)} = h^{(k)} - \mu e_i^{(k)} \circledast \mathbf{r}_i^T
+h^{(k+1)} = h^{(k)} - \mu e_i^{(k)} \cdot \mathbf{r}_i^T
 \end{equation}
 dove $\mathbf{r}_i$ è l'i-esima riga della matrice che contiene le $r_{ilm}$ nell'equazione~\eqref{eq:y_lms2} e $e_i^{(k)}$ è l'errore k-esimo step e all'i-esima riga. Esplicitando l'equazione~\eqref{eq:aggiornamento_lms}, si ottiene
 \[
@@ -370,12 +395,13 @@ Un'implementazione più efficiente è invece quella descritta di seguito, in cui
 \label{subsec:codice_matlab_lms}
 Nel codice dell'algoritmo LMS in Matlab si carica il file audio in formato wav ``Daft Punk - Get Lucky\_cut.wav''. Poiché questo formato contiene i campioni del canale sinistro e di quello destro, si dividono i due canali salvando il primo nella variabile \texttt{x1} e il secondo in \texttt{x2}.
 
-\begin{lstlisting}[label=code:caricamento_audio_lms, caption=Caricamento del file audio, captionpos=b, firstnumber=1]
+\begin{lstlisting}[label=code:caricamento_audio_lms, caption=Caricamento del file audio, captionpos=b]
 [x, Fsample] = audioread('Daft Punk - Get Lucky_cut.wav');
 x1 = x(:, 1);
 x2 = x(:, 2);
 \end{lstlisting}
-Allo stesso modo vengono caricate le quattro HRIR \texttt{c11}, \texttt{c12}, \texttt{c21} e \texttt{c22}.
+
+Allo stesso modo vendono caricate le quattro HRIR \texttt{c11}, \texttt{c12}, \texttt{c21} e \texttt{c22}.
 
 \begin{lstlisting}[label=code:caricamento_hrir_lms, caption=Caricamento delle HRIR, captionpos=b]
 % c11: HRIR left loudspeaker - left ear
@@ -387,25 +413,26 @@ Allo stesso modo vengono caricate le quattro HRIR \texttt{c11}, \texttt{c12}, \t
 % c22: HRIR right loudspeaker - righ ear
 [c22,~] = audioread("HRTF_measurements/elev0/R0e030a.wav");  
 \end{lstlisting}
-Vengono inizializzati i vettori e le variabili che saranno utilizzate nell'algoritmo.
-La lunghezza dei filtri e dei buffer è pari a M=512 in modo da poter effettuare le convoluzioni tra segnali aventi la stessa lunghezza.
-I segnali intermedi r hanno invece dimensione pari a x: L.ùù
-\begin{lstlisting}[label=code:init_lms, caption=Init variabili, captionpos=b]
-% il segnale desiderato x ritardato di tau campioni
+
+Viene salvata la lunghezza dei filtri $c_{11}$, $c_{12}$, $c_{21}$ e $c_{22}$ nella variabile \texttt{M}. Si ha che $M = 512$ e si imposta il ritardo temporale \texttt{tau} pari a \texttt{M}. Conoscendo il valore del ritardo temporale, è possibile costruire i due segnali desiderati \texttt{d1} e \texttt{d2} mettendo \texttt{tau} zeri all'inizio del vettore d'ingresso.
+
+\begin{lstlisting}[label=code:segnale_desiderato_lms, caption=Costruzione del segnale desiderato, captionpos=b]
+M = length(c11);      % lunghezza dei filtri c11, c12, c21, c22
+% il segnale desiderato e' x ritardato di tau campioni
 tau = M;   % ritardo temporale
 d1 = [zeros(tau,1); x1(1:end-tau)]; % segnale desiderato 1 (left)
 d2 = [zeros(tau,1); x2(1:end-tau)]; % segnale desiderato 2 (right)
+\end{lstlisting}
 
+Vengono inizializzati i vettori \texttt{y1} e \texttt{y2} di uscita, i vettori \texttt{e1} e \texttt{e2} che contengono l'errore per i due canali, i vettori \texttt{r\ped{ilm}} che contengono il filtraggio di \texttt{x1} e \texttt{x2} con \texttt{c11}, \texttt{c12}, \texttt{c21} e \texttt{c22}. Questi vettori sono tutti di lunghezza pari a quella de segnale x, cioè \texttt{L}.
+
+\begin{lstlisting}[label=code:inizializzazione_vettori_L, caption=Inizializzazione dei vettori di lunghezza L, captionpos=b]
+L = length(x1);
 y1 = zeros(L,1);  % output 1 (left)
 y2 = zeros(L,1);  % output 2 (right)
 
 e1 = zeros(L,1);  % errore 1 (left)
 e2 = zeros(L,1);  % errore 2 (right)
-
-h11 = zeros(M,1);     % filtro da calcolare input 1 output 1
-h12 = zeros(M,1);     % filtro da calcolare input 2 output 1
-h21 = zeros(M,1);     % filtro da calcolare input 1 output 2
-h22 = zeros(M,1);     % filtro da calcolare input 2 output 2
 
 r111 = zeros(L,1);    % uscita di x1 filtrato da c11 per output y1
 r112 = zeros(L,1);    % uscita di x1 filtrato da c12 per output y1
@@ -415,9 +442,11 @@ r222 = zeros(L,1);    % uscita di x2 filtrato da c22 per output y2
 r221 = zeros(L,1);    % uscita di x2 filtrato da c21 per output y2
 r122 = zeros(L,1);    % uscita di x1 filtrato da c22 per output y2
 r121 = zeros(L,1);    % uscita di x1 filtrato da c21 per output y2
+\end{lstlisting}
 
-mu = 1e-4; 
+Successivamente, vengono inizializzati i vettori di lunghezza \texttt{M}, le variabili \texttt{h11},  \texttt{h12},  \texttt{h21} e  \texttt{h22} contengono i filtri di ricostruzione, i buffer \texttt{x1buff} e \texttt{x2buff} necessari per il filtraggio con i c e i buffer delle uscite $r_{ilm}$ dove $i, l, m = 0,1$.
 
+\begin{lstlisting}[label=code:inizializzazione_vettori_M, caption=Inizializzazione dei vettori di lunghezza M, captionpos=b]
 x1buff = zeros(M, 1);
 x2buff = zeros(M, 1);
 
@@ -430,15 +459,11 @@ r221buff = zeros(M,1);
 r122buff = zeros(M,1);   
 r121buff = zeros(M,1);  
 \end{lstlisting}
-Nel ciclo for principale viene utilizzato un buffer che aggiunge in testa il campione entrante invertendo il segnale di ingresso.
-Il buffer viene poi moltiplicato per la serie di filtri c: in questo modo si ottiene la convoluzione desiderata.
 
-Lo stesso avviene per i segnali intermedi r che vanno a costituire un buffer e attraversano i filtri h.
-Le 4 componenti risultanti vengono quindi sommate per ottenere y1 e y2.
+Nel codice~\ref{code:filtraggio_x_c} viene usato un $\mu = 10^{-3}$ e viene implementata l'equazione~\eqref{eq:r_ilm_prodotto_scalare} che effettua il filtraggio tra le hrir e il segnale di ingresso. Per fare questo, si utilizza un buffer che aggiunge in testa il campione entrante invertendo il segnale di ingresso. Facendo il prodotto scalare dei buffer di ingresso con le rispettive $c_{lm}$, si ottiene il filtraggio desiderato.
 
-Viene quindi calcolato l'errore come la differenza fra il segnale desiderato e le y.
-Questo valore viene poi utilizzato per aggiornare i tappi del filtro h tramite un altro ciclo for.
-\begin{lstlisting}[label=code:caricamento_hrir_lms, caption=Caricamento delle HRIR, captionpos=b]
+\begin{lstlisting}[label=code:filtraggio_x_c, caption=Filtraggio del segnale di ingresso con le hrir, captionpos=b]
+mu = 1e-3; 
 for n = 1:L
     x1buff = [x1(n); x1buff(1:end-1)];
     x2buff = [x2(n); x2buff(1:end-1)];
@@ -451,7 +476,11 @@ for n = 1:L
     r221(n) = c21'*x2buff;
     r122(n) = c22'*x1buff;
     r121(n) = c21'*x1buff;
+\end{lstlisting}
 
+L'equazione~\eqref{eq:r_ilm_prodotto_scalare} viene nuovamente applicata nel codice~\ref{code:filtraggio_r_h} per calcolare le uscite. I segnali intermedi $r_{ilm}$ vanno a costituire un buffer e attraversano i filtri $h$. Le quattro uscite dei filtri $h$ vengono infine sommate per ottenere \texttt{y1} e \texttt{y2}, come mostrato nell'equazione~\eqref{eq:y_i_lms}.
+
+\begin{lstlisting}[label=code:filtraggio_r_h, caption=Calcolo delle uscite, captionpos=b]
     r111buff = [r111(n); r111buff(1:end-1)];
     r112buff = [r112(n); r112buff(1:end-1)];
     r211buff = [r211(n); r211buff(1:end-1)];
@@ -463,10 +492,19 @@ for n = 1:L
     
     y1(n) = h11'*r111buff+h21'*r112buff+h12'*r211buff+h22'*r212buff;
     y2(n) = h11'*r121buff+h21'*r122buff+h12'*r221buff+h22'*r222buff;
-    
+\end{lstlisting}
+
+Viene quindi calcolato l'errore come la differenza fra il segnale desiderato e le uscite.
+
+\begin{lstlisting}[label=code:calcolo_errore, caption=Calcolo dell'errore, captionpos=b]
     e1(n) = d1(n)-y1(n);
     e2(n) = d2(n)-y2(n);
-    
+\end{lstlisting}    
+
+
+I valori dell'errore vengono poi utilizzati per aggiornare i tappi dei filtri \texttt{h11}, \texttt{h12}, \texttt{h21} e \texttt{h22} tramite un altro ciclo for, utilizzando la formula~\eqref{eq:aggiornamento_lms}.
+
+\begin{lstlisting}[label=code:aggiornamento_filtro_lms, caption=Aggiornamento del filtro, captionpos=b]
     for k = 1:M
         h11(k) = h11(k)+mu*(e1(n)*r111buff(k)+e2(n)*r121buff(k));
         h12(k) = h12(k)+mu*(e1(n)*r211buff(k)+e2(n)*r221buff(k));
@@ -475,22 +513,7 @@ for n = 1:L
     end
 end
 \end{lstlisting}
-Vengono poi calcolate le fft dei due filtri in modo da poter visualizzare il loro comportamento in frequenza.
-\begin{lstlisting}[label=code:caricamento_hrir_lms, caption=Caricamento delle HRIR, captionpos=b]
-C11 = fft(c11);
-C12 = fft(c12);
-C21 = fft(c21);
-C22 = fft(c22);
 
-H11 = fft(h11, M);
-H12 = fft(h12, M);
-H21 = fft(h21, M);
-H22 = fft(h22, M);
-\end{lstlisting}
-
-\begin{lstlisting}[label=code:caricamento_hrir_lms, caption=Caricamento delle HRIR, captionpos=b]
-
-\end{lstlisting}
 \subsection{Fast Deconvolution}
 \label{subsec:codice_matlab_fd}
 Nella Fast Deconvolution, come per il codice della LMS, si carica il file audio e le risposte impulsive \texttt{c11}, \texttt{c12}, \texttt{c21} e \texttt{c22} come mostrato nei codici~\ref{code:caricamento_audio_lms} e~\ref{code:caricamento_hrir_lms}. A differenza dell'algoritmo LMS, nella Fast Deconvolution si usa un overlap and save quindi occorre scegliere come dividere in blocchi il segnale di ingresso. Si implementa l'overlap and save come descritto nel capitolo~\ref{subsec:FD_teoria}, con dei blocchi di lunghezza $L = 4096$, pari alla lunghezza di default del frame di Nu-Tech, e un overlap al 50\%, quindi $M = L/2 = 2048$. La lunghezza totale del frame con overlap sarà quindi $\text{fs} = L + M - 1 = 4096+2048-1 = 6143$, per una FFT efficiente si sceglie la potenza di 2 più vicina a $6143$, quindi $\text{fftLen} = 2^{13} = 8192$.
@@ -516,6 +539,92 @@ H21 = zeros(fftLen,1);     % filtro di cancellazione del crosstalk input 1 outpu
 H22 = zeros(fftLen,1);     % filtro di cancellazione del crosstalk input 2 output 2
 \end{lstlisting}
 
+L'implementazione dell'equazione~\eqref{eq:H_FD2} è mostrato nel codice~\ref{code:calcolo_h_fd} con $\beta = 0.1$ e $B = I$, dove $I$ è la matrice identità. Per ogni frequenza $k$ dei filtri $C_{11}$, $C_{12}$, $C_{21}$ e $C_{22}$, composti da \texttt{fftLen} punti in frequenza, viene costruita una matrice $C [k]$ nel seguente modo:
+\begin{equation*}
+C [k] =
+\begin{bmatrix}
+C_{11}[k]	& C_{12}[k]\\
+C_{21}[k]	& C_{22}[k]
+\end{bmatrix}.
+\end{equation*}
+Per trovare i filtri $H_{11}$, $H_{12}$, $H_{21}$ e $H_{22}$ si calcola la matrice $H$ come mostrato nell'equazione~\eqref{eq:H_FD2} dove $H$ è una matrice $2 \times 2$ costruita nel seguente modo:
+\begin{equation*}
+H [k] =
+\begin{bmatrix}
+H_{11}[k]	& H_{12}[k]\\
+H_{21}[k]	& H_{22}[k]
+\end{bmatrix}.
+\end{equation*}
+I filtri $H_{11}$, $H_{12}$, $H_{21}$ e $H_{22}$ sono presi dagli elementi della matrice $H$.
+
+\begin{lstlisting}[label=code:calcolo_h_fd, caption=Calcolo dei filtri di cancellazione del crosstalk, captionpos=b]
+beta = 0.1;
+B = [1 0; 0 1];
+for k = 1:length(C11)
+    C = [C11(k) C12(k); C21(k) C22(k)];
+    H = (C'*C+beta*(B'*B))^(-1)*C'; 
+    H11(k) = H(1, 1);
+    H12(k) = H(1, 2);
+    H21(k) = H(2, 1);
+    H22(k) = H(2, 2);
+end
+\end{lstlisting}
+
+Dopo aver calcolato i filtri $H$, si procede con l'implementazione dell'overlap and save inizializzando due buffer \texttt{x1Buff} e \texttt{x2Buff} con \texttt{fs} zeri.
+
+\begin{lstlisting}[label=code:buffer_ols, caption=Inizializzazione dei buffer per l'overlap and save, captionpos=b]
+x1Buff = zeros(fs, 1);
+x2Buff = zeros(fs, 1);
+\end{lstlisting}
+
+Successivamente si divide il segnale di ingresso, lungo \texttt{nPoints}, in blocchi di lunghezza \texttt{L}, risultando in un numero di blocchi pari a \texttt{nPoints/L}. Poiché non sappiamo a priori se questo valore è intero, lo si approssima per difetto usando la funzione \texttt{floor} di Matlab. Per l'\texttt{i}-esimo blocco si copiano \texttt{L} campioni del segnale di ingresso nel buffer dall'indice $M$ in poi, come mostrato in figura~\ref{fig:ols}.
+
+\begin{lstlisting}[label=code:ols1, caption=Copia di L campioni del segnale di ingresso nel buffer, captionpos=b]
+nPoints = length(x1);
+for i = 1 : floor(nPoints/L)
+    copy L values of x vector into the buffer from M onwards
+    x1Buff(fs - L + 1 : fs) = x1((i - 1) * L + 1 : i * L); 
+    x2Buff(fs - L + 1 : fs) = x2((i - 1) * L + 1 : i * L); 
+\end{lstlisting}
+
+Dopo aver riempito il buffer, si fa la FFT a \texttt{fftLen} punti del buffer di ingresso.
+
+\begin{lstlisting}[label=code:ols2, caption=FFT del buffer di ingresso, captionpos=b]
+	X1BUFF = fft(x1Buff, fftLen);
+	X2BUFF = fft(x2Buff, fftLen);
+\end{lstlisting}
+
+Si calcola il buffer di uscita in frequenza implementando l'equazione~\eqref{eq:y_matrix} come mostrato nel codice~\ref{code:ols3}.
+
+\begin{lstlisting}[label=code:ols3, caption=Calcolo del buffer di uscita in frequenza, captionpos=b]
+	Y1BUFF = (C11.*H11+C12.*H21).*X1BUFF+(C11.*H12+C12.*H22).*X2BUFF;
+	Y2BUFF = (C21.*H11+C22.*H21).*X1BUFF+(C21.*H12+C22.*H22).*X2BUFF;
+\end{lstlisting}
+    
+Usando il buffer di uscita in frequenza, si calcola la IFFT e si prendono solamente i valori reali.
+
+\begin{lstlisting}[label=code:ols4, caption=IFFT del buffer di uscita, captionpos=b]
+	y1Buff = real(ifft(Y1BUFF));
+	y2Buff = real(ifft(Y2BUFF));
+\end{lstlisting}  
+
+L'aggiornamento dell'uscita avviene scartando i primi $M - 1$ campioni e dunque prendendo gli ultimi $L$ campioni del buffer precedentemente calcolato.
+
+\begin{lstlisting}[label=code:ols5, caption=Aggiornamento dell'uscita, captionpos=b]
+	% discard first M - 1 values
+	y1((i-1) * L + 1 : i * L) = y1Buff(fs - L + 1 : fs); 
+	y2((i-1) * L + 1 : i * L) = y2Buff(fs - L + 1 : fs); 
+\end{lstlisting}  
+
+Infine, si aggiornano i buffer di ingresso prendendo gli ultimi $M - 1$ punti del buffer di ingresso precedente e mettendoli all'inizio del buffer di ingresso successivo.
+
+\begin{lstlisting}[label=code:ols6, caption=Aggiornamento del buffer di ingresso, captionpos=b, language=matlabfloz]
+    % first M - 1 values of the new vector must be the last ones of the previous array
+    x1Buff(1 : M - 1) = x1Buff(fs - M + 2 : fs); 
+    x2Buff(1 : M - 1) = x2Buff(fs - M + 2 : fs); 
+end
+\end{lstlisting}  
+
 \clearpage
 
 \section{Codice C}
@@ -524,6 +633,12 @@ H22 = zeros(fftLen,1);     % filtro di cancellazione del crosstalk input 2 outpu
 \label{sec:codice_c_lms}
 \subsection{Fast Deconvolution}
 \label{sec:codice_c_fd}
+Nella libreria \texttt{Plugin.h} viene inizialmente definito il nome del Nuts come ``Fast Deconvolution''.
+
+\begin{lstlisting}[language=cpp]
+#define NUTS_NAME	"Fast Deconvolution"
+\end{lstlisting}
+
 
 \clearpage
 

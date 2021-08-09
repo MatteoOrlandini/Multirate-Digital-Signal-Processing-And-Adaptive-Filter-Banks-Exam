@@ -6,7 +6,6 @@ format long
 %digits(32)
 
 %L = 10000;    % lunghezza input x1 e x2 e output y1 e y2
-M = 512;      % lunghezza dei filtri c11, c12, c21, c22
 %N = 1024;     % lunghezza dei filtri da calcolare h11, h12, h21, h22
 
 %x1 = 0.1*randn(L,1);  % random input 1 (left)
@@ -14,18 +13,6 @@ M = 512;      % lunghezza dei filtri c11, c12, c21, c22
 [x, Fsample] = audioread('Daft Punk - Get Lucky_cut.wav');
 x1 = x(:,1);
 x2 = x(:,2);
-L = length(x1);
-
-% il segnale desiderato è x ritardato di tau campioni
-tau = M;   % ritardo temporale
-d1 = [zeros(tau,1); x1(1:end-tau)]; % segnale desiderato 1 (left)
-d2 = [zeros(tau,1); x2(1:end-tau)]; % segnale desiderato 2 (right)
-
-y1 = zeros(L,1);  % output 1 (left)
-y2 = zeros(L,1);  % output 2 (right)
-
-e1 = zeros(L,1);  % errore 1 (left)
-e2 = zeros(L,1);  % errore 2 (right)
 
 % https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.39.9751&rep=rep1&type=pdf
 % within "HRTF_measurements" folder, each filename has the format
@@ -44,10 +31,18 @@ e2 = zeros(L,1);  % errore 2 (right)
 % c22: HRIR right loudspeaker - righ ear
 [c22,~] = audioread("HRTF_measurements/elev0/R0e030a.wav");  
 
-h11 = zeros(M,1);     % filtro da calcolare input 1 output 1
-h12 = zeros(M,1);     % filtro da calcolare input 2 output 1
-h21 = zeros(M,1);     % filtro da calcolare input 1 output 2
-h22 = zeros(M,1);     % filtro da calcolare input 2 output 2
+M = length(c11);      % lunghezza dei filtri c11, c12, c21, c22
+% il segnale desiderato è x ritardato di tau campioni
+tau = M;   % ritardo temporale
+d1 = [zeros(tau,1); x1(1:end-tau)]; % segnale desiderato 1 (left)
+d2 = [zeros(tau,1); x2(1:end-tau)]; % segnale desiderato 2 (right)
+
+L = length(x1);
+y1 = zeros(L,1);  % output 1 (left)
+y2 = zeros(L,1);  % output 2 (right)
+
+e1 = zeros(L,1);  % errore 1 (left)
+e2 = zeros(L,1);  % errore 2 (right)
 
 r111 = zeros(L,1);    % uscita di x1 filtrato da c11 per output y1
 r112 = zeros(L,1);    % uscita di x1 filtrato da c12 per output y1
@@ -58,7 +53,10 @@ r221 = zeros(L,1);    % uscita di x2 filtrato da c21 per output y2
 r122 = zeros(L,1);    % uscita di x1 filtrato da c22 per output y2
 r121 = zeros(L,1);    % uscita di x1 filtrato da c21 per output y2
 
-mu = 1e-4; 
+h11 = zeros(M,1);     % filtro da calcolare input 1 output 1
+h12 = zeros(M,1);     % filtro da calcolare input 2 output 1
+h21 = zeros(M,1);     % filtro da calcolare input 1 output 2
+h22 = zeros(M,1);     % filtro da calcolare input 2 output 2
 
 x1buff = zeros(M, 1);
 x2buff = zeros(M, 1);
@@ -71,6 +69,8 @@ r222buff = zeros(M,1);
 r221buff = zeros(M,1);    
 r122buff = zeros(M,1);   
 r121buff = zeros(M,1);  
+
+mu = 1e-3; 
 
 for n = 1:L
     x1buff = [x1(n); x1buff(1:end-1)];
@@ -214,7 +214,7 @@ legend('JR Cancellazione xtalk', 'JR Finestra rettangolare')
 %}
 %}
 
-save("lms_data.mat", "h11", "h12", "h21", "h22", "y1", "y2", "e1", "e2")
+save("lms_data.mat", "h11", "h12", "h21", "h22", "y1", "y2", "e1", "e2", "JL_num", "JL_den", "JR_num", "JR_den")
 
 audioin = audioplayer([x1,x2],Fsample);
 %play(audioin);
