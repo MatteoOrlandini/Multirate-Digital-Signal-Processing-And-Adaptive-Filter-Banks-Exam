@@ -5,6 +5,6 @@
 \contentsline {section}{\numberline {2}Dataset}{2}{section.2}% 
 \contentsline {section}{\numberline {3}Descrizione teorica degli algoritmi}{3}{section.3}% 
 \contentsline {subsection}{\numberline {3.1}LMS}{3}{subsection.3.1}% 
-\contentsline {subsection}{\numberline {3.2}Fast Deconvolution}{3}{subsection.3.2}% 
-\contentsline {section}{\numberline {4}Codice Matlab}{6}{section.4}% 
-\contentsline {section}{\numberline {5}Codice C}{6}{section.5}% 
+\contentsline {subsection}{\numberline {3.2}Fast Deconvolution}{5}{subsection.3.2}% 
+\contentsline {section}{\numberline {4}Codice Matlab}{8}{section.4}% 
+\contentsline {section}{\numberline {5}Codice C}{8}{section.5}% 

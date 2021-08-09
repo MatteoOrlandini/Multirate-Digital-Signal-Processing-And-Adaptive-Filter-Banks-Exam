@@ -12,6 +12,7 @@
 \usepackage{listings}
 \usepackage{siunitx}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{mcode} % matlab code
 %inizio impostazioni bibliografia
 \usepackage[autostyle,italian=guillemets]{csquotes} 
@@ -97,6 +98,157 @@ I dati HRTF vengono archiviati nelle directory per elevazione. Ogni nome di dire
 \label{sec:descrizione_teorica}
 \subsection{LMS}
 \label{subsec:LMS_teoria}
+Per la cancellazione del crosstalk l'algoritmo più comune è quello dell'LMS.
+Nonostante sia semplice e accurato ha una veloce convergenza.
+Una tipica situazione di ascolto con due altoparlanti con cancellazione del closstalk è rappresentata in figura...
+La rappresentazione in frequenza dei segnali desiderati binaurali è indicata con $X_1$ e $X_2$ per suoni che raggiungono rispettivamente orecchio destro e sinistro.
+Con $Y_1$ e $Y_2$ invece, si indicano i suoni che effettivamente raggiungono l'ascoltatore, attraversando il sistema.
+Il sistema può essere rappresentato come:
+\begin{equation}
+\textbf{Y=CHX}
+\end{equation}
+ovvero
+\begin{equation}
+\begin{bmatrix}
+Y_1\\
+Y_2
+\end{bmatrix}
+=
+\begin{bmatrix}
+C_{11} & C_{12}\\
+C_{21} & C_{22}
+\end{bmatrix}
+\begin{bmatrix}
+H_{11} & H_{12}\\
+H_{21} & H_{22}
+\end{bmatrix}
+\begin{bmatrix}
+X_1\\
+X_2
+\end{bmatrix}
+\end{equation}
+Per avere il segnale in uscita uguale a quello desiderato $H$ dovrebbe essere l'inversa di $C$. La diretta inversa di $C$ però non garantisce la cancellazione del crosstalk in quanto gli elementi non soddisfano la condizione di fase minima.
+La'approccio utilizzato è quindi quello dell'algoritmo LMS.
+La precedente equazione viene riscritta come:
+\begin{equation}
+\begin{bmatrix}
+Y_1\\
+Y_2
+\end{bmatrix}
+\begin{bmatrix}
+C_{11} X_1 & C_{12} X_1 & C_{11} X_2 & C_{12} X_2 \\ 
+C_{21} X_1 & C_{22} X_1 & C_{21} X_2 & C_{22} X_2 \\ 
+\end{bmatrix}
+\begin{bmatrix}
+H_{11}\\
+H_{21}\\
+H_{12}\\
+H_{22}\\
+\end{bmatrix}
+\end{equation}
+Le sequenze $r_{ilm}[n]$ corrispondono ai segnali di riferimento filtrati ottenuti facendo passare le sequenze $x_i[n]$ attraverso le funzioni di trasferimento $C_{lm}$.
+\begin{equation}
+r_{ilm}[n]=\sum_{j=0}^{J-1}c_{lm}(j)x_i(n-j)
+\end{equation}
+Il segnale ricevuto ad ogni orecchio è dato da:
+\begin{equation}
+y_i[n]=r_{1i1}[n]*h_{11}[n]+r_{1i2}[n]*h_{21}[n]+
+r_{2i1}[n]*h_{12}[n]+r_{2i2}[n]*h_{22}[n]
+\end{equation}
+dove $i,l,m$ assumono i valori 1 o 2.
+Il criterio dell'algoritmo LMS è la minimizzazione della funzione costo
+\begin{equation}
+J=E[e[n]^2]=E[(d[n]-y[n])^2]
+\end{equation}
+dove $e[n]$, $d[n]$ e $y[n]$ sono definiti come
+\begin{equation}
+e[n]=
+\begin{bmatrix}
+e_1[n]\\
+e_2[n]
+\end{bmatrix},
+d[n]=
+\begin{bmatrix}
+d_1[n]\\
+d_2[n]
+\end{bmatrix},
+y[n]=
+\begin{bmatrix}
+y_1[n]\\
+y_2[n]
+\end{bmatrix}
+\end{equation}
+La minimizzazione di $J$ avviene con il metodo steepest descend.
+Nel dominio del tempo discreto il sistema si può scrivere come
+\begin{equation}
+\begin{bmatrix}
+	y_1[n]     \\
+	y_2[n]    
+\end{bmatrix}
+= 
+\begin{bmatrix}
+	c_{11}[n] \circledast x_1[n]  &  c_{12}[n] \circledast x_1[n]  & c_{11}[n] \circledast x_2[n]  & c_{12}[n] \circledast x_2[n]    \\
+	c_{21}[n] \circledast x_1[n]  &  c_{22}[n] \circledast x_1[n]  & c_{21}[n] \circledast x_2[n]  & c_{22}[n] \circledast x_2[n]     
+\end{bmatrix} 
+\circledast
+\begin{bmatrix}
+	h_{11}[n] \\
+	h_{21}[n] \\
+	h_{12}[n] \\
+	h_{22}[n]  
+\end{bmatrix} 
+\end{equation}
+
+\begin{equation}
+\begin{bmatrix}
+	y_1[n]     \\
+	y_2[n]    
+\end{bmatrix}
+= 
+\begin{bmatrix}
+	r_{111}[n]  &	r_{112}[n]  &  r_{211}[n]  &	r_{212}[n]    \\
+	r_{121}[n]  &	r_{122}[n]  &  r_{221}[n]  &	r_{222}[n]    \\
+\end{bmatrix} 
+\circledast
+\begin{bmatrix}
+	h_{11}[n] \\
+	h_{21}[n] \\
+	h_{12}[n] \\
+	h_{22}[n]  
+\end{bmatrix} 
+\end{equation}
+Per ottenere l'errore si calcola la differenza fra il segnale desiderato è l'uscita effettiva.
+\[
+e_1^{(1)} = d_1 - (r_{111} \circledast h_{11} + r_{112} \circledast h_{21} + r_{211} \circledast h_{12} + r_{212} \circledast h_{22})
+\]
+l'aggiornamento avviene come di seguito:
+\[
+h^{(k+1)} = h^{(k)} - \mu e_i^{(k)} \mathbf{r}_i^T
+\]
+dove $\mathbf{r}_i$ è l'i-esima riga di r e $e_i^{(k)}$ è l'errore k-esimo step e all'i-esima riga.
+\[
+\begin{split}
+h_{11} \leftarrow h_{11} - \mu e_1^{(1)} \circledast r_{111}[n]\\
+h_{21} \leftarrow h_{21} - \mu e_1^{(1)} \circledast r_{112}[n]\\
+h_{12} \leftarrow h_{12} - \mu e_1^{(1)} \circledast r_{211}[n]\\
+h_{22} \leftarrow h_{22} - \mu e_1^{(1)} \circledast r_{212}[n]
+\end{split}
+\]
+Allo stesso modo per il secondo canale:
+\[e_2^{(2)} = d_2- (r_{121} \circledast h_{11} + r_{122} \circledast h_{21} + r_{221} \circledast h_{12} + r_{222} \circledast h_{22})
+\]
+
+\[
+\begin{split}
+h_{11} \leftarrow h_{11} - \mu e_2^{(2)} \circledast r_{121}[n]\\
+h_{21} \leftarrow h_{21} - \mu e_2^{(2)} \circledast r_{122}[n]\\
+h_{12} \leftarrow h_{12} - \mu e_2^{(2)} \circledast r_{221}[n]\\
+h_{22} \leftarrow h_{22} - \mu e_2^{(2)} \circledast r_{222}[n]\\
+\end{split}
+\]
+
+
+
 
 \subsection{Fast Deconvolution}
 \label{subsec:FD_teoria}
