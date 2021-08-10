@@ -254,10 +254,10 @@ h^{(k+1)} = h^{(k)} - \mu e_i^{(k)} \cdot \mathbf{r}_i^T
 dove $\mathbf{r}_i$ è l'i-esima riga della matrice che contiene le $r_{ilm}$ nell'equazione~\eqref{eq:y_lms2} e $e_i^{(k)}$ è l'errore k-esimo step e all'i-esima riga. Esplicitando l'equazione~\eqref{eq:aggiornamento_lms}, si ottiene
 \[
 \begin{split}
-h_{11} \leftarrow h_{11} - \mu e_1^{(1)} \circledast r_{111}[n]\\
-h_{21} \leftarrow h_{21} - \mu e_1^{(1)} \circledast r_{112}[n]\\
-h_{12} \leftarrow h_{12} - \mu e_1^{(1)} \circledast r_{211}[n]\\
-h_{22} \leftarrow h_{22} - \mu e_1^{(1)} \circledast r_{212}[n]
+h_{11}^{(k+1)}[n] \leftarrow h_{11}^{(k)}[n] - \mu e_1^{(1)} \cdot r_{111}[n]\\
+h_{21}^{(k+1)}[n] \leftarrow h_{21}^{(k)}[n] - \mu e_1^{(1)} \cdot r_{112}[n]\\
+h_{12}^{(k+1)}[n] \leftarrow h_{12}^{(k)}[n] - \mu e_1^{(1)} \cdot r_{211}[n]\\
+h_{22}^{(k+1)}[n] \leftarrow h_{22}^{(k)}[n] - \mu e_1^{(1)} \cdot r_{212}[n]
 \end{split}
 \]
 Allo stesso modo, per il secondo canale l'errore è definito come:
@@ -266,10 +266,10 @@ Allo stesso modo, per il secondo canale l'errore è definito come:
 
 \[
 \begin{split}
-h_{11} \leftarrow h_{11} - \mu e_2^{(2)} \circledast r_{121}[n]\\
-h_{21} \leftarrow h_{21} - \mu e_2^{(2)} \circledast r_{122}[n]\\
-h_{12} \leftarrow h_{12} - \mu e_2^{(2)} \circledast r_{221}[n]\\
-h_{22} \leftarrow h_{22} - \mu e_2^{(2)} \circledast r_{222}[n]\\
+h_{11}^{(k+1)}[n] \leftarrow h_{11}^{(k)}[n] - \mu e_2^{(2)} \cdot r_{121}[n]\\
+h_{21}^{(k+1)}[n] \leftarrow h_{21}^{(k)}[n] - \mu e_2^{(2)} \cdot r_{122}[n]\\
+h_{12}^{(k+1)}[n] \leftarrow h_{12}^{(k)}[n] - \mu e_2^{(2)} \cdot r_{221}[n]\\
+h_{22}^{(k+1)}[n] \leftarrow h_{22}^{(k)}[n] - \mu e_2^{(2)} \cdot r_{222}[n]\\
 \end{split}
 \]
 
@@ -405,13 +405,13 @@ Allo stesso modo vendono caricate le quattro HRIR \texttt{c11}, \texttt{c12}, \t
 
 \begin{lstlisting}[label=code:caricamento_hrir_lms, caption=Caricamento delle HRIR, captionpos=b]
 % c11: HRIR left loudspeaker - left ear
-[c11,Fs] = audioread("HRTF_measurements/elev0/L0e330a.wav"); 
+[c11,Fs] = audioread('HRTF_measurements/elev0/L0e330a.wav'); 
 % c12: HRIR right loudspeaker - left ear
-[c12,~] = audioread("HRTF_measurements/elev0/L0e030a.wav");     
+[c12,~] = audioread('HRTF_measurements/elev0/L0e030a.wav');     
 % c21: HRIR left loudspeaker - right ear
-[c21,~] = audioread("HRTF_measurements/elev0/R0e330a.wav");    
+[c21,~] = audioread('HRTF_measurements/elev0/R0e330a.wav');    
 % c22: HRIR right loudspeaker - righ ear
-[c22,~] = audioread("HRTF_measurements/elev0/R0e030a.wav");  
+[c22,~] = audioread('HRTF_measurements/elev0/R0e030a.wav');  
 \end{lstlisting}
 
 Viene salvata la lunghezza dei filtri $c_{11}$, $c_{12}$, $c_{21}$ e $c_{22}$ nella variabile \texttt{M}. Si ha che $M = 512$ e si imposta il ritardo temporale \texttt{tau} pari a \texttt{M}. Conoscendo il valore del ritardo temporale, è possibile costruire i due segnali desiderati \texttt{d1} e \texttt{d2} mettendo \texttt{tau} zeri all'inizio del vettore d'ingresso.
