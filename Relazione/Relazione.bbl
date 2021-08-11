@@ -41,6 +41,45 @@
       \field{year}{1994}
       \true{nocite}
     \endentry
+    \entry{4217047}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{hash=330c8733157c951861b96c031f332d74}{%
+           family={Kim},
+           familyi={K\bibinitperiod},
+           given={Jun\bibnamedelima Seong},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=118925056e861f39cb1791287d676833}{%
+           family={Kim},
+           familyi={K\bibinitperiod},
+           given={Sang\bibnamedelima Gyun},
+           giveni={S\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+        {{hash=4a06639929d0d2f21e2fa121caa8dd26}{%
+           family={Yoo},
+           familyi={Y\bibinitperiod},
+           given={Chang\bibnamedelima D.},
+           giveni={C\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \strng{namehash}{e19f641e245cadb40b9a0139ea4aa14d}
+      \strng{fullhash}{e19f641e245cadb40b9a0139ea4aa14d}
+      \strng{bibnamehash}{e19f641e245cadb40b9a0139ea4aa14d}
+      \strng{authorbibnamehash}{e19f641e245cadb40b9a0139ea4aa14d}
+      \strng{authornamehash}{e19f641e245cadb40b9a0139ea4aa14d}
+      \strng{authorfullhash}{e19f641e245cadb40b9a0139ea4aa14d}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2007 IEEE International Conference on Acoustics, Speech and Signal Processing - ICASSP '07}
+      \field{title}{A Novel Adaptive Crosstalk Cancellation using Psychoacoustic Model for 3D Audio}
+      \field{volume}{1}
+      \field{year}{2007}
+      \true{nocite}
+      \field{pages}{I-185-I\bibrangedash 188}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1109/ICASSP.2007.366647
+      \endverb
+    \endentry
     \entry{kirkeby:deconvolution_regularization}{article}{}
       \name{author}{4}{}{%
         {{hash=2aaa7f7a176d3d4ed5d0303a5579be58}{%
@@ -201,6 +240,46 @@
       \range{pages}{6}
       \verb{doi}
       \verb 10.1109/ICALIP.2012.6376616
+      \endverb
+    \endentry
+    \entry{143434}{article}{}
+      \name{author}{3}{}{%
+        {{hash=1b5d7ff3c46a2f605aaf756d00c1c252}{%
+           family={Nelson},
+           familyi={N\bibinitperiod},
+           given={P.A.},
+           giveni={P\bibinitperiod}}}%
+        {{hash=08758bafdb9130ec0225725f9dd89522}{%
+           family={Hamada},
+           familyi={H\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+        {{hash=877d95e319aaa276d7e538520b2b3c3b}{%
+           family={Elliott},
+           familyi={E\bibinitperiod},
+           given={S.J.},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{e3c3d6040ead3928651d25de0d744ca1}
+      \strng{fullhash}{e3c3d6040ead3928651d25de0d744ca1}
+      \strng{bibnamehash}{e3c3d6040ead3928651d25de0d744ca1}
+      \strng{authorbibnamehash}{e3c3d6040ead3928651d25de0d744ca1}
+      \strng{authornamehash}{e3c3d6040ead3928651d25de0d744ca1}
+      \strng{authorfullhash}{e3c3d6040ead3928651d25de0d744ca1}
+      \field{sortinit}{N}
+      \field{sortinithash}{f7242c3ed3dc50029fca1be76c497c7c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Signal Processing}
+      \field{number}{7}
+      \field{title}{Adaptive inverse filters for stereophonic sound reproduction}
+      \field{volume}{40}
+      \field{year}{1992}
+      \true{nocite}
+      \field{pages}{1621\bibrangedash 1632}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1109/78.143434
       \endverb
     \endentry
   \enddatalist

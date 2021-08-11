@@ -13,7 +13,7 @@
 \usepackage{siunitx}
 \usepackage{amssymb}
 \usepackage{amsmath}
-\usepackage[autolinebreaks]{mcode} % matlab code
+\usepackage[autolinebreaks, framed]{mcode} % matlab code
 %\usepackage[numbered]{mcode} % matlab code
 %inizio impostazioni bibliografia
 \usepackage[autostyle,italian=guillemets]{csquotes} 
@@ -631,6 +631,270 @@ end
 \label{sec:codice_c}
 \subsection{LMS}
 \label{sec:codice_c_lms}
+Nella libreria \texttt{Plugin.h} viene inizialmente definito il nome del Nuts come ``LMS Filter''.
+
+\begin{lstlisting}[language=cpp]
+#define NUTS_NAME	"LMS Filter"
+\end{lstlisting}
+Nella classe \texttt{class PlugIn :	public LEEffect} vengono definite le variabili che saranno utilizzate nell'algoritmo.
+
+Le variabili sono le stesse usate nel codice Matlab in \ref{code:inizializzazione_vettori_L} e \ref{code:inizializzazione_vettori_M}.
+\begin{lstlisting}[language=cpp]
+private:
+
+	int FrameSize, SampleRate;
+	int M, L, tau;
+	double mu;
+	double* x1, * x2, * d1, * d2, * y1, * y2, * e1, * e2, * x1buff, * x2buff;
+	double* c11, * c12, * c21, * c22;
+	double* h11, * h12, * h21, * h22;
+	double* r111, * r112, * r211, * r212, * r222, * r221, * r122, * r121;
+	double* r111buff, * r112buff, * r211buff, * r212buff, * r222buff, * r221buff, * r122buff, * r121buff;
+\end{lstlisting}
+Nel file \texttt{PlugIn.cpp} sono presenti le funzioni:
+\begin{itemize}
+\item Costruttore della classe Plugin : viene chiamata quando il NUTS viene caricato sulla board del NUTECH
+\item Funzione di inizializzazione: viene chiamata quando si lancia la riproduzione con il tasto START
+\item Funzione di elaborazione: all’interno di questa funzione va messa la parte di elaborazione real time del segnale
+\item Funzione di deinizializzazione: viene chiamata quando si seleziona il tasto STOP
+\item Distruttore della classe
+Plugin : viene chiamata quando il NUTS viene eliminato dalla board del NUTECH
+\end{itemize}
+Nel costruttore vengono inizializzate a zero le varibile precedentemente definite.
+Framesize e Samplerate vengono ricavati dagli ingressi del blocco che vengono impostati pari a due allo stesso modo delle uscite.
+\begin{lstlisting}[language=cpp]
+PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffect(_CBFunction,_PlugRef,ParentDlg)
+{
+	FrameSize = CBFunction(this,NUTS_GET_FS_SR,0,(LPVOID)AUDIOPROC);
+	SampleRate = CBFunction(this,NUTS_GET_FS_SR,1,(LPVOID)AUDIOPROC);
+
+	LESetNumInput(2);
+	LESetNumOutput(2);
+	
+	M = 512;	// filter length
+	tau = M;
+	mu = 1e-4;
+
+	y1 = 0;
+	y2 = 0;
+
+	x1 = 0;
+	x2 = 0;
+
+	x1buff = 0;
+	x2buff = 0;
+	
+	e1 = 0;
+	e2 = 0;
+
+	d1 = 0;
+	d2 = 0;
+
+	c11 = 0;
+	c12 = 0;
+	c21 = 0;
+	c22 = 0;
+
+	h11 = 0;
+	h12 = 0;
+	h21 = 0;
+	h22 = 0;
+	
+	r111 = 0;
+	r112 = 0;
+	r211 = 0;
+	r212 = 0;
+	r222 = 0;
+	r221 = 0;
+	r122 = 0;
+	r121 = 0;
+
+	r111buff = 0;
+	r112buff = 0;
+	r121buff = 0;
+	r122buff = 0;
+	r211buff = 0;
+	r212buff = 0;
+	r221buff = 0;
+	r222buff = 0;
+
+	bufferNumber = 0;
+}
+\end{lstlisting}
+Nella funzione di inizializzazione vengono allocate le variabili.
+\begin{lstlisting}[language=cpp]
+void __stdcall PlugIn::LEPlugin_Init()
+{
+	if (y1 == 0)
+	{
+		y1 = ippsMalloc_64f(FrameSize);
+		ippsZero_64f(y1, FrameSize);
+	}
+\end{lstlisting}
+Inoltre vegono caricati i tappi dei filtri HRIR tramite la funzione \texttt{read\_dat} presente in \texttt{myLib.cpp}.
+\begin{lstlisting}[language=cpp]
+	// load filter taps
+	read_dat("c11.dat", c11, M);
+
+	read_dat("c12.dat", c12, M);
+
+	read_dat("c21.dat", c21, M);
+
+	read_dat("c22.dat", c22, M);
+\end{lstlisting}
+Nella funzione Process avviene l'algoritmo vero e proprio. Questa funzione viene chiamata per ogni frame dell'ingresso e produce il corrispondente frame in uscita.
+Gli ingressi e le uscite vengono quindi caricati in variabili temporanee in modo da poter essere elaborate.
+Il vettore del segnale desiderato viene creato ritardando l'ingresso di \texttt{tau} campioni.
+L'ingresso viene copiato nelle variabili \texttt{x1} e \texttt{x2} e normalizzato in ampiezza dividendo per 32768.
+I vettori di uscita \texttt{y1} e \texttt{y2} vengono invece posti pari a zero.
+\begin{lstlisting}[language=cpp]
+int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID ExtraInfo)
+{ 
+	double* InputData1 = ((double*)Input[0]->DataBuffer);
+	double* OutputData1 = ((double*)Output[0]->DataBuffer);
+	double* InputData2 = ((double*)Input[1]->DataBuffer);
+	double* OutputData2 = ((double*)Output[1]->DataBuffer);
+	
+	bufferNumber++;
+
+	// d1[0:tau] = x1[end - tau:end];
+	ippsCopy_64f(x1 + FrameSize - tau, d1, tau);
+	// copy InputData1 to x1
+	ippsCopy_64f(InputData1, x1, FrameSize);
+	// divide each element of the vector x1 by 32768 and store the result in x1
+	ippsDivC_64f_I(32768.0, x1, FrameSize);
+	//d1[tau + 1:end] = x1[0:FrameSize - tau];	
+	ippsCopy_64f(x1, d1 + tau, FrameSize - tau);
+	// d2[0:tau] = x2[end - tau:end];
+	ippsCopy_64f(x2 + FrameSize - tau, d2, tau);
+	// copy InputData2 to x2
+	ippsCopy_64f(InputData2, x2, FrameSize);
+	// divide each element of the vector x2 by 32768 and store the result in x2
+	ippsDivC_64f_I(32768.0, x2, FrameSize);
+	//d2[tau + 1:end] = x2[0:FrameSize - tau];	
+	ippsCopy_64f(x2, d2 + tau, FrameSize - tau);
+	
+	// initialize y1 and y2 with zeros
+	ippsZero_64f(y1, FrameSize);
+	ippsZero_64f(y2, FrameSize);
+\end{lstlisting}
+Il ciclo for corrisponde a quello usato in Matlab: vengono creati dei vettori di buffer temporanei e il segnale di ingresso viene elaborato un campione alla volta.
+Moltiplicando il buffer di ingresso per i filtri $c_{ij}$ si ottengono i segnali $r_{ijl}$ intermedi.
+\begin{lstlisting}[language=cpp]
+	for (int i = 0; i < FrameSize; i++)
+	{
+		ippsMove_64f(x1buff, x1buff + 1, M - 1);
+		x1buff[0] = x1[i];
+
+		ippsMove_64f(x2buff, x2buff + 1, M - 1);
+		x2buff[0] = x2[i];
+
+		ippsDotProd_64f(c11, x1buff, M, &(r111[i]));
+		ippsDotProd_64f(c12, x1buff, M, &(r112[i]));
+		ippsDotProd_64f(c11, x2buff, M, &(r211[i]));
+		ippsDotProd_64f(c12, x2buff, M, &(r212[i]));
+		ippsDotProd_64f(c22, x2buff, M, &(r222[i]));
+		ippsDotProd_64f(c21, x2buff, M, &(r221[i]));
+		ippsDotProd_64f(c22, x1buff, M, &(r122[i]));
+		ippsDotProd_64f(c21, x1buff, M, &(r121[i]));
+\end{lstlisting}
+A questo punto sono i segnali $r_{ijl}$ ad essere inseriti nel buffer. Moltiplicando ognuno di essi per $h_{ij}$ e sommando le 4 componenti si ottengono i segnali di uscita \texttt{y1} e \texttt{y2}.
+\begin{lstlisting}[language=cpp]
+		ippsMove_64f(r111buff, r111buff + 1, M - 1);
+		r111buff[0] = r111[i];
+
+		ippsMove_64f(r112buff, r112buff + 1, M - 1);
+		r112buff[0] = r112[i];
+
+		ippsMove_64f(r121buff, r121buff + 1, M - 1);
+		r121buff[0] = r121[i];
+
+		ippsMove_64f(r122buff, r122buff + 1, M - 1);
+		r122buff[0] = r122[i];
+
+		ippsMove_64f(r211buff, r211buff + 1, M - 1);
+		r211buff[0] = r211[i];
+
+		ippsMove_64f(r212buff, r212buff + 1, M - 1);
+		r212buff[0] = r212[i];
+
+		ippsMove_64f(r221buff, r221buff + 1, M - 1);
+		r221buff[0] = r221[i];
+
+		ippsMove_64f(r222buff, r222buff + 1, M - 1);
+		r222buff[0] = r222[i];
+
+		double ytmp = 0.0;
+		ippsDotProd_64f(h11, r111buff, M, y1 + i);
+		// y1[i] = y1[i] + ytmp;
+
+		ippsDotProd_64f(h21, r112buff, M, &ytmp);
+		y1[i] = y1[i] + ytmp;
+		//ippsAddC_64f_I(ytmp, y1 + i, 1);
+
+		ippsDotProd_64f(h12, r211buff, M, &ytmp);
+		y1[i] = y1[i] + ytmp;
+		//ippsAddC_64f_I(ytmp, y1 + i, 1);
+
+		ippsDotProd_64f(h22, r212buff, M, &ytmp);
+		y1[i] = y1[i] + ytmp;
+		//ippsAddC_64f_I(ytmp, y1 + i, 1);
+
+		ippsDotProd_64f(h11, r121buff, M, y2 + i);
+		//y2[i] = y2[i] + ytmp;
+
+		ippsDotProd_64f(h21, r122buff, M, &ytmp);
+		y2[i] = y2[i] + ytmp;
+		//ippsAddC_64f_I(ytmp, y2 + i, 1);
+
+		ippsDotProd_64f(h12, r221buff, M, &ytmp);
+		y2[i] = y2[i] + ytmp;
+		//ippsAddC_64f_I(ytmp, y2 + i, 1);
+
+		ippsDotProd_64f(h22, r222buff, M, &ytmp);
+		y2[i] = y2[i] + ytmp;
+		//ippsAddC_64f_I(ytmp, y2 + i, 1);
+\end{lstlisting}
+L'errore viene calcolato per ogni campione tramite la differenza fra il segnale desiderato e quello ottenuto.
+\begin{lstlisting}[language=cpp]
+		e1[i] = d1[i] - y1[i];
+		e2[i] = d2[i] - y2[i];
+\end{lstlisting}
+I filtri h vengono poi aggiornati analogamente a \ref{code:aggiornamento_filtro_lms} tramite il metodo steepest descend.
+\begin{lstlisting}[language=cpp]
+		for (int j = 0; j < M; j++)
+		{
+			h11[j] = h11[j] + mu * (e1[i] * r111buff[j] + e2[i] * r121buff[j]);
+			h12[j] = h12[j] + mu * (e1[i] * r211buff[j] + e2[i] * r221buff[j]);
+			h21[j] = h21[j] + mu * (e1[i] * r112buff[j] + e2[i] * r122buff[j]);
+			h22[j] = h22[j] + mu * (e1[i] * r212buff[j] + e2[i] * r222buff[j]);
+		}	
+	}
+\end{lstlisting}
+Il vettore in uscita viene quindi di nuovo riportate in \texttt{OutputData1} e \texttt{OutputData2} dopo essere stato scalato per 32768.
+\begin{lstlisting}[language=cpp]
+	// multiply each element of the vector y1 by a 32768 and store the result in y1
+	ippsMulC_64f_I(32768.0, y1, FrameSize);
+	// copy y1 to OutputData1
+	ippsCopy_64f(y1, OutputData1, FrameSize);
+	// multiply each element of the vector y2 by a 32768 and store the result in y2
+	ippsMulC_64f_I(32768.0, y2, FrameSize);
+	// copy y2 to OutputData2
+	ippsCopy_64f(y2, OutputData2, FrameSize);
+	return COMPLETED;
+}
+\end{lstlisting}
+Nella funzione Delete vengono liberate dalla memoria tutte le variabili che erano state allocate nella Init.
+\begin{lstlisting}[language=cpp]
+void __stdcall PlugIn::LEPlugin_Delete()
+{
+	if (y1 != 0)
+	{
+		ippsFree(y1);
+		y1 = 0;
+	}
+\end{lstlisting}
+
 \subsection{Fast Deconvolution}
 \label{sec:codice_c_fd}
 Nella libreria \texttt{Plugin.h} viene inizialmente definito il nome del Nuts come ``Fast Deconvolution''.
