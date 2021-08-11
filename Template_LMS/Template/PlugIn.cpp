@@ -1,7 +1,6 @@
 #include "StdAfx.h"
 #include ".\plugin.h"
 
-
 PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffect(_CBFunction,_PlugRef,ParentDlg)
 {
 	FrameSize = CBFunction(this,NUTS_GET_FS_SR,0,(LPVOID)AUDIOPROC);
@@ -10,6 +9,8 @@ PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffe
 	LESetNumInput(2);
 	LESetNumOutput(2);
 	
+	isRunning = false;
+
 	M = 512;	// filter length
 	tau = M;
 	mu = 1e-4;
@@ -56,8 +57,6 @@ PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffe
 	r212buff = 0;
 	r221buff = 0;
 	r222buff = 0;
-
-	bufferNumber = 0;
 }
 
 int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID ExtraInfo)
@@ -66,8 +65,6 @@ int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID E
 	double* OutputData1 = ((double*)Output[0]->DataBuffer);
 	double* InputData2 = ((double*)Input[1]->DataBuffer);
 	double* OutputData2 = ((double*)Output[1]->DataBuffer);
-	
-	bufferNumber++;
 
 	// d1[0:tau] = x1[end - tau:end];
 	ippsCopy_64f(x1 + FrameSize - tau, d1, tau);
@@ -195,11 +192,11 @@ int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID E
 		e1[i] = d1[i] - y1[i];
 		e2[i] = d2[i] - y2[i];
 
-		if (y1[i] > 1.0)
-			printf("\n"); // MATLAB y1(40*4096+297)
+		//if (y1[i] > 1.0)
+		//	printf("\n"); // MATLAB y1(40*4096+297)
 
-		if (y2[i] > 1.0)
-			printf("\n");
+		//if (y2[i] > 1.0)
+		//	printf("\n");
 
 		for (int j = 0; j < M; j++)
 		{
@@ -217,6 +214,9 @@ int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID E
 	ippsMulC_64f_I(32768.0, y2, FrameSize);
 	// copy y2 to OutputData2
 	ippsCopy_64f(y2, OutputData2, FrameSize);
+
+	write_dat("e1.dat", e1, FrameSize, "");
+	write_dat("e2.dat", e2, FrameSize, "");
 
 	/*
 	// filter r111 with h11 and store the result in ytmp
@@ -279,6 +279,8 @@ int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID E
 
 void __stdcall PlugIn::LEPlugin_Init()
 {
+	isRunning = true;
+
 	if (y1 == 0)
 	{
 		y1 = ippsMalloc_64f(FrameSize);
@@ -326,6 +328,7 @@ void __stdcall PlugIn::LEPlugin_Init()
 		e2 = ippsMalloc_64f(FrameSize);
 		ippsZero_64f(e2, FrameSize);
 	}
+
 	if (d1 == 0)
 	{
 		d1 = ippsMalloc_64f(FrameSize);
@@ -566,6 +569,8 @@ void __stdcall PlugIn::LEPlugin_Init()
 
 void __stdcall PlugIn::LEPlugin_Delete()
 {
+	isRunning = false;
+
 	if (y1 != 0)
 	{
 		ippsFree(y1);
@@ -849,11 +854,32 @@ void __stdcall PlugIn::LESetName(char *Name)
 
 void __stdcall PlugIn::LESetParameter(int Index,void *Data,LPVOID bBroadCastInfo)
 {
+	CBFunction(this, NUTS_GETSECURETIME, NUTSSECURE, 0);
+
+	if (Index == ID_MU)
+	{
+		if (!isRunning)
+		{
+			memcpy(&mu, (double*)Data, sizeof(double));
+			CBFunction(this, NUTS_UPDATERTWATCH, ID_MU, 0);
+		}
+	}
+
+	CBFunction(this, NUTS_RELEASESECURETIME, NUTSSECURE, 0);
 
 }
 
 int  __stdcall PlugIn::LEGetParameter(int Index,void *Data)
 {
+
+	CBFunction(this, NUTS_GETSECURETIME, NUTSSECURE, 0);
+
+	if (Index == ID_MU)
+	{
+		memcpy((double*)Data, &mu, sizeof(double));
+	}
+
+	CBFunction(this, NUTS_RELEASESECURETIME, NUTSSECURE, 0);
 	return 0;
 }
 
@@ -869,7 +895,15 @@ void __stdcall PlugIn::LELoadSetUp()
 
 void __stdcall PlugIn::LERTWatchInit()
 {
+	WatchType NewWatch;
 
+	memset(&NewWatch, 0, sizeof(WatchType));
+	NewWatch.EnableWrite = true;
+	NewWatch.LenByte = sizeof(double);
+	NewWatch.TypeVar = WTC_DOUBLE;
+	NewWatch.IDVar = ID_MU;
+	sprintf(NewWatch.VarName, "mu\0");
+	CBFunction(this, NUTS_ADDRTWATCH, 0, &NewWatch);
 }
 
 void __stdcall PlugIn::LESampleRateChange(int NewVal,int TrigType)

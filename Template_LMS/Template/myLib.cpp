@@ -12,8 +12,10 @@ void write_dat(char *name, double *data, int dim, char *save_name) {
 	c=(char *)(void *)data;
 
 	fstream File;
-	File.open(name_a,ios::out | ios::binary);
-	File.write(c,dim*sizeof(double));
+	// ios::app is the open mode "append" meaning
+	// new data will be written to the end of the file.
+	File.open(name_a, ios::app | ios::binary);
+	File.write(c, dim * sizeof(double));
 	File.close();
 }
 

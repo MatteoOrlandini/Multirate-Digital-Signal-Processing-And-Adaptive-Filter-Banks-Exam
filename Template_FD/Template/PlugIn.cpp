@@ -17,7 +17,6 @@ PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffe
 	M = int(L / 2);
 	fs = L + M - 1;
 
-	tau = M;
 	beta = 0.1;
 
 	x1buff = 0;

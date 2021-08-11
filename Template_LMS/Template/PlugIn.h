@@ -20,6 +20,7 @@
 
 #define NUTS_NAME	"LMS Filter"
 
+#define ID_MU 0 
 
 class PlugIn :	public LEEffect
 {
@@ -68,13 +69,13 @@ private:
 	int FrameSize, SampleRate;
 	int M, L, tau;
 	double mu;
-	double* x1, * x2, * d1, * d2, * y1, * y2, * e1, * e2, * x1buff, * x2buff;
+	double* x1, * x2, * d1, * d2, * y1, * y2, * e1, * e2, * e1tot, * e2tot, * x1buff, * x2buff;
 	double* c11, * c12, * c21, * c22;
 	double* h11, * h12, * h21, * h22;
 	double* r111, * r112, * r211, * r212, * r222, * r221, * r122, * r121;
 	double* r111buff, * r112buff, * r211buff, * r212buff, * r222buff, * r221buff, * r122buff, * r121buff;
-	
-	int bufferNumber;
+
+	bool isRunning;
 	/*
 	int specSizeh11;
 	int specSizeh12;

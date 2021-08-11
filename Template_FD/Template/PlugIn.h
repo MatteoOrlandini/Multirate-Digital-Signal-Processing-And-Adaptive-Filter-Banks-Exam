@@ -70,7 +70,7 @@ public:
 private:
 
 	int FrameSize,SampleRate;
-	int L, M, fs, tau;
+	int L, M, fs, fftLen, fftOrd;
 	double beta, * hrir;
 	Ipp64fc* x1buff, * x2buff, * X1BUFF, * X2BUFF, * y1buff, * y2buff, * Y1BUFF, * Y2BUFF;
 	Ipp64fc* c11, * c12, * c21, * c22, * C11, * C12, * C21, * C22;
@@ -101,8 +101,6 @@ private:
 	Ipp8u* pMemBuffer;
 
 	int sizeSpec, sizeInit, sizeBuffer;
-
-	int fftLen, fftOrd;
 
 	bool isRunning;
 
