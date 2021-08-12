@@ -744,8 +744,8 @@ Inoltre vegono caricati i tappi dei filtri HRIR tramite la funzione \texttt{read
 \end{lstlisting}
 Nella funzione Process avviene l'algoritmo vero e proprio. Questa funzione viene chiamata per ogni frame dell'ingresso e produce il corrispondente frame in uscita.
 Gli ingressi e le uscite vengono quindi caricati in variabili temporanee in modo da poter essere elaborate.
-Il vettore del segnale desiderato viene creato ritardando l'ingresso di \texttt{tau} campioni.
-L'ingresso viene copiato nelle variabili \texttt{x1} e \texttt{x2} e normalizzato in ampiezza dividendo per 32768.
+Gli ingressi \texttt{InputData1} e \texttt{InputData2} vengono copiati nelle variabili \texttt{x1} e \texttt{x2} tramite la funzione \texttt{ippsCopy\_64f}.
+Usando la stessa funzione si crea il vettore del segnale desiderato ritardando l’ingresso di \texttt{tau} campioni copiando \texttt{tau} valori dal puntatore \texttt{x1 + FrameSize - tau} in \texttt{d1} e  allo stesso modo dal puntatore \texttt{x2 + FrameSize - tau} in \texttt{d2}.
 I vettori di uscita \texttt{y1} e \texttt{y2} vengono invece posti pari a zero.
 \begin{lstlisting}[language=cpp]
 int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID ExtraInfo)
@@ -799,6 +799,8 @@ Moltiplicando il buffer di ingresso per i filtri $c_{ij}$ si ottengono i segnali
 		ippsDotProd_64f(c21, x1buff, M, &(r121[i]));
 \end{lstlisting}
 A questo punto sono i segnali $r_{ijl}$ ad essere inseriti nel buffer. Moltiplicando ognuno di essi per $h_{ij}$ e sommando le 4 componenti si ottengono i segnali di uscita \texttt{y1} e \texttt{y2}.
+
+La variabile \texttt{ytmp} viene utilizzata come variabile di appoggio per le componenti parziali dell'uscita.
 \begin{lstlisting}[language=cpp]
 		ippsMove_64f(r111buff, r111buff + 1, M - 1);
 		r111buff[0] = r111[i];
