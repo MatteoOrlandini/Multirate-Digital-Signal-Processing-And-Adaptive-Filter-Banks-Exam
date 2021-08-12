@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.12.18)  12 AUG 2021 15:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.12.18)  12 AUG 2021 15:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1204,15 +1204,8 @@ Overfull \hbox (30.73323pt too wide) detected at line 236
 [] [] \OT1/cmr/m/n/12 = [] \U/msa/m/n/12 ~ []
  []
 
-[4] [5] [6]
-
-LaTeX Warning: Reference `H_FD_3' on page 7 undefined on input line 327.
-
-
-LaTeX Warning: Reference `H_FD_3' on page 7 undefined on input line 332.
-
-[7] [8]
-<Immagini/ols.jpg, id=182, 249.93375pt x 203.25937pt>
+[4] [5] [6] [7] [8]
+<Immagini/ols.jpg, id=184, 249.93375pt x 203.25937pt>
 File: Immagini/ols.jpg Graphic file (type jpg)
 <use Immagini/ols.jpg>
 Package pdftex.def Info: Immagini/ols.jpg  used on input line 395.
@@ -1318,19 +1311,15 @@ Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1539.
 
 Package rerunfilecheck Info: File `Relazione.out' has not changed.
 (rerunfilecheck)             Checksum: 1919EFCFC6D6A5EE3AF9C810AA28A016;609.
-
-
-LaTeX Warning: There were undefined references.
-
 Package logreq Info: Writing requests to 'Relazione.run.xml'.
 \openout1 = `Relazione.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 31457 strings out of 492623
- 567732 string characters out of 6126681
- 1043889 words of memory out of 5000000
- 34239 multiletter control sequences out of 15000+600000
+ 31456 strings out of 492623
+ 567724 string characters out of 6126681
+ 1043907 words of memory out of 5000000
+ 34238 multiletter control sequences out of 15000+600000
  558605 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  44i,25n,69p,1541b,2413s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1366,10 +1355,10 @@ ublic/cm-super/sftt1000.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts/typ
 e1/public/cm-super/sftt1200.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts
 /type1/urw/courier/ucrr8a.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts/t
 ype1/urw/times/utmr8a.pfb>
-Output written on Relazione.pdf (41 pages, 608639 bytes).
+Output written on Relazione.pdf (41 pages, 608475 bytes).
 PDF statistics:
- 1372 PDF objects out of 1440 (max. 8388607)
- 1285 compressed objects within 13 object streams
+ 1374 PDF objects out of 1440 (max. 8388607)
+ 1287 compressed objects within 13 object streams
  815 named destinations out of 1000 (max. 500000)
  99 words of extra memory for PDF output out of 10000 (max. 10000000)
 

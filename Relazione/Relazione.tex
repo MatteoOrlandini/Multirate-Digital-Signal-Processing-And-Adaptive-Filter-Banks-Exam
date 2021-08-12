@@ -324,12 +324,12 @@ Le equazioni~\eqref{eq:H_FD} e~\eqref{eq:H_FD2} rappresentano una espressione di
 \begin{equation}\label{eq:H_FD3}
 H[k] = \left[C^H[k] C[k] + \beta I)\right]^{-1} C^H[k]
 \end{equation}
-dove $k$ indica la $k$-esima frequenza corrispondente a $\exp(j2\pi k/N)$ e l'apice $H$ denota l'operatore Hermitiano che fa la trasposta coniugata del suo argomento. Dall'equazione~\eqref{H_FD_3} si può osservare che ponendo $\beta = 0$ si ottiene $H = C^{-1}$. In questo caso, poiché $Y = CHX = C C^{-1} X = IX = X$, si ottiene in uscita il segnale d'ingresso.
+dove $k$ indica la $k$-esima frequenza corrispondente a $\exp(j2\pi k/N)$ e l'apice $H$ denota l'operatore Hermitiano che fa la trasposta coniugata del suo argomento. Dall'equazione~\eqref{eq:H_FD3} si può osservare che ponendo $\beta = 0$ si ottiene $H = C^{-1}$. In questo caso, poiché $Y = CHX = C C^{-1} X = IX = X$, si ottiene in uscita il segnale d'ingresso.
 
 Per calcolare la risposta impulsiva del filtro occorre seguire i seguenti passi:
 \begin{enumerate}
 \item si calcola la matrice $2 \times 2$ $C[k]$ tramite una FFT delle risposte impulsive $c_{ij}[n]$ con $i = 1, 2$ e $j = 1, 2$. Ad esempio, $C_{11}[k]$ contiene l'ampiezza della $k$-esima armonica della FFT di $c_{11}$,
-\item si calcola $H[k]$ usando la formula~\eqref{H_FD_3},
+\item si calcola $H[k]$ usando la formula~\eqref{eq:H_FD3},
 \item si calcola $h[n]$ facendo una FFT inversa a $N$ punti,
 \item si implementa uno shift ciclico di $m$ campioni per ogni elemento di $h_{ij}[n]$ con $i = 1, 2$ e $j = 1, 2$.
 \end{enumerate}
