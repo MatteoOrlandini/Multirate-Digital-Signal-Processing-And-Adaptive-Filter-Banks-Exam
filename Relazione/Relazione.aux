@@ -51,7 +51,7 @@
 \newlabel{errore_fd}{{14}{6}{Fast Deconvolution}{equation.3.14}{}}
 \newlabel{eq:H_FD}{{17}{6}{Fast Deconvolution}{equation.3.17}{}}
 \newlabel{eq:H_FD2}{{18}{7}{Fast Deconvolution}{equation.3.18}{}}
-\newlabel{H_FD_3}{{19}{7}{Fast Deconvolution}{equation.3.19}{}}
+\newlabel{eq:H_FD3}{{19}{7}{Fast Deconvolution}{equation.3.19}{}}
 \newlabel{eq:y_matrix}{{20}{7}{Fast Deconvolution}{equation.3.20}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Metodo Overlap and Save\relax }}{9}{figure.caption.2}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
@@ -104,8 +104,72 @@
 \newlabel{sec:codice_c}{{5}{17}{Codice C}{section.5}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1}LMS}{17}{subsection.5.1}\protected@file@percent }
 \newlabel{sec:codice_c_lms}{{5.1}{17}{LMS}{subsection.5.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Fast Deconvolution}{24}{subsection.5.2}\protected@file@percent }
-\newlabel{sec:codice_c_fd}{{5.2}{24}{Fast Deconvolution}{subsection.5.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Fast Deconvolution}{23}{subsection.5.2}\protected@file@percent }
+\newlabel{sec:codice_c_fd}{{5.2}{23}{Fast Deconvolution}{subsection.5.2}{}}
+\newlabel{code:costanti_c}{{20}{23}{Dichiarazione delle costanti in \texttt {Plugin.h}}{lstlisting.20}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {20}Dichiarazione delle costanti in \texttt  {Plugin.h}}{23}{lstlisting.20}\protected@file@percent }
+\newlabel{code:Ipp64fc}{{21}{24}{Struct \texttt {Ipp64fc}}{lstlisting.21}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {21}Struct \texttt  {Ipp64fc}}{24}{lstlisting.21}\protected@file@percent }
+\newlabel{code:variabili}{{22}{24}{Dichiarazione delle variabili in \texttt {Plugin.h}}{lstlisting.22}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {22}Dichiarazione delle variabili in \texttt  {Plugin.h}}{24}{lstlisting.22}\protected@file@percent }
+\newlabel{code:myLib.h}{{23}{25}{Libreria \texttt {myLib.h}}{lstlisting.23}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {23}Libreria \texttt  {myLib.h}}{25}{lstlisting.23}\protected@file@percent }
+\newlabel{code:myLib.cpp}{{24}{25}{File \texttt {myLib.cpp}}{lstlisting.24}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {24}File \texttt  {myLib.cpp}}{25}{lstlisting.24}\protected@file@percent }
+\newlabel{code:costruttore}{{25}{26}{Costruttore}{lstlisting.25}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {25}Costruttore}{26}{lstlisting.25}\protected@file@percent }
+\newlabel{code:isRunning_init}{{26}{27}{Variabile \texttt {isRunning} nella funzione \texttt {LEPlugin\_Init}}{lstlisting.26}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {26}Variabile \texttt  {isRunning} nella funzione \texttt  {LEPlugin\_Init}}{27}{lstlisting.26}\protected@file@percent }
+\newlabel{code:allocazione_fd}{{27}{27}{Allocazione della variabile \texttt {x1buff} nella funzione \texttt {LEPlugin\_Init}}{lstlisting.27}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {27}Allocazione della variabile \texttt  {x1buff} nella funzione \texttt  {LEPlugin\_Init}}{27}{lstlisting.27}\protected@file@percent }
+\newlabel{code:lettura_hrir}{{28}{28}{Lettura delle HRIR}{lstlisting.28}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {28}Lettura delle HRIR}{28}{lstlisting.28}\protected@file@percent }
+\newlabel{code:inizializzazione_fft}{{29}{30}{Inizializzazione FFT}{lstlisting.29}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {29}Inizializzazione FFT}{30}{lstlisting.29}\protected@file@percent }
+\newlabel{code:fft_hrir_c}{{30}{30}{FFT delle HRIR}{lstlisting.30}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {30}FFT delle HRIR}{30}{lstlisting.30}\protected@file@percent }
+\newlabel{eq:Ctemp}{{25}{30}{Fast Deconvolution}{equation.5.25}{}}
+\newlabel{eq:c_conj}{{26}{30}{Fast Deconvolution}{equation.5.26}{}}
+\newlabel{code:implementazione_matrice_C}{{31}{30}{Implementazione della matrice \texttt {C} e \texttt {Cconj}}{lstlisting.31}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {31}Implementazione della matrice \texttt  {C} e \texttt  {Cconj}}{30}{lstlisting.31}\protected@file@percent }
+\newlabel{eq:Ctemp_esplicita}{{27}{31}{Fast Deconvolution}{equation.5.27}{}}
+\newlabel{eq:Ctemp_esplicita2}{{28}{31}{Fast Deconvolution}{equation.5.28}{}}
+\newlabel{eq:Ctemp_esplicita3}{{29}{31}{Fast Deconvolution}{equation.5.29}{}}
+\newlabel{eq:sistema_ctemp}{{30}{31}{Fast Deconvolution}{equation.5.30}{}}
+\newlabel{code:ctemp_11}{{32}{31}{Implementazione della prima riga del sistema~\eqref {eq:sistema_ctemp}}{lstlisting.32}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {32}Implementazione della prima riga del sistema~\textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces \ref  {eq:sistema_ctemp}\unskip \@@italiccorr )}}}{31}{lstlisting.32}\protected@file@percent }
+\newlabel{code:ctemp}{{33}{32}{Implementazione della matrice \texttt {Ctemp}}{lstlisting.33}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {33}Implementazione della matrice \texttt  {Ctemp}}{32}{lstlisting.33}\protected@file@percent }
+\newlabel{eq:det_Ctemp}{{31}{32}{Fast Deconvolution}{equation.5.31}{}}
+\newlabel{code:det_Ctemp}{{34}{32}{Calcolo del determinante della matrice \texttt {Ctemp}}{lstlisting.34}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {34}Calcolo del determinante della matrice \texttt  {Ctemp}}{32}{lstlisting.34}\protected@file@percent }
+\newlabel{eq:inversa_Ctemp}{{32}{33}{Fast Deconvolution}{equation.5.32}{}}
+\newlabel{code:inversa_Ctemp}{{35}{33}{Calcolo dell'inversa della matrice \texttt {Ctemp}}{lstlisting.35}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {35}Calcolo dell'inversa della matrice \texttt  {Ctemp}}{33}{lstlisting.35}\protected@file@percent }
+\newlabel{eq:calcolo_H}{{33}{33}{Fast Deconvolution}{equation.5.33}{}}
+\newlabel{eq:calcolo_H_esplicito}{{34}{33}{Fast Deconvolution}{equation.5.34}{}}
+\newlabel{eq:H11_sistema}{{35}{34}{Fast Deconvolution}{equation.5.35}{}}
+\newlabel{code:H11}{{36}{34}{Calcolo dell'$n$-esima armonica di \texttt {H11}}{lstlisting.36}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {36}Calcolo dell'$n$-esima armonica di \texttt  {H11}}{34}{lstlisting.36}\protected@file@percent }
+\newlabel{code:calcolo_H}{{37}{34}{Calcolo dell'$n$-esima armonica di \texttt {H12, H21, H22}}{lstlisting.37}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {37}Calcolo dell'$n$-esima armonica di \texttt  {H12, H21, H22}}{34}{lstlisting.37}\protected@file@percent }
+\newlabel{code:copia_puntatori}{{38}{35}{Copia dei puntatori degli ingressi e delle uscite}{lstlisting.38}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {38}Copia dei puntatori degli ingressi e delle uscite}{35}{lstlisting.38}\protected@file@percent }
+\newlabel{code:buffer_C}{{39}{35}{Creazione dei buffer di ingresso e normalizzazione}{lstlisting.39}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {39}Creazione dei buffer di ingresso e normalizzazione}{35}{lstlisting.39}\protected@file@percent }
+\newlabel{code:FFT_buffer}{{40}{36}{FFT dei buffer di ingresso}{lstlisting.40}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {40}FFT dei buffer di ingresso}{36}{lstlisting.40}\protected@file@percent }
+\newlabel{eq:y_matrix_sistema}{{36}{36}{Fast Deconvolution}{equation.5.36}{}}
+\newlabel{code:buffer_output_frequenza}{{41}{36}{Calcolo dei buffer di uscita in frequenza}{lstlisting.41}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {41}Calcolo dei buffer di uscita in frequenza}{36}{lstlisting.41}\protected@file@percent }
+\newlabel{code:buffer_output_tempo}{{42}{37}{Calcolo dei buffer di uscita nel tempo con la IFFT}{lstlisting.42}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {42}Calcolo dei buffer di uscita nel tempo con la IFFT}{37}{lstlisting.42}\protected@file@percent }
+\newlabel{code:aggiornamento_uscite}{{43}{37}{Aggiornamento delle uscite}{lstlisting.43}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {43}Aggiornamento delle uscite}{37}{lstlisting.43}\protected@file@percent }
+\newlabel{code:aggiornamento_buffer_ingresso}{{44}{38}{Aggiornamento dei buffer di ingresso}{lstlisting.44}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {44}Aggiornamento dei buffer di ingresso}{38}{lstlisting.44}\protected@file@percent }
+\newlabel{code:rtwatch_fd}{{45}{38}{Creazione RT Watch}{lstlisting.45}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {45}Creazione RT Watch}{38}{lstlisting.45}\protected@file@percent }
 \abx@aux@refcontextdefaultsdone
 \abx@aux@defaultrefcontext{0}{Gardner:HRTF}{nty/global//global/global}
 \abx@aux@defaultrefcontext{0}{4217047}{nty/global//global/global}

@@ -9,12 +9,13 @@
 \usepackage{booktabs} %toprule, midrule, bottomrule
 \usepackage{subfig}
 \usepackage{graphicx}
+\usepackage[dvipsnames,table,xcdraw]{xcolor}
+\usepackage[autolinebreaks, framed]{mcode} % matlab code
+%\usepackage[numbered]{mcode} % matlab code
 \usepackage{listings}
 \usepackage{siunitx}
 \usepackage{amssymb}
 \usepackage{amsmath}
-\usepackage[autolinebreaks, framed]{mcode} % matlab code
-%\usepackage[numbered]{mcode} % matlab code
 %inizio impostazioni bibliografia
 \usepackage[autostyle,italian=guillemets]{csquotes} 
 %autostyle adatta lo stile delle citazioni alla lingua corrente del documento;
@@ -50,12 +51,21 @@
 } 
 
 \lstdefinelanguage{cpp}{
-                basicstyle=\ttfamily,
+                basicstyle=\ttfamily\footnotesize ,
                 keywordstyle=\color{blue}\ttfamily,
                 stringstyle=\color{red}\ttfamily,
                 commentstyle=\color{green}\ttfamily,
                 morecomment=[l][\color{magenta}]{\#},
                 language=C++,
+                emph={[1]ippsMalloc_64f, ippsMalloc_64fc, ippsZero_64fc, ippsZero_64f,  ippsFFTGetSize_C_64fc, ippMalloc, ippsFFTInit_C_64fc, read_dat, write_dat, memset, sprintf, strcpy, strcat, open, write, close, LESetNumOutput, LESetNumInput,log10, LEPlugin_Init, ippsMalloc_64fc, ippsZero_64fc, ippsFFTFwd_CToC_64fc, ippsConj_64fc, ippsMul_64fc, ippsAdd_64fc_I, ippsAddC_64fc_I, ippsDivC_64fc, ippsMulC_64fc_I, ippsDivC_64fc_I,ippsSub_64fc_I, LEPlugin_Process, ippsMove_64fc, ippsFFTInv_CToC_64fc,ippsAdd_64fc, LERTWatchInit, ippsCopy_64f, ippsCopy_64f_I, ippsMove_64f, ippsDotProd_64f, ippsMulC_64f_I, ippsFree, LEPlugin_Delete}, 
+                emphstyle={[1]\color{olive}},  
+                emph={[2]Ipp8u, Ipp64f, Ipp64fc, IppsFFTSpec_C_64fc, fstream, ios, ifstream, PlugIn, InterfaceType, HWND, LEEffect, LPVOID, PinType, WatchType}, 
+                emphstyle={[2]\color{ForestGreen}},
+                emph={[3]NUTS_NAME, ID_BETA, MAX_FILE_NAME_LENGTH, NUTS_GET_FS_SR, AUDIOPROC, NUTS_ADDRTWATCH}, 
+                emphstyle={[3]\color{Purple}}, 
+                emph={[4]_CBFunction, _PlugRef, ParentDlg, Input, Output, ExtraInfo}, emphstyle={[4]\color{Gray}}, 
+                emph={[5]__stdcall}, 
+                emphstyle={[5]\color{blue}}, 
 }
 
 \renewcommand{\lstlistingname}{Codice}
@@ -311,7 +321,7 @@ H(z) = \left[C^T (z^{-1}) C(z) + \beta I)\right]^{-1} C^T(z^{-1}) z^{-m}
 dove la componente $z^{-m}$ implementa un ritardo di $m$ campioni.
 
 Le equazioni~\eqref{eq:H_FD} e~\eqref{eq:H_FD2} rappresentano una espressione di $H(z)$ nel dominio continuo della frequenza. Se viene usata una FFT a $N$ punti per campionare la risposta in frequenza $H(z)$, allora il valore di $H[k]$ è dato da
-\begin{equation}\label{H_FD_3}
+\begin{equation}\label{eq:H_FD3}
 H[k] = \left[C^H[k] C[k] + \beta I)\right]^{-1} C^H[k]
 \end{equation}
 dove $k$ indica la $k$-esima frequenza corrispondente a $\exp(j2\pi k/N)$ e l'apice $H$ denota l'operatore Hermitiano che fa la trasposta coniugata del suo argomento. Dall'equazione~\eqref{H_FD_3} si può osservare che ponendo $\beta = 0$ si ottiene $H = C^{-1}$. In questo caso, poiché $Y = CHX = C C^{-1} X = IX = X$, si ottiene in uscita il segnale d'ingresso.
@@ -424,7 +434,7 @@ d1 = [zeros(tau,1); x1(1:end-tau)]; % segnale desiderato 1 (left)
 d2 = [zeros(tau,1); x2(1:end-tau)]; % segnale desiderato 2 (right)
 \end{lstlisting}
 
-Vengono inizializzati i vettori \texttt{y1} e \texttt{y2} di uscita, i vettori \texttt{e1} e \texttt{e2} che contengono l'errore per i due canali, i vettori \texttt{r\ped{ilm}} che contengono il filtraggio di \texttt{x1} e \texttt{x2} con \texttt{c11}, \texttt{c12}, \texttt{c21} e \texttt{c22}. Questi vettori sono tutti di lunghezza pari a quella de segnale x, cioè \texttt{L}.
+Vengono inizializzati i vettori \texttt{y1} e \texttt{y2} di uscita, i vettori \texttt{e1} e \texttt{e2} che contengono l'errore per i due canali, i vettori \texttt{r\ped{ilm}} che contengono il filtraggio di \texttt{x1} e \texttt{x2} con \texttt{c11}, \texttt{c12}, \texttt{c21} e \texttt{c22}. Questi vettori sono tutti di lunghezza pari a quella del segnale x, cioè \texttt{L}.
 
 \begin{lstlisting}[label=code:inizializzazione_vettori_L, caption=Inizializzazione dei vettori di lunghezza L, captionpos=b]
 L = length(x1);
@@ -539,7 +549,7 @@ H21 = zeros(fftLen,1);     % filtro di cancellazione del crosstalk input 1 outpu
 H22 = zeros(fftLen,1);     % filtro di cancellazione del crosstalk input 2 output 2
 \end{lstlisting}
 
-L'implementazione dell'equazione~\eqref{eq:H_FD2} è mostrato nel codice~\ref{code:calcolo_h_fd} con $\beta = 0.1$ e $B = I$, dove $I$ è la matrice identità. Per ogni frequenza $k$ dei filtri $C_{11}$, $C_{12}$, $C_{21}$ e $C_{22}$, composti da \texttt{fftLen} punti in frequenza, viene costruita una matrice $C [k]$ nel seguente modo:
+L'implementazione dell'equazione~\eqref{eq:H_FD3} è mostrata nel codice~\ref{code:calcolo_h_fd} con $\beta = 0.1$ e $B = I$, dove $I$ è la matrice identità. Per ogni frequenza $k$ dei filtri $C_{11}$, $C_{12}$, $C_{21}$ e $C_{22}$, composti da \texttt{fftLen} punti in frequenza, viene costruita una matrice $C [k]$ nel seguente modo:
 \begin{equation*}
 C [k] =
 \begin{bmatrix}
@@ -547,7 +557,7 @@ C_{11}[k]	& C_{12}[k]\\
 C_{21}[k]	& C_{22}[k]
 \end{bmatrix}.
 \end{equation*}
-Per trovare i filtri $H_{11}$, $H_{12}$, $H_{21}$ e $H_{22}$ si calcola la matrice $H$ come mostrato nell'equazione~\eqref{eq:H_FD2} dove $H$ è una matrice $2 \times 2$ costruita nel seguente modo:
+Per trovare i filtri $H_{11}$, $H_{12}$, $H_{21}$ e $H_{22}$ si calcola la matrice $H$ come mostrato nell'equazione~\eqref{eq:H_FD3} dove $H$ è una matrice $2 \times 2$ costruita nel seguente modo:
 \begin{equation*}
 H [k] =
 \begin{bmatrix}
@@ -660,8 +670,8 @@ Nel file \texttt{PlugIn.cpp} sono presenti le funzioni:
 \item Distruttore della classe
 Plugin : viene chiamata quando il NUTS viene eliminato dalla board del NUTECH
 \end{itemize}
-Nel costruttore vengono inizializzate a zero le varibile precedentemente definite.
-Framesize e Samplerate vengono ricavati dagli ingressi del blocco che vengono impostati pari a due allo stesso modo delle uscite.
+Nel costruttore vengono inizializzate a zero le variabili precedentemente definite.
+\texttt{Framesize} e \texttt{Samplerate} vengono ricavati dagli ingressi del blocco che vengono impostati pari a due allo stesso modo delle uscite.
 \begin{lstlisting}[language=cpp]
 PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffect(_CBFunction,_PlugRef,ParentDlg)
 {
@@ -873,13 +883,15 @@ I filtri h vengono poi aggiornati analogamente a \ref{code:aggiornamento_filtro_
 		}	
 	}
 \end{lstlisting}
-Il vettore in uscita viene quindi di nuovo riportate in \texttt{OutputData1} e \texttt{OutputData2} dopo essere stato scalato per 32768.
+I vettori in uscita vengono quindi di nuovo riportati in \texttt{OutputData1} e \texttt{OutputData2} dopo essere stati moltiplicati per 32768.
 \begin{lstlisting}[language=cpp]
-	// multiply each element of the vector y1 by a 32768 and store the result in y1
+	// multiply each element of the vector y1 by 32768 
+	//	and store the result in y1
 	ippsMulC_64f_I(32768.0, y1, FrameSize);
 	// copy y1 to OutputData1
 	ippsCopy_64f(y1, OutputData1, FrameSize);
-	// multiply each element of the vector y2 by a 32768 and store the result in y2
+	// multiply each element of the vector y2 by 32768 
+	//	and store the result in y2
 	ippsMulC_64f_I(32768.0, y2, FrameSize);
 	// copy y2 to OutputData2
 	ippsCopy_64f(y2, OutputData2, FrameSize);
@@ -899,13 +911,623 @@ void __stdcall PlugIn::LEPlugin_Delete()
 
 \subsection{Fast Deconvolution}
 \label{sec:codice_c_fd}
-Nella libreria \texttt{Plugin.h} viene inizialmente definito il nome del Nuts come ``Fast Deconvolution''.
+Nella libreria \texttt{Plugin.h} viene inizialmente definito il nome del Nuts come ``Fast Deconvolution'' e l'indice \texttt{ID\_BETA} dell'RT Watch che permette di cambiare il parametro $\beta$.
 
-\begin{lstlisting}[language=cpp]
+\begin{lstlisting}[language=cpp, label=code:costanti_c, caption = Dichiarazione delle costanti in \texttt{Plugin.h},captionpos = b]
 #define NUTS_NAME	"Fast Deconvolution"
+#define ID_BETA 0
 \end{lstlisting}
 
+Successivamente vengono dichiarate le variabili intere \texttt{FrameSize} e \texttt{SampleRate} che contengono rispettivamente la lunghezza del frame e la frequenza di campionamento, \texttt{L}, \texttt{M}, \texttt{fs} e \texttt{fftLen} sono le stesse variabili viste nel codice~\ref{code:parametri_ols}, mentre \texttt{fftOrd} contiene l'ordine della FFT, cioè l'esponente di 2 usato per trovare i punti su cui viene calcolata la FFT. Il parametro \texttt{beta} rappresenta il parametro $\beta$ dell'equazione~\eqref{eq:H_FD2}, \texttt{hrir} contiene le risposte impulsive di $c_{11}$, $c_{12}$, $c_{21}$ e $c_{22}$. Vengono poi dichiarati come \texttt{Ipp64fc} tutti i puntatori necessari per i buffer di ingresso e di uscita dell'overlap and save, i puntatori delle risposte in frequenza  $C_{11}$, $C_{12}$, $C_{21}$, $C_{22}$, $H_{11}$, $H_{12}$, $H_{21}$ e $H_{22}$ e altre variabili temporanee di appoggio usate durante i calcoli. Lo struct \texttt{Ipp64fc} è formato da un campo reale e uno immaginario come mostrato di seguito.
 
+\begin{lstlisting}[language=cpp, label=code:Ipp64fc, caption = Struct \texttt{Ipp64fc}, captionpos = b]
+typedef struct {
+    Ipp64f  re;
+    Ipp64f  im;
+} Ipp64fc;
+\end{lstlisting}
+
+Le variabili \texttt{pSpec}, \texttt{pMemSpec}, \texttt{pMemInit}, \texttt{pMemBuffer}, \texttt{sizeSpec}, \texttt{sizeInit} e \texttt{sizeBuffer} sono usate per inizializzare e calcolare la FFT. La variabile booleana \texttt{isRunning} servirà successivamente per conoscere se il programma è in esecuzione e in particolare, in questa 
+
+\begin{lstlisting}[language=cpp, label=code:variabili, caption = Dichiarazione delle variabili in \texttt{Plugin.h}, breaklines = false, captionpos = b]
+int FrameSize,SampleRate;
+int L, M, fs, fftLen, fftOrd;
+double beta, * hrir;
+Ipp64fc* x1buff, * x2buff, * X1BUFF, * X2BUFF, * y1buff, 
+	* y2buff, * Y1BUFF, * Y2BUFF;
+Ipp64fc* c11, * c12, * c21, * c22, * C11, * C12, * C21, * C22;
+Ipp64fc* H11, * H12, * H21, * H22;
+Ipp64fc det, invtemp, invtemp2, Cconj[2][2], C[2][2], 
+	B[2][2], Ctemp[2][2], Ctemp2[2][2];
+Ipp64fc* temp, * temp2, * temp3;
+IppsFFTSpec_C_64fc* pSpec;
+
+Ipp8u* pMemSpec, * pMemInit, * pMemBuffer;
+
+int sizeSpec, sizeInit, sizeBuffer;
+
+int fftLen, fftOrd;
+
+bool isRunning;
+\end{lstlisting}
+
+Nella libreria \texttt{myLib.h} vengono dichiarate le funzioni usate per scrivere e leggere i file ``.dat''.
+
+\begin{lstlisting}[language=cpp, label=code:myLib.h, caption = Libreria \texttt{myLib.h}, breaklines = false, captionpos = b]
+void read_dat(char *name, double *data, int dim);
+void write_dat(char *name, double *data, int dim, 
+	char*save_dir);
+\end{lstlisting}
+
+Nel codice sorgente \texttt{myLib.cpp} vengono definite le funzioni \texttt{read\_dat} e \texttt{write\_dat}. La prima apre in input e legge un file, mentre la seconda apre in output un file e ne scrive il dato \texttt{data}.
+
+\begin{lstlisting}[language=cpp, label=code:myLib.cpp, caption = File \texttt{myLib.cpp}, breaklines = false, breaklines = false, captionpos = b]
+#include "StdAfx.h"
+#include "myLib.h"
+
+void write_dat(char *name, double *data, int dim, 
+	char *save_name) 
+{
+	char name_a[MAX_FILE_NAME_LENGTH];
+	memset(name_a,0,MAX_FILE_NAME_LENGTH*sizeof(char));
+	strcpy(name_a,save_name);
+	strcat(name_a,name);
+
+	char *c;
+	c=(char *)(void *)data;
+
+	fstream File;
+	File.open(name_a,ios::out | ios::binary);
+	File.write(c,dim*sizeof(double));
+	File.close();
+}
+
+void read_dat(char *name, double *data, int dim) 
+{
+	char *c;
+	c=(char *)(void *)data;
+
+	ifstream File;
+	File.open(name, ios::in | ios::binary);
+	File.read(c, dim * sizeof(double));
+	File.close();
+}
+\end{lstlisting}
+
+Nel costruttore vengono inizializzate le variabili dichiarate nella libreria \texttt{Plugin.h} come mostrato nel codice~\ref{code:costruttore}. Si ottengono il \texttt{FrameSize} e il \texttt{SampleRate} usando la funzione \texttt{CBFunction} che permette di interagire con il Nu-Tech. Vengono impostati due pin di input e due pin di output, rispettivamente con la funzione \texttt{LESetNumInput(2)} e con \texttt{LESetNumOutput(2)}. La variabile \texttt{L} è pari alla lunghezza del frame, cioè di default $4096$, l'overlap \texttt{M} è pari alla metà di \texttt{L}, quindi la lunghezza di tutto il buffer è \texttt{fs = L + M - 1}. La variabile booleana \texttt{isRunning} è inizializzata falsa.
+
+\begin{lstlisting}[language=cpp, label=code:costruttore, caption = Costruttore, breaklines = false, captionpos = b]
+PlugIn::PlugIn(InterfaceType _CBFunction, void * _PlugRef, 
+	HWND ParentDlg): LEEffect(_CBFunction,_PlugRef,ParentDlg)
+{
+	FrameSize = CBFunction(this,NUTS_GET_FS_SR,0,
+		(LPVOID)AUDIOPROC);
+	SampleRate = CBFunction(this,NUTS_GET_FS_SR,1,
+		(LPVOID)AUDIOPROC);
+
+	LESetNumInput(2);
+	LESetNumOutput(2);
+	
+	isRunning = false;
+
+	L = FrameSize;
+	M = int(L / 2);
+	fs = L + M - 1;
+
+	beta = 0.1;
+
+	x1buff = 0;
+	x2buff = 0;
+
+	X1BUFF = 0;
+	X2BUFF = 0;
+
+	y1buff = 0;
+	y2buff = 0;
+
+	Y1BUFF = 0;
+	Y2BUFF = 0;
+	
+	temp = 0;
+	temp2 = 0;
+	temp3 = 0;
+
+	hrir = 0;
+	c11 = 0;
+	c12 = 0;
+	c21 = 0;
+	c22 = 0;
+
+	C11 = 0;
+	C12 = 0;
+	C21 = 0;
+	C22 = 0;
+
+	H11 = 0;
+	H12 = 0;
+	H21 = 0;
+	H22 = 0;
+	
+	fftLen = 8192;
+	fftOrd = (int)(log10((double)fftLen) / log10(2.0));
+}
+\end{lstlisting}
+
+Nella funzione \texttt{LEPlugin\_Init} la variabile booleana \texttt{isRunning} diventa \texttt{true}, questo non permette di modificare il parametro $\beta$ nell'RT Watch.
+
+\begin{lstlisting}[language=cpp, label=code:isRunning_init, caption = Variabile \texttt{isRunning} nella funzione \texttt{LEPlugin\_Init}, breaklines = false, captionpos = b]
+void __stdcall PlugIn::LEPlugin_Init()
+{
+	isRunning = true;
+\end{lstlisting}
+
+Successivamente, vengono allocate tutte le variabili dichiarate come puntatori, un esempio di allocazione è mostrata nel codice~\ref{code:allocazione_fd}. A differenza del codice~\ref{code:buffer_ols} in Matlab, in questo caso le variabili \texttt{x1buff} e \texttt{x2buff} che contengono il buffer nel tempo sono della stessa dimensione di \texttt{X1BUFF} e \texttt{X2BUFF} che contengono le rispettive trasformate di Fourier, cioè \texttt{fftLen}. In particolare i valori diversi da zero sono sempre \texttt{fs}, come in Matlab, ma i restanti \texttt{fftLen-fs} campioni sono uguali a zeri. Questo è necessario perché per sfruttare la funzione che calcola la FFT dobbiamo avere un segnale nel tempo della stessa lunghezza di quello in frequenza. Allo stesso modo anche i buffer di uscita nel tempo \texttt{y1buff} e \texttt{y2buff} e in frequenza \texttt{Y1BUFF} e \texttt{Y2BUFF} sono lunghi \texttt{fftLen}. Le variabili di appoggio per i calcoli \texttt{temp}, \texttt{temp2}, \texttt{temp3}, le variabili che contengono le HRIR, le HRTF e i filtri di ricostruzioni sono tutte di dimensione	 \texttt{fftLen}.
+
+\begin{lstlisting}[language=cpp, label=code:allocazione_fd, caption = Allocazione della variabile \texttt{x1buff} nella funzione \texttt{LEPlugin\_Init}, breaklines = false, captionpos = b]
+if (x1buff == 0)
+{
+		x1buff = ippsMalloc_64fc(fftLen);
+		ippsZero_64fc(x1buff, fftLen);
+}
+\end{lstlisting}
+
+La HRIR vengono lette dai file ``.dat'' e salvate nell'array \texttt{hrir} di dimensione \texttt{M}. Successivamente, questo array viene copiato nel campo reale delle variabili \texttt{c11}, \texttt{c12}, \texttt{c21} e \texttt{c22} di tipo \texttt{Ipp64fc}.
+
+\begin{lstlisting}[language=cpp, label=code:lettura_hrir, caption = Lettura delle HRIR, breaklines = false, captionpos = b]
+if (hrir == 0)
+{
+	hrir = ippsMalloc_64f(M);
+	ippsZero_64f(hrir, M);
+}
+// load filter taps
+read_dat("c11.dat", hrir, M);
+for (int i = 0; i < M; i++)
+	c11[i].re = hrir[i];
+
+read_dat("c12.dat", hrir, M);
+for (int i = 0; i < M; i++)
+	c12[i].re = hrir[i];
+
+read_dat("c21.dat", hrir, M);
+for (int i = 0; i < M; i++)
+	c21[i].re = hrir[i];
+
+read_dat("c22.dat", hrir, M);
+for (int i = 0; i < M; i++)
+	c22[i].re = hrir[i];
+\end{lstlisting}
+	
+Nel codice~\ref{code:inizializzazione_fft} si può vedere come è inizializzata la FFT. La funzione \texttt{ippsFFTGetSize\_C\_64fc} calcola le dimensioni della struttura delle specifiche della FFT e i buffer di lavoro richiesti. I parametri della funzione sono:
+\begin{itemize}
+\item l'ordine \texttt{fftOrd} della FFT: sia $N$ la lunghezza del segnale di ingresso, allora $N = 2^{ \texttt{fftOrd}}$,
+\item il metodo di normalizzazione \texttt{IPP\_FFT\_DIV\_INV\_BY\_N} che specifica di calcolare la IFFT con una normalizzazione $1/N$,
+\item il parametro deprecato \texttt{ippAlgHintNone},
+\item il puntatore \texttt{sizeSpec} al valore della dimensione della struttura che contiene le specifiche della FFT,
+\item il puntatore \texttt{sizeInit} al valore della dimensione del buffer per la funzione di inizializzazione della FFT,
+\item il puntatore \texttt{sizeBuffer} al valore della dimensione del buffer di lavoro della FFT.
+\end{itemize}
+La funzione \texttt{ippsFFTGetSize\_C\_64fc} calcola:
+\begin{itemize}
+\item la dimensione della struttura delle specifiche della FFT e la salva in \texttt{sizeSpec},
+\item la dimensione del buffer di lavoro \texttt{sizeInit} necessario per la funzione \texttt{ippsFFTInit\_C} che inizializza la struttura dalla FFT,
+\item la dimensione del buffer di lavoro \texttt{sizeBuffer} della FFT  per le funzioni di \texttt{ippsFFTFwd} e \texttt{ippsFFTInv} che calcolano rispettivamente la FFT diretta e inversa.
+\end{itemize}
+
+Successivamente, la funzione \texttt{ippsFFTInit\_C\_64fc} inizializza la struttura delle specifiche della FFT. I parametri di questa funzione sono:
+\begin{itemize}
+\item l'ordine \texttt{fftOrd} della FFT: sia $N$ la lunghezza del segnale di ingresso, allora $N = 2^{ \texttt{fftOrd}}$,
+\item il metodo di normalizzazione \texttt{IPP\_FFT\_DIV\_INV\_BY\_N} che specifica di calcolare la IFFT con una normalizzazione $1/N$,
+\item il parametro deprecato \texttt{ippAlgHintNone},
+\item il puntatore al puntatore alla struttura delle specifiche della FFT \texttt{pSpec} che deve essere creata
+\item il puntatore \texttt{pMemSpec} all'area per la struttura delle specifiche della FFT,
+\item il puntatore al buffer di lavoro \texttt{pMemInit}.
+\end{itemize}
+La funzione \texttt{ippsFFTInit\_C\_64fc} inizializza la struttura delle specifiche della FFT \texttt{pSpec} con i seguenti parametri:
+\begin{itemize}
+\item l'ordine \texttt{fftOrd} della FFT,
+\item il flag  \texttt{IPP\_FFT\_DIV\_INV\_BY\_N}, 
+\item il parametro \texttt{ippAlgHintNone}.
+\end{itemize}
+
+\begin{lstlisting}[language=cpp, label=code:inizializzazione_fft, caption = Inizializzazione FFT, breaklines = false, captionpos = b]
+// get sizes for required buffers
+ippsFFTGetSize_C_64fc(fftOrd, IPP_FFT_DIV_INV_BY_N, 
+	ippAlgHintNone, &sizeSpec, &sizeInit, &sizeBuffer);
+/// allocate memory for required buffers
+pMemSpec = (Ipp8u*)ippMalloc(sizeSpec);
+pMemInit = (Ipp8u*)ippMalloc(sizeInit);
+pMemBuffer = (Ipp8u*)ippMalloc(sizeBuffer);
+ippsFFTInit_C_64fc(&pSpec, fftOrd, IPP_FFT_DIV_INV_BY_N, 
+	ippAlgHintNone, pMemSpec, pMemInit);
+\end{lstlisting}
+
+Dopo aver inizializzato la struttura delle specifiche della FFT, si procede ad eseguire la trasformata di Fourier delle HRIR, usando le variabili \texttt{pSpec} e \texttt{pMemBuffer} precedentemente definite, come di seguito
+
+\begin{lstlisting}[language=cpp, label=code:fft_hrir_c, caption = FFT delle HRIR, breaklines = false, captionpos = b]
+ippsFFTFwd_CToC_64fc(c11, C11, pSpec, pMemBuffer);
+ippsFFTFwd_CToC_64fc(c12, C12, pSpec, pMemBuffer);
+ippsFFTFwd_CToC_64fc(c21, C21, pSpec, pMemBuffer);
+ippsFFTFwd_CToC_64fc(c22, C22, pSpec, pMemBuffer);
+\end{lstlisting}
+
+Conoscendo le risposte in frequenza \texttt{C11}, \texttt{C12}, \texttt{C21} e \texttt{C22}, è possibile implementare la formula~\eqref{eq:H_FD3} per trovare i filtri \texttt{H11}, \texttt{H12}, \texttt{H21} e \texttt{H22}. Poiché non è possibile eseguire il calcolo dell'equazione in una sola riga di codice come nel programma~\ref{code:calcolo_h_fd} di Matlab, è necessario usare le variabili di appoggio per calcolare le somme e i prodotti in più passaggi. Dobbiamo dunque calcolare le matrici $C$ e $C^H$, successivamente calcoliamo 
+\begin{equation}\label{eq:Ctemp}
+C_{\text{temp}}[k] = C^H[k] C[k] + \beta \cdot I
+\end{equation}
+e ne facciamo l'inversa. Infine, moltiplichiamo l'inversa per $C^H[k]$. 
+
+Per iniziare si costruisce la matrice \texttt{C} e la sua complessa coniugata chiamata \texttt{Cconj}, come nel codice~\ref{code:implementazione_matrice_C}. Sia 
+\begin{equation*}
+C[k] = 
+\begin{bmatrix}
+C_{11}[k] & C_{12}[k]\\
+C_{21}[k] & C_{22}[k]\\
+\end{bmatrix}
+\end{equation*}
+allora
+\begin{equation}\label{eq:c_conj}
+C_{\text{conj}}[k] = 
+\begin{bmatrix}
+C_{11}^*[k] & C_{12}^*[k]\\
+C_{21}^*[k] & C_{22}^*[k]
+\end{bmatrix}
+\end{equation}
+
+\begin{lstlisting}[language=cpp, label=code:implementazione_matrice_C, caption = Implementazione della matrice \texttt{C} e \texttt{Cconj}, breaklines = false, captionpos = b]
+for (int n = 0; n < fftLen; n++)
+{
+	C[0][0] = C11[n];
+	C[0][1] = C12[n];
+	C[1][0] = C21[n];
+	C[1][1] = C22[n];
+	
+	ippsConj_64fc(&(C[0][0]), &(Cconj[0][0]), 1);
+	ippsConj_64fc(&(C[0][1]), &(Cconj[0][1]), 1);
+	ippsConj_64fc(&(C[1][0]), &(Cconj[1][0]), 1);
+	ippsConj_64fc(&(C[1][1]), &(Cconj[1][1]), 1);
+\end{lstlisting}
+
+Esplicitando l'equazione~\eqref{eq:Ctemp} si può scrivere
+\begin{equation}\label{eq:Ctemp_esplicita}
+\begin{split}
+C_{\text{temp}}[k] = C^H[k] C[k] + \beta \cdot I = \\ 
+\begin{bmatrix}
+C_{11}[k] & C_{12}[k]\\
+C_{21}[k] & C_{22}[k]
+\end{bmatrix}^H
+\cdot
+\begin{bmatrix}
+C_{11}[k] & C_{12}[k]\\
+C_{21}[k] & C_{22}[k]
+\end{bmatrix}
++
+\beta \cdot
+\begin{bmatrix}
+1 & 0\\
+0 & 1
+\end{bmatrix}
+\end{split}
+\end{equation}
+Facendo la trasposta e coniugata di $C$ si ha
+\begin{equation}\label{eq:Ctemp_esplicita2}
+C_{\text{temp}}[k] = 
+\begin{bmatrix}
+C_{11}^*[k] & C_{21}^*[k]\\
+C_{12}^*[k] & C_{22}^*[k]
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+C_{11}[k] & C_{12}[k]\\
+C_{21}[k] & C_{22}[k]
+\end{bmatrix}
++
+\begin{bmatrix}
+\beta & 0\\
+0 & \beta
+\end{bmatrix}
+\end{equation}
+Usando la definizione di $C_{conj}$~\eqref{eq:c_conj} e applicandola alla~\eqref{eq:Ctemp_esplicita2} si ottiene
+\begin{equation}\label{eq:Ctemp_esplicita3}
+C_{\text{temp}}[k] = 
+\begin{bmatrix}
+C_{conj11}[k] & C_{conj21}[k]\\
+C_{conj12}[k] & C_{conj22}[k]
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+C_{11}[k] & C_{12}[k]\\
+C_{21}[k] & C_{22}[k]
+\end{bmatrix}
++
+\begin{bmatrix}
+\beta & 0\\
+0 & \beta
+\end{bmatrix}
+\end{equation}
+
+Scrivendo l'equazione~\eqref{eq:Ctemp_esplicita3} come sistema si possono ottenere gli elementi della matrice $C_{\text{temp}}[k]$ come di seguito
+\begin{equation}\label{eq:sistema_ctemp}
+\begin{cases}
+C_{\text{temp11}}[k] = C_{conj11}[k] \cdot C_{11}[k] + C_{conj21}[k] \cdot C_{21}[k] + \beta\\
+C_{\text{temp12}}[k] = C_{conj11}[k] \cdot C_{12}[k] + C_{conj21}[k] \cdot C_{22}[k]\\
+C_{\text{temp21}}[k] = C_{conj12}[k] \cdot C_{11}[k] + C_{conj22}[k] \cdot C_{21}[k]\\
+C_{\text{temp22}}[k] = C_{conj12}[k] \cdot C_{12}[k] + C_{conj22}[k] \cdot C_{22}[k] + \beta\\
+\end{cases}
+\end{equation}
+L'elemento $C_{\text{temp11}}[k]$ viene calcolato come mostrato nel seguente codice, moltiplicando i due prodotti $C_{conj11}[k] \cdot C_{11}[k]$ e $C_{conj21}[k] \cdot C_{21}[k]$ con la funzione \texttt{ippsMul\_64fc}, successivamente vengono sommati tra loro con la funzione \texttt{ippsAdd\_64fc\_I} e infine sommata la costante $\beta$ con \texttt{ippsAddC\_64fc\_I}.
+\begin{lstlisting}[language=cpp, label=code:ctemp_11, caption = Implementazione della prima riga del sistema~\eqref{eq:sistema_ctemp}, breaklines = false, captionpos = b]
+//Ctemp[0][0] = Cconj[0][0] * C[0][0] + Cconj[1][0] * C[1][0]
+// + beta;
+ippsMul_64fc(&(Cconj[0][0]), &(C[0][0]), &(Ctemp[0][0]), 1);
+ippsMul_64fc(&(Cconj[1][0]), &(C[1][0]), &(Ctemp2[0][0]), 1);
+ippsAdd_64fc_I(&(Ctemp2[0][0]), &(Ctemp[0][0]), 1);
+ippsAddC_64fc_I({ beta, 0 }, &(Ctemp[0][0]), 1);
+\end{lstlisting}
+
+In modo analogo vengono calcolati gli elementi $C_{\text{temp12}}[k]$, $C_{\text{temp21}}[k]$ e $C_{\text{temp22}}[k]$.
+\begin{lstlisting}[language=cpp, label=code:ctemp, caption = Implementazione della matrice \texttt{Ctemp}, breaklines = false, captionpos = b]
+//Ctemp[0][1] = Cconj[0][0] * C[0][1] + Cconj[1][0] * C[1][1];
+ippsMul_64fc(&(Cconj[0][0]), &(C[0][1]), &(Ctemp[0][1]), 1);
+ippsMul_64fc(&(Cconj[1][0]), &(C[1][1]), &(Ctemp2[0][1]), 1);
+ippsAdd_64fc_I(&(Ctemp2[0][1]), &(Ctemp[0][1]), 1);
+
+//Ctemp[1][0] = Cconj[0][1] * C[0][0] + Cconj[1][1] * C[1][0];
+ippsMul_64fc(&(Cconj[0][1]), &(C[0][0]), &(Ctemp[1][0]), 1);
+ippsMul_64fc(&(Cconj[1][1]), &(C[1][0]), &(Ctemp2[1][0]), 1);
+ippsAdd_64fc_I(&(Ctemp2[1][0]), &(Ctemp[1][0]), 1);
+
+//Ctemp[1][1] = Cconj[0][1] * C[0][1] + Cconj[1][1] * C[1][1]
+// + beta;
+ippsMul_64fc(&(Cconj[0][1]), &(C[0][1]), &(Ctemp[1][1]), 1);
+ippsMul_64fc(&(Cconj[1][1]), &(C[1][1]), &(Ctemp2[1][1]), 1);
+ippsAdd_64fc_I(&(Ctemp2[1][1]), &(Ctemp[1][1]), 1);
+ippsAddC_64fc_I({ beta, 0 }, &(Ctemp[1][1]), 1);
+\end{lstlisting}
+Dopo aver calcolato la matrice \texttt{Ctemp} con la formula~\eqref{eq:Ctemp}, occorre trovare la sua inversa. Per fare ciò, si inizia calcolando il determinante di 
+\begin{equation*}
+C_{\text{temp}}[k] = 
+\begin{bmatrix}
+C_{\text{temp11}}[k]	& 	C_{\text{temp12}}[k]\\
+C_{\text{temp21}}[k]	& 	C_{\text{temp22}}[k]
+\end{bmatrix}.
+\end{equation*}
+La formula per trovare il determinante di $C_{\text{temp}}$ è la seguente
+\begin{equation}\label{eq:det_Ctemp}
+\det = \left(C_{\text{temp11}}[k] \cdot C_{\text{temp22}}[k]\right) - \left(C_{\text{temp12}}[k] \cdot C_{\text{temp21}}[k]\right)
+\end{equation}
+L'equazione~\eqref{eq:det_Ctemp} è stata implementata nel codice~\ref{code:det_Ctemp} calcolando i prodotti $C_{\text{temp11}}[k] \cdot C_{\text{temp22}}[k]$ e $C_{\text{temp12}}[k] \cdot C_{\text{temp21}}[k]$ con la funzione \texttt{ippsMul\_64fc}, infine sottraendo i due prodotti con \texttt{ippsSub\_64fc\_I} e salvando il determinante nella variabile \texttt{det}.
+\begin{lstlisting}[language=cpp, label=code:det_Ctemp, caption = Calcolo del determinante della matrice \texttt{Ctemp}, breaklines = false, captionpos = b]
+ippsMul_64fc(&(Ctemp[0][0]), &(Ctemp[1][1]), &det, 1);
+ippsMul_64fc(&(Ctemp[0][1]), &(Ctemp[1][0]), &invtemp, 1);
+ippsSub_64fc_I(&invtemp, &det, 1);
+\end{lstlisting}
+Una volta noto il determinante possiamo implementare la formula dell'inversa di $C_{\text{temp}}[k]$ come nella seguente equazione
+\begin{equation}\label{eq:inversa_Ctemp}
+\begin{split}
+C_{\text{temp}}^{-1}[k] = 
+\begin{bmatrix}
+C_{\text{temp11}}[k]	& 	C_{\text{temp12}}[k]\\
+C_{\text{temp21}}[k]	& 	C_{\text{temp22}}[k]
+\end{bmatrix}^{-1}
+=\\\dfrac{1}{\det(C_{\text{temp}})}
+\begin{bmatrix}
+C_{\text{temp22}}[k]	& 	-C_{\text{temp12}}[k]\\
+-C_{\text{temp21}}[k]	& 	C_{\text{temp11}}[k]
+\end{bmatrix}
+.
+\end{split}
+\end{equation}
+In C la formula~\eqref{eq:inversa_Ctemp} viene applicata dividendo ogni elemento di \texttt{Ctemp} per il determinante \texttt{det} con la funzione \texttt{ippsDivC\_64fc}, invertendo gli elementi \texttt{Ctemp[0][0]} e \texttt{Ctemp[1][1]}, e cambiando segno agli elementi \texttt{Ctemp[0][1]} e \texttt{Ctemp[1][0]} moltiplicandoli per $-1$ con la funzione \texttt{ippsMulC\_64fc\_I}. L'inversa è calcolata usando il seguente codice
+\begin{lstlisting}[language=cpp, label=code:inversa_Ctemp, caption = Calcolo dell'inversa della matrice \texttt{Ctemp}, breaklines = false, captionpos = b]
+invtemp = Ctemp[0][0];
+//Ctemp[0][0] = Ctemp[1][1] / det;
+ippsDivC_64fc(&(Ctemp[1][1]), det, &(Ctemp[0][0]), 1);
+//Ctemp[1][1] = invtemp / det;
+ippsDivC_64fc(&invtemp, det, &(Ctemp[1][1]), 1);
+//Ctemp[0][1] = -Ctemp[0][1] / det;
+ippsMulC_64fc_I({ -1.0, 0.0 }, &det, 1);
+ippsDivC_64fc_I(det, &(Ctemp[0][1]), 1);
+//Ctemp[1][0] = -Ctemp[1][0] / det;
+ippsDivC_64fc_I(det, &(Ctemp[1][0]), 1);
+\end{lstlisting}
+L'ultimo passo consiste nel moltiplicare l'inversa di $C_{\text{temp}}[k]$ per $C^H[k]$ al fine implementare l'ultima parte della formula~\eqref{eq:H_FD3}, cioè
+\begin{equation}\label{eq:calcolo_H}
+H[k] = \left[C^H[k] C[k] + \beta I)\right]^{-1} C^H[k] = C_{\text{temp}}^{-1}[k] \cdot C^H[k].
+\end{equation}
+Sia $C_{\text{inv}}[k] = C_{\text{temp}}^{-1}[k]$, usando~\eqref{eq:c_conj} ed esplicitando l'equazione~\eqref{eq:calcolo_H_esplicito} si ha
+\begin{equation}\label{eq:calcolo_H_esplicito}
+\begin{split}
+H[k] = C_{\text{temp}}^{-1}[k] \cdot C^H[k] = C_{\text{inv}}[k] \cdot C^H[k] =\\
+\begin{bmatrix}
+C_{\text{inv}11}[k]	&	C_{\text{inv}12}[k]\\
+C_{\text{inv}21}[k]	&	C_{\text{inv}22}[k]
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+C_{\text{conj}11}[k]	&	C_{\text{conj}21}[k]\\
+C_{\text{conj}12}[k]	&	C_{\text{conj}22}[k]
+\end{bmatrix}
+=
+\begin{bmatrix}
+H_{11}[k]	&	H_{12}[k]\\
+H_{21}[k]	&	H_{22}[k]
+\end{bmatrix}.
+\end{split}
+\end{equation}
+Se si scrive l'equazione~\eqref{eq:calcolo_H_esplicito} come sistema si ottiene
+\begin{equation}\label{eq:H11_sistema}
+\begin{cases}
+H_{11}[k] = \left(C_{\text{inv}11}[k] \cdot C_{\text{conj}11}[k]\right) + \left(C_{\text{inv}12}[k] \cdot C_{\text{conj}12}[k]\right)\\
+H_{12}[k] = \left(C_{\text{inv}11}[k] \cdot C_{\text{conj}21}[k]\right) + \left(C_{\text{inv}12}[k] \cdot C_{\text{conj}22}[k]\right)\\
+H_{21}[k] = \left(C_{\text{inv}21}[k] \cdot C_{\text{conj}11}[k]\right) + \left(C_{\text{inv}22}[k] \cdot C_{\text{conj}12}[k]\right)\\
+H_{22}[k] = \left(C_{\text{inv}21}[k] \cdot C_{\text{conj}21}[k]\right) + \left(C_{\text{inv}22}[k] \cdot C_{\text{conj}22}[k]\right)
+\end{cases}
+\end{equation}
+L'implementazione della prima riga del sistema~\eqref{eq:H11_sistema}, e quindi del filtro $H_{11}$,  è mostrata nel codice~\ref{code:H11} in cui si calcolano i prodotti $\left(C_{\text{inv}11}[k] \cdot C_{\text{conj}11}[k]\right)$ e $\left(C_{\text{inv}12}[k] \cdot C_{\text{conj}12}[k]\right)$, si sommano tra loro i prodotti e si salva il risultato nel campo reale e immaginario della variabile \texttt{H11}. Si noti che nel codice la variabile \texttt{Ctemp} contiene la matrice $C^{-1}_{\text{temp}}$.
+\begin{lstlisting}[language=cpp, label=code:H11, caption = Calcolo dell'$n$-esima armonica di \texttt{H11}, breaklines = false, captionpos = b]
+//invtemp = Ctemp[0][0] * Cconj[0][0] + Ctemp[0][1] * 
+//	Cconj[0][1];
+ippsMul_64fc(&(Ctemp[0][0]), &(Cconj[0][0]), &invtemp2, 1);
+ippsMul_64fc(&(Ctemp[0][1]), &(Cconj[0][1]), &invtemp, 1);
+ippsAdd_64fc_I(&invtemp2, &invtemp, 1);
+H11[n].re = invtemp.re;
+H11[n].im = invtemp.im;
+\end{lstlisting}
+In modo analogo si calcolano le variabili \texttt{H12}, \texttt{H21} e \texttt{H22} come di seguito.
+\begin{lstlisting}[language=cpp, label=code:calcolo_H, caption = Calcolo dell'$n$-esima armonica di \texttt{H12, H21, H22}, breaklines = false, captionpos = b]
+//invtemp = Ctemp[0][0] * Cconj[1][0] + Ctemp[0][1] * 
+	//Cconj[1][1];
+ippsMul_64fc(&(Ctemp[0][0]), &(Cconj[1][0]), &invtemp2, 1);
+ippsMul_64fc(&(Ctemp[0][1]), &(Cconj[1][1]), &invtemp, 1);
+ippsAdd_64fc_I(&invtemp2, &invtemp, 1);
+H12[n].re = invtemp.re;
+H12[n].im = invtemp.im;
+//invtemp = Ctemp[1][0] * Cconj[0][0] + Ctemp[1][1] *
+	//Cconj[0][1];
+ippsMul_64fc(&(Ctemp[1][0]), &(Cconj[0][0]), &invtemp2, 1);
+ippsMul_64fc(&(Ctemp[1][1]), &(Cconj[0][1]), &invtemp, 1);
+ippsAdd_64fc_I(&invtemp2, &invtemp, 1);
+H21[n].re = invtemp.re;
+H21[n].im = invtemp.im;
+//invtemp = Ctemp[1][0] * Cconj[1][0] + Ctemp[1][1] * 
+	//Cconj[1][1];
+ippsMul_64fc(&(Ctemp[1][0]), &(Cconj[1][0]), &invtemp2, 1);
+ippsMul_64fc(&(Ctemp[1][1]), &(Cconj[1][1]), &invtemp, 1);
+ippsAdd_64fc_I(&invtemp2, &invtemp, 1);
+H22[n].re = invtemp.re;
+H22[n].im = invtemp.im;
+}
+\end{lstlisting}
+Una volta eseguito il ciclo \texttt{for} iniziato nel codice~\ref{code:implementazione_matrice_C} e terminato nel~\ref{code:calcolo_H}, la funzione \texttt{LEPlugin\_Init} finisce e sono ora noti i filtri $H_{11}$, $H_{12}$, $H_{11}$, $H_{21}$ e $H_{22}$ per effettuare la correzione del crosstalk.
+
+A questo punto la funzione \texttt{LEPlugin\_Process} effettua il filtraggio con i filtri di ricostruzione usando l'overlap and save in modo analogo a quanto visto con i codici~\ref{code:ols1},~\ref{code:ols2}, ~\ref{code:ols3}, ~\ref{code:ols4},~\ref{code:ols5} e~\ref{code:ols6} in Matlab. Inizialmente, per semplicità si copiano i puntatori degli ingressi in \texttt{InputData1} e \texttt{InputData2} e delle uscite in \texttt{OutputData1} e \texttt{OutputData2}.
+
+\begin{lstlisting}[language=cpp, label=code:copia_puntatori, caption = Copia dei puntatori degli ingressi e delle uscite, breaklines = false, captionpos = b]
+int __stdcall PlugIn::LEPlugin_Process(PinType** Input, 
+	PinType** Output, LPVOID ExtraInfo)
+{
+	double* InputData1 = ((double*)Input[0]->DataBuffer);
+	double* OutputData1 = ((double*)Output[0]->DataBuffer);
+	double* InputData2 = ((double*)Input[1]->DataBuffer);
+	double* OutputData2 = ((double*)Output[1]->DataBuffer);
+\end{lstlisting}
+Successivamente, vengono riempiti i campi reali dei buffer di ingresso \texttt{x1buff} e \texttt{x2buff} dall'indice \texttt{M - 1} fino a \texttt{L + M - 1} copiando \texttt{L} valori degli ingressi. I buffer vengono poi normalizzati dividendo per $2^{15} = 32768$ per non andare in overflow e per poter confrontare gli stessi segnali in Matlab.
+
+\begin{lstlisting}[language=cpp, label=code:buffer_C, caption = Creazione dei buffer di ingresso e normalizzazione, breaklines = false, captionpos = b]
+for (int i = 0; i < L; i++)
+{
+	x1buff[M - 1 + i].re = InputData1[i];
+	x2buff[M - 1 + i].re = InputData2[i];
+}
+// divide L elements of the vector x1buff by 32768 and store
+//	the result in x1buff
+ippsDivC_64fc_I({ 32768.0, 0.0 }, x1buff + M - 1, L);
+// divide L elements of the vector x2buff by 32768 and store 
+//	the result in x2buff
+ippsDivC_64fc_I({ 32768.0, 0.0 }, x2buff + M - 1, L);
+\end{lstlisting}
+Una volta riempiti i buffer di ingresso \texttt{x1buff} e \texttt{x2buff}, ne viene fatta la FFT e salvato il risultato rispettivamente in \texttt{X1BUFF} e \texttt{X2BUFF}.
+\begin{lstlisting}[language=cpp, label=code:FFT_buffer, caption = FFT dei buffer di ingresso, breaklines = false, captionpos = b]
+ippsFFTFwd_CToC_64fc(x1buff, X1BUFF, pSpec, pMemBuffer);
+ippsFFTFwd_CToC_64fc(x2buff, X2BUFF, pSpec, pMemBuffer);
+\end{lstlisting}
+Poiché non è possibile implementare in una sola riga l'equazione~\eqref{eq:y_matrix} come mostrato nel codice~\ref{code:ols3} di Matlab, occorre dividere la formula in più passaggi. Scrivendo~\eqref{eq:y_matrix} come sistema lineare si ha
+\begin{equation}\label{eq:y_matrix_sistema}
+\begin{cases}
+Y_1 = \left( C_{11} \cdot H_{11} +  C_{12} \cdot H_{21} \right) \cdot X_1 + \left( C_{11} \cdot H_{12} +  C_{12} \cdot H_{22} \right) \cdot X_2\\
+Y_2 = \left( C_{21} \cdot H_{11} +  C_{22} \cdot H_{21} \right) \cdot X_1 + \left( C_{21} \cdot H_{12} +  C_{22} \cdot H_{22} \right) \cdot X_2
+\end{cases}
+\end{equation}
+Sia $\text{temp} = C_{11} \cdot H_{11}$, $\text{temp}_2 = C_{12} \cdot H_{21}$, allora il primo addendo della prima riga del sistema~\eqref{eq:y_matrix_sistema} è data da
+\begin{equation*}
+\text{temp}_3 = \left( \text{temp} +  \text{temp}_2 \right) \cdot X_1 = \left( C_{11} \cdot H_{11} +  C_{12} \cdot H_{21} \right) \cdot X_1.
+\end{equation*} 
+Allo stesso modo si può calcolare il secondo addendo e sommarli per trovare $Y_1$. Il calcolo di $Y_2$ è analogo. L'implementazione del sistema~\eqref{eq:y_matrix_sistema} è mostrato nel codice~\ref{code:buffer_output_frequenza}, in cui vengono calcolati i buffer di uscita in frequenza \texttt{Y1BUFF} e \texttt{Y2BUFF}.
+\begin{lstlisting}[language=cpp, label=code:buffer_output_frequenza, caption = Calcolo dei buffer di uscita in frequenza, breaklines = false, captionpos = b]
+// temp = C11.*H11
+ippsMul_64fc(C11, H11, temp, fftLen);
+// temp2 = C12.*H21
+ippsMul_64fc(C12, H21, temp2, fftLen);
+// temp2 = C11.*H11+C12.*H21
+ippsAdd_64fc_I(temp, temp2, fftLen);
+// temp3 = (C11.*H11 + C12.*H21).*X1BUFF
+ippsMul_64fc(temp2, X1BUFF, temp3, fftLen);
+// temp = C11.*H12
+ippsMul_64fc(C11, H12, temp, fftLen);
+// temp2 = C12.*H22
+ippsMul_64fc(C12, H22, temp2, fftLen);
+// temp2 = C11.*H12+C12.*H22
+ippsAdd_64fc_I(temp, temp2, fftLen);
+// temp = (C11.*H12+C12.*H22).*X2BUFF
+ippsMul_64fc(temp2, X2BUFF, temp, fftLen);
+// Y1BUFF = (C11.*H11 + C12.*H21).*X1BUFF +
+//	(C11.*H12+C12.*H22).*X2BUFF
+ippsAdd_64fc(temp3, temp, Y1BUFF, fftLen);
+
+// temp = C21.*H11
+ippsMul_64fc(C21, H11, temp, fftLen);
+// temp2 = C22.*H21
+ippsMul_64fc(C22, H21, temp2, fftLen);
+// temp2 = C21.*H11+C22.*H21
+ippsAdd_64fc_I(temp, temp2, fftLen);
+// temp3 = (C21.*H11+C22.*H21).*X1BUFF
+ippsMul_64fc(temp2, X1BUFF, temp3, fftLen);
+// temp = C21.*H12
+ippsMul_64fc(C21, H12, temp, fftLen);
+// temp2 = C22.*H22
+ippsMul_64fc(C22, H22, temp2, fftLen);
+// temp2 = C21.*H12+C22.*H22
+ippsAdd_64fc_I(temp, temp2, fftLen);
+// temp = (C21.*H12+C22.*H22).*X2BUFF
+ippsMul_64fc(temp2, X2BUFF, temp, fftLen);
+// Y2BUFF = (C21.*H11+C22.*H21).*X1BUFF +
+//	(C21.*H12+C22.*H22).*X2BUFF
+ippsAdd_64fc(temp3, temp, Y2BUFF, fftLen);
+\end{lstlisting}
+Procedendo con l'algoritmo dell'overlap and save occorre ora fare le IFFT dei buffer di uscita e salvarle nelle variabili \texttt{y1buff} e \texttt{y2buff}. 
+
+\begin{lstlisting}[language=cpp, label=code:buffer_output_tempo, caption = Calcolo dei buffer di uscita nel tempo con la IFFT, breaklines = false, captionpos = b]
+ippsFFTInv_CToC_64fc(Y1BUFF, y1buff, pSpec, pMemBuffer);
+ippsFFTInv_CToC_64fc(Y2BUFF, y2buff, pSpec, pMemBuffer);
+\end{lstlisting}
+L'aggiornamento dell'uscita avviene moltiplicando i buffer di uscita per $2^{15} = 32768$ e copiando \texttt{L} elementi dall'indice \texttt{M - 1} all'indice \texttt{L + M - 1} dei valori reali di \texttt{y1buff} e \texttt{y2buff}.
+
+\begin{lstlisting}[language=cpp, label=code:aggiornamento_uscite, caption = Aggiornamento delle uscite, breaklines = false, captionpos = b]
+// output update
+// multiply each element of the vector y1buff by 32768 and 
+//	store the result in y1buff
+ippsMulC_64fc_I({ 32768.0, 0.0 }, y1buff, fs);
+// multiply each element of the vector y2buff by 32768 and 
+//	store the result in y2buff
+ippsMulC_64fc_I({ 32768.0, 0.0 }, y2buff, fs);
+for (int i = 0; i < L; i++)
+{
+	OutputData1[i] = y1buff[M - 1 + i].re;
+	OutputData2[i] = y2buff[M - 1 + i].re;
+}
+\end{lstlisting}
+L'ultimo passo consiste nell'aggiornare il buffer di ingresso spostando gli ultimi \texttt{M - 1} valori all'inizio del buffer successivo con la funzione \texttt{ippsMove\_64fc}.
+
+\begin{lstlisting}[language=cpp, label=code:aggiornamento_buffer_ingresso, caption = Aggiornamento dei buffer di ingresso, breaklines = false, captionpos = b]
+ippsMove_64fc(x1buff + L, x1buff, M - 1);
+ippsMove_64fc(x2buff + L, x2buff, M - 1);
+\end{lstlisting}
+L'RT Watch per variare il parametro $\beta$ è creato nella funzione \texttt{LERTWatchInit} come di seguito. Come si può vedere, la variabile che accetta in ingresso può essere solo di tipo \texttt{double} e di dimensione \texttt{sizeof(double)} byte.
+
+\begin{lstlisting}[language=cpp, label=code:rtwatch_fd, caption = Creazione RT Watch, breaklines = false, captionpos = b]
+void __stdcall PlugIn::LERTWatchInit()
+{
+	WatchType NewWatch;
+
+	memset(&NewWatch, 0, sizeof(WatchType));
+	NewWatch.EnableWrite = true;
+	NewWatch.LenByte = sizeof(double);
+	NewWatch.TypeVar = WTC_DOUBLE;
+	NewWatch.IDVar = ID_BETA;
+	sprintf(NewWatch.VarName, "Beta\0");
+	CBFunction(this, NUTS_ADDRTWATCH, 0, &NewWatch);
+}
+\end{lstlisting}
 \clearpage
 
 \nocite{*}
