@@ -57,13 +57,14 @@
                 commentstyle=\color{green}\ttfamily,
                 morecomment=[l][\color{magenta}]{\#},
                 language=C++,
-                emph={[1]ippsMalloc_64f, ippsMalloc_64fc, ippsZero_64fc, ippsZero_64f,  ippsFFTGetSize_C_64fc, ippMalloc, ippsFFTInit_C_64fc, read_dat, write_dat, memset, sprintf, strcpy, strcat, open, write, close, LESetNumOutput, LESetNumInput,log10, LEPlugin_Init, ippsMalloc_64fc, ippsZero_64fc, ippsFFTFwd_CToC_64fc, ippsConj_64fc, ippsMul_64fc, ippsAdd_64fc_I, ippsAddC_64fc_I, ippsDivC_64fc, ippsMulC_64fc_I, ippsDivC_64fc_I,ippsSub_64fc_I, LEPlugin_Process, ippsMove_64fc, ippsFFTInv_CToC_64fc,ippsAdd_64fc, LERTWatchInit, ippsCopy_64f, ippsCopy_64f_I, ippsMove_64f, ippsDotProd_64f, ippsMulC_64f_I, ippsFree, LEPlugin_Delete}, 
+                emph={[1]ippsMalloc_64f, ippsMalloc_64fc, ippsZero_64fc, ippsZero_64f,  ippsFFTGetSize_C_64fc, ippMalloc, ippsFFTInit_C_64fc, read_dat, write_dat, memset, sprintf, strcpy, strcat, open, write, close, LESetNumOutput, LESetNumInput,log10, LEPlugin_Init, ippsMalloc_64fc, ippsZero_64fc, ippsFFTFwd_CToC_64fc, ippsConj_64fc, ippsMul_64fc, ippsAdd_64fc_I, ippsAddC_64fc_I, ippsDivC_64fc, ippsMulC_64fc_I, ippsDivC_64fc_I,ippsSub_64fc_I, LEPlugin_Process, ippsMove_64fc, ippsFFTInv_CToC_64fc,ippsAdd_64fc, LERTWatchInit, ippsCopy_64f, ippsCopy_64f_I, ippsMove_64f, ippsDotProd_64f, ippsMulC_64f_I, ippsFree, LEPlugin_Delete, LEGetParameter, LESetParameter}, 
                 emphstyle={[1]\color{olive}},  
                 emph={[2]Ipp8u, Ipp64f, Ipp64fc, IppsFFTSpec_C_64fc, fstream, ios, ifstream, PlugIn, InterfaceType, HWND, LEEffect, LPVOID, PinType, WatchType}, 
                 emphstyle={[2]\color{ForestGreen}},
-                emph={[3]NUTS_NAME, ID_BETA, MAX_FILE_NAME_LENGTH, NUTS_GET_FS_SR, AUDIOPROC, NUTS_ADDRTWATCH}, 
+                emph={[3]NUTS_NAME, ID_BETA, MAX_FILE_NAME_LENGTH, NUTS_GET_FS_SR, AUDIOPROC, NUTS_ADDRTWATCH, ID_MU, NUTS_GETSECURETIME, NUTSSECURE, NUTS_RELEASESECURETIME, NUTS_UPDATERTWATCH}, 
                 emphstyle={[3]\color{Purple}}, 
-                emph={[4]_CBFunction, _PlugRef, ParentDlg, Input, Output, ExtraInfo}, emphstyle={[4]\color{Gray}}, 
+                emph={[4]_CBFunction, _PlugRef, ParentDlg, Input, Output, ExtraInfo, Index, Data}, 
+                emphstyle={[4]\color{Gray}}, 
                 emph={[5]__stdcall}, 
                 emphstyle={[5]\color{blue}}, 
 }
@@ -103,33 +104,48 @@
 \newpage
 \setcounter{page}{1}
 \section{Introduzione}
-\label{sec:Introduzione}
-\clearpage
+\label{sec:Introduzione}    
+La cancellazione della diafonia svolge un ruolo importante nell'ascolto di segnali binaurali tramite altoparlanti. Lo scopo della cancellazione del crosstalk è quello di riprodurre suoni binaurali alle orecchie dell'ascoltatore tramite l'inversione dei percorsi dell'onda sonora. Il filtro di cancellazione della diafonia richiede un'elevato sforzo computazionale per essere aggiornato in tempo reale in base alla posizione della testa. In questo progetto vengono analizzati, implementati e confrontati due algoritmi di cancellazione del crosstalk: LMS (Least Mean Square) e Fast Deconvolution.
 
-\section{Dataset}
-\label{sec:Dataset}
-Il dataset usato è composto ad un ampio set di \href{http://sound.media.mit.edu/resources/KEMAR/full.zip}{misurazioni della funzione di trasferimento relativa alla testa} (HRTF) di un microfono dummy-head KEMAR. Le misurazioni consistono nelle risposte impulsive dell'orecchio sinistro e destro di un altoparlante Realistic Optimus Pro 7 montato a 1,4 metri dal KEMAR. Sono state utilizzate sequenze binarie pseudo-casuali per ottenere le risposte impulsive a una frequenza di campionamento di \SI{44.1}{\kilo \hertz}. \cite{Gardner:HRTF}
+A differenza dei sistemi stereo classici, un sistema audio 3D permette di posizionare i suoni intorno ad un ascoltatore in modo che questi siano percepiti come provenienti da punti arbitrari nello spazio. In questo modo, l'audio 3D può  aumentare il senso di realismo nella musica o nei film e può essere di grande beneficio nella realtà virtuale, nella realtà aumentata, nelle videoconferenze da remoto o per l'intrattenimento casalingo.
 
-Le misurazioni sono state effettuate nella camera anecoica del MIT. Il KEMAR è stato montato in posizione verticale su un giradischi motorizzato che può essere ruotato con precisione sotto il controllo del computer. L'altoparlante è stato montato su un supporto a braccio che ha consentito il posizionamento accurato dell'altoparlante a qualsiasi elevazione rispetto al KEMAR. Pertanto, le misurazioni sono state effettuate un'elevazione alla volta, impostando l'altoparlante all'altezza corretta e quindi ruotando il KEMAR su ciascun azimut.
+La percezione del suono virtuale è ottenuta sintetizzando una coppia di segnali binaurali da un segnale di ingresso monoaurale con le informazioni acustiche 3D fornite: la distanza e la direzione della sorgente sonora rispetto all'ascoltatore. In particolare, il senso dell'orientamento può essere reso utilizzando informazioni acustiche relative alla testa, come le funzioni di trasferimento correlate alla testa (HRTF) che possono essere ottenute in modo sperimentale o teorico. Per fornire segnali binaurali, il modo più semplice è attraverso le cuffie. Tuttavia, in molti scenari, ad esempio, a casa o in teleconferenza, molti ascoltatori preferiscono non indossare le cuffie. Se vengono utilizzati altoparlanti, la riproduzione di questi segnali binaurali all'orecchio dell'ascoltatore non è semplice. Ogni orecchio riceve una cosiddetta componente di diafonia, inoltre, i segnali diretti sono distorti dal riverbero della stanza. Per superare i problemi descritti sopra, è necessario un filtro inverso prima di riprodurre il segnale binaurale attraverso gli altoparlanti. Il concetto di cancellazione ed equalizzazione della diafonia è stato introdotto da Atal e Schroeder e Bauer nei primi anni Sessanta.
 
-I dati HRTF vengono archiviati nelle directory per elevazione. Ogni nome di directory ha il formato "elevEE", dove EE è l'angolo di elevazione. All'interno di ogni directory, il nome di ogni file ha il formato "XEEeAAAa.wav" dove X può essere "L" o "R" rispettivamente per la risposta dell'orecchio sinistro e destro, "EE" è l'angolo di elevazione della sorgente in gradi, da -40° a 90°, e AAA è l'azimut della sorgente in gradi, da 0° a 355°. Gli angoli di elevazione e azimut indicano la posizione della sorgente rispetto al KEMAR, in modo che, ad esempio, in corrispondenza dell'elevazione 0 e azimut 0 sia di fronte al KEMAR , l'elevazione 90 è direttamente sopra il KEMAR, elevazione 0 e azimut 90 è a destra del KEMAR. Ad esempio, il file "R-20e270a.wav" è la risposta dell'orecchio destro, con la sorgente 20 gradi sotto il piano orizzontale e 90 gradi a sinistra della testa.
-\clearpage
-\section{Descrizione teorica degli algoritmi}
-\label{sec:descrizione_teorica}
-\subsection{LMS}
-\label{subsec:LMS_teoria}
-Per la cancellazione del crosstalk l'algoritmo più comune è quello dell'LMS \cite{143434}, \cite{4217047}.
-Nonostante sia semplice e accurato ha una veloce convergenza.
-Una tipica situazione di ascolto con due altoparlanti con cancellazione del closstalk è rappresentata in figura...
-La rappresentazione in frequenza dei segnali desiderati binaurali è indicata con $X_1$ e $X_2$ per suoni che raggiungono rispettivamente orecchio destro e sinistro.
-Con $Y_1$ e $Y_2$ invece, si indicano i suoni che effettivamente raggiungono l'ascoltatore, attraversando il sistema.
-Il sistema può essere rappresentato come:
+Da allora sono stati presentati diversi algoritmi sofisticati per la cancellazione della diafonia, utilizzando due o più altoparlanti, in modo diretto o adattivo. Supponendo che i percorsi di trasferimento acustico dagli altoparlanti alle orecchie siano noti, il metodo di implementazione diretto calcola il filtro di cancellazione della diafonia invertendo direttamente le funzioni di trasferimento. Solitamente viene utilizzato un manichino di una testa con dei microfoni all'interno per stimare queste funzioni.
+
+Il metodo della stima diretta può essere implementato nel dominio del tempo o della frequenza. I primi sono generalmente dispendiosi dal punto di vista computazionale, mentre i secondi hanno una complessità inferiore. D'altra parte, gli algoritmi nel dominio del tempo hanno prestazioni migliori di quelli nel dominio della frequenza data la stessa lunghezza del filtro di cancellazione.
+
+Ad esempio, un metodo nel dominio della frequenza, noto come metodo di fast deconvolution, che è stato dimostrato essere molto utile e facile da usare in diversi casi pratici, può subire un effetto di convoluzione circolare quando
+i filtri inversi non sono sufficientemente lunghi rispetto alla durata del percorso acustico.
+
+In un metodo di implementazione adattivo, il filtro di cancellazione della  diafonia è calcolato in modo adattivo con i segnali di feedback ricevuti da
+microfoni in miniatura collocati nelle orecchie dell'utente. Molti metodi adattativi impiegano tipicamente qualche variazione degli algoritmi LMS o RLS (Recursive Least Squares). L'algoritmo LMS tende a ridurre l'errore quadratico medio tra il segnale desiderato e l'uscita ed è noto per la sua semplicità e robustezza. Questo algoritmo è ampiamente utilizzato, anche se la sua velocità di convergenza è lenta. A differenza di LMS, l'RLS trova ricorsivamente i coefficienti che minimizzano una funzione costo ai minimi quadrati ponderati relativa ai segnali di ingresso. Nella derivazione dell'RLS, gli input sono considerati deterministici, mentre per LMS sono stocastici. L'algoritmo RLS può arrivare a convergenza in modo più veloce di LMS, aumentando però il carico computazionale.
+
+Sebbene molti algoritmi siano stati proposti, il metodo adattativo viene usato più in ambito accademico rispetto alla vita di tutti i giorni. Il motivo è che le persone che non vogliono usare le cuffie probabilmente non vorrebbero utilizzare neanche un paio di microfoni nelle orecchie per ottimizzare la riproduzione degli altoparlanti. Una limitazione di un sistema di cancellazione della diafonia nasce dal fatto che ogni movimento dell'ascoltatore che supera i $75-100$ \si{\milli \meter} può cambiare completamente l'effetto desiderato. Questo problema può essere risolto seguendo in tempo reale la testa dell'ascoltatore nello spazio 3D. La posizione della testa viene determinata da un localizzatore magnetico o basato su fotocamera, quindi i filtri HRTF e quelli di cancellazione della diafonia sono aggiornati in tempo reale in base alla posizione dell'ascoltatore.
+
+In acustica e audio, la deconvoluzione a singolo canale è particolarmente utile poiché può compensare la risposta di trasduttori imperfetti come cuffie, altoparlanti e amplificatori. La deconvoluzione multicanale è necessaria nella progettazione di sistemi di cancellazione della diafonia e sistemi di imaging di sorgenti virtuali.%~\cite{kirkeby:deconvolution_analysis} 
+
+La fast deconvolution è un metodo molto veloce per calcolare una matrice di filtri digitali che può essere utilizzata per controllare le uscite di un impianto multicanale. Questo metodo è tipicamente più veloce di diversi ordini di grandezza rispetto ai metodi nel dominio del tempo e combina i principi dell'inversione dei minimi quadrati nel dominio della frequenza e il metodo di regolarizzazione di ordine zero.%~\cite{kirkeby:deconvolution_regularization}
+
+L'algoritmo presuppone che sia possibile utilizzare filtri ottimali lunghi, e funziona bene solo quando il parametro di regolarizzazione è impostato in modo appropriato. Nella pratica questo parametro viene determinato per tentativi.%~\cite{kirkeby:deconvolution_design}
+
+Una tipica situazione di ascolto con due altoparlanti con cancellazione del closstalk è rappresentata in figura~\ref{fig:head}. La rappresentazione in frequenza dei segnali desiderati binaurali è indicata con $X_1$ e $X_2$ per i suoni che raggiungono rispettivamente orecchio destro e sinistro.
+Con $Y_1$ e $Y_2$ invece, si indicano i suoni che effettivamente raggiungono l'ascoltatore, attraversando il sistema. $C_{i, j}$ sono le HRTF dagli altoparlanti alle orecchie dell'ascoltatore, $H_{i,j}$ sono i filtri di cancellazione della diafonia, per $i , j =1,2$.
+
+\begin{figure}[h]
+	\centering	
+	\includegraphics[width=1\textwidth]{Immagini/head}
+	\caption{Diagramma a blocchi del sistema sonoro usato}
+	\label{fig:head}
+\end{figure}
+Il sistema in~\ref{fig:head} può essere rappresentato nel dominio della frequenza come:
 
 \begin{equation}
-\textbf{Y=CHX}
+\textbf{Y} = \textbf{CHX}
 \end{equation}
 ovvero
-\begin{equation}
+
+\begin{equation}\label{eq:sistema_sonoro}
 \begin{bmatrix}
 Y_1\\
 Y_2
@@ -148,16 +164,13 @@ X_1\\
 X_2
 \end{bmatrix}
 \end{equation}
-
-Per avere il segnale in uscita uguale a quello desiderato $H$ dovrebbe essere l'inversa di $C$. La diretta inversa di $C$ però non garantisce la cancellazione del crosstalk in quanto gli elementi non soddisfano la condizione di fase minima.
-La'approccio utilizzato è quindi quello dell'algoritmo LMS.
-La precedente equazione viene riscritta come:
-
+L'equazione~\eqref{eq:sistema_sonoro} può essere riscritta come:
 \begin{equation}
 \begin{bmatrix}
 Y_1\\
 Y_2
 \end{bmatrix}
+=
 \begin{bmatrix}
 C_{11} X_1 & C_{12} X_1 & C_{11} X_2 & C_{12} X_2 \\ 
 C_{21} X_1 & C_{22} X_1 & C_{21} X_2 & C_{22} X_2 \\ 
@@ -169,12 +182,33 @@ H_{12}\\
 H_{22}\\
 \end{bmatrix}
 \end{equation}
+Per avere il segnale in uscita uguale a quello desiderato $H$ dovrebbe essere l'inversa di $C$. La diretta inversa di $C$ però non garantisce la cancellazione del crosstalk in quanto gli elementi potrebbero non soddisfare la condizione di fase minima. 
+\clearpage
+
+\section{Dataset}
+\label{sec:Dataset}
+Il dataset usato è composto ad un ampio set di \href{http://sound.media.mit.edu/resources/KEMAR/full.zip}{misurazioni della funzione di trasferimento relativa alla testa} (HRTF) di un microfono dummy-head KEMAR. Le misurazioni consistono nelle risposte impulsive dell'orecchio sinistro e destro di un altoparlante Realistic Optimus Pro 7 montato a 1,4 metri dal KEMAR. Sono state utilizzate sequenze binarie pseudo-casuali per ottenere le risposte impulsive a una frequenza di campionamento di \SI{44.1}{\kilo \hertz}. \cite{Gardner:HRTF}
+
+Le misurazioni sono state effettuate nella camera anecoica del MIT. Il KEMAR è stato montato in posizione verticale su un giradischi motorizzato che può essere ruotato con precisione sotto il controllo del computer. L'altoparlante è stato montato su un supporto a braccio che ha consentito il posizionamento accurato dell'altoparlante a qualsiasi elevazione rispetto al KEMAR. Pertanto, le misurazioni sono state effettuate un'elevazione alla volta, impostando l'altoparlante all'altezza corretta e quindi ruotando il KEMAR su ciascun azimut.
+
+I dati HRTF vengono archiviati nelle directory per elevazione. Ogni nome di directory ha il formato "elevEE", dove EE è l'angolo di elevazione. All'interno di ogni directory, il nome di ogni file ha il formato "XEEeAAAa.wav" dove X può essere "L" o "R" rispettivamente per la risposta dell'orecchio sinistro e destro, "EE" è l'angolo di elevazione della sorgente in gradi, da -40° a 90°, e AAA è l'azimut della sorgente in gradi, da 0° a 355°. Gli angoli di elevazione e azimut indicano la posizione della sorgente rispetto al KEMAR, in modo che, ad esempio, in corrispondenza dell'elevazione 0 e azimut 0 sia di fronte al KEMAR , l'elevazione 90 è direttamente sopra il KEMAR, elevazione 0 e azimut 90 è a destra del KEMAR. Ad esempio, il file "R-20e270a.wav" è la risposta dell'orecchio destro, con la sorgente 20 gradi sotto il piano orizzontale e 90 gradi a sinistra della testa.
+\clearpage
+\section{Descrizione teorica degli algoritmi}
+\label{sec:descrizione_teorica}
+\subsection{LMS}
+\label{subsec:LMS_teoria}
+Per la cancellazione del crosstalk l'algoritmo più comune è quello dell'LMS \cite{143434}, \cite{4217047}.
+Nonostante sia semplice e accurato ha una veloce convergenza. La figura~\ref{fig:lms} mostra il diagramma di cancellazione del crosstalk usando LMS. 
+
 \begin{figure}[h]
 	\centering	
 	\includegraphics[width=\textwidth]{Immagini/lms.png}
 	\caption{Diagramma a blocchi della cancellazione del crosstalk usando LMS}
 	\label{fig:lms}
 \end{figure}
+
+Le variabili con lettera minuscola rappresentano il segnale nel dominio del tempo e $\tau$ rappresenta il ritardo del sistema. Per sistemi causali, $y_i[n]$ dovrebbe essere idealmente una versione ritardata di $x_i[n]$. Le sequenze $r_{ilm}$ sono i segnali $x_i[n]$ di ingresso filtrati dalle funzioni $c_{lm}$ che hanno $M$ tappi nel dominio del tempo.
+
 In generale, si può scrivere il filtraggio nell'$n$-esimo istante di un segnale $\mathbf{a[n]} = \left[a[n], a[n-1], \dots, a[n - M + 1]\right]^T$ con un filtro $\mathbf{b[n]} =  \left[b_{0}[n], b_{1}[n], \dots, b_{M-1}[n]\right]^T$ di lunghezza $M$ come
 \begin{equation}\label{eq:filtraggio_prodotto_scalare}
 y[n] = \sum_{j=0}^{M-1}b_{j}[n]a[n-j] = \mathbf{b}^T[\mathbf{n}] \cdot \mathbf{a}^T[\mathbf{n}].
@@ -207,12 +241,12 @@ e[n]=
 \begin{bmatrix}
 e_1[n]\\
 e_2[n]
-\end{bmatrix},
+\end{bmatrix},\quad
 d[n]=
 \begin{bmatrix}
 d_1[n]\\
 d_2[n]
-\end{bmatrix},
+\end{bmatrix},\quad
 y[n]=
 \begin{bmatrix}
 y_1[n]\\
@@ -290,13 +324,11 @@ h_{22}^{(k+1)}[n] \leftarrow h_{22}^{(k)}[n] - \mu e_2^{(2)} \cdot r_{222}[n]\\
 
 \subsection{Fast Deconvolution}
 \label{subsec:FD_teoria}
-La deconvoluzione~\cite{kirkeby:deconvolution_regularization}~\cite{kirkeby:deconvolution_analysis}~\cite{kirkeby:deconvolution_design}, nella sua forma più elementare, può essere descritta come il compito di calcolare l'input di un sistema a tempo discreto conoscendo il suo output. Di solito si presume che il sistema sia lineare e che la relazione input output sia nota con precisione. In acustica e audio, la deconvoluzione a singolo canale è particolarmente utile poiché può compensare la risposta di trasduttori imperfetti come cuffie, altoparlanti e amplificatori. La deconvoluzione multicanale è necessaria nella progettazione di sistemi di cancellazione della diafonia e sistemi di imaging di sorgenti virtuali.%~\cite{kirkeby:deconvolution_analysis}
-
-Nel progetto siamo interessati alle tecniche di deconvoluzione allo scopo di progettare filtri digitali per la riproduzione del suono su due canali. Più specificamente, dato un set di altoparlanti S, l'obiettivo è riprodurre un campo sonoro desiderato nei punti R dello spazio nel modo più accurato possibile. Questo principio è applicato dai cosiddetti sistemi di cancellazione della diafonia che vengono utilizzati per riprodurre registrazioni binaurali su due altoparlanti. In questo caso, viene utilizzata una matrice $2 \times 2$ di filtri digitali per compensare sia la risposta ambientale che la risposta degli altoparlanti, e anche per annullare la diafonia dall'altoparlante sinistro all'orecchio destro e viceversa. Un problema correlato è quello di ottenere una perfetta ``dereverberazione'' della risposta di una stanza in una posizione del microfono utilizzando due filtri digitali per calcolare l'ingresso a due altoparlanti. La fast deconvolution un metodo molto veloce per calcolare una matrice di filtri digitali che può essere utilizzata per controllare le uscite di un impianto multicanale. Questo metodo è tipicamente più veloce di diversi ordini di grandezza rispetto ai metodi nel dominio del tempo. Combina i principi dell'inversione dei minimi quadrati nel dominio della frequenza e il metodo di regolarizzazione di ordine zero che viene tradizionalmente utilizzato quando ci si trova di fronte a un problema di inversione mal condizionata.%~\cite{kirkeby:deconvolution_regularization}
-
-La regolarizzazione dipendente dalla frequenza viene utilizzata per prevenire picchi elevati nella risposta in ampiezza dei filtri ottimali. Un ritardo di modellazione viene utilizzato per garantire che la rete di cancellazione del cross-talk funzioni bene non solo in termini di ampiezza, ma anche in termini di fase. L'algoritmo presuppone che sia possibile utilizzare filtri ottimali lunghi, e funziona bene solo quando due parametri di regolarizzazione, un fattore di forma e un fattore di guadagno, sono impostati in modo appropriato. In pratica, i valori dei due parametri di regolarizzazione sono determinati più facilmente da esperimenti per tentativi.%~\cite{kirkeby:deconvolution_design}
-
-Consideriamo una funzione di costo del tipo
+La deconvoluzione~\cite{kirkeby:deconvolution_regularization}~\cite{kirkeby:deconvolution_analysis}~\cite{kirkeby:deconvolution_design}, nella sua forma più elementare, può essere descritta come il compito di calcolare l'input di un sistema a tempo discreto conoscendo il suo output. Di solito si presume che il sistema sia lineare e che la relazione input output sia nota con precisione. 
+%In acustica e audio, la deconvoluzione a singolo canale è particolarmente utile poiché può compensare la risposta di trasduttori imperfetti come cuffie, altoparlanti e amplificatori. La deconvoluzione multicanale è necessaria nella progettazione di sistemi di cancellazione della diafonia e sistemi di imaging di sorgenti virtuali.%~\cite{kirkeby:deconvolution_analysis}
+%Nel progetto siamo interessati alle tecniche di deconvoluzione allo scopo di progettare filtri digitali per la riproduzione del suono su due canali. Più specificamente, dato un set di altoparlanti S, l'obiettivo è riprodurre un campo sonoro desiderato nei punti R dello spazio nel modo più accurato possibile. Questo principio è applicato dai cosiddetti sistemi di cancellazione della diafonia che vengono utilizzati per riprodurre registrazioni binaurali su due altoparlanti. In questo caso, viene utilizzata una matrice $2 \times 2$ di filtri digitali per compensare sia la risposta ambientale che la risposta degli altoparlanti, e anche per annullare la diafonia dall'altoparlante sinistro all'orecchio destro e viceversa. Un problema correlato è quello di ottenere una perfetta ``dereverberazione'' della risposta di una stanza in una posizione del microfono utilizzando due filtri digitali per calcolare l'ingresso a due altoparlanti. La fast deconvolution un metodo molto veloce per calcolare una matrice di filtri digitali che può essere utilizzata per controllare le uscite di un impianto multicanale. Questo metodo è tipicamente più veloce di diversi ordini di grandezza rispetto ai metodi nel dominio del tempo. Combina i principi dell'inversione dei minimi quadrati nel dominio della frequenza e il metodo di regolarizzazione di ordine zero che viene tradizionalmente utilizzato quando ci si trova di fronte a un problema di inversione mal condizionata.%~\cite{kirkeby:deconvolution_regularization}
+%La regolarizzazione dipendente dalla frequenza viene utilizzata per prevenire picchi elevati nella risposta in ampiezza dei filtri ottimali. Un ritardo di modellazione viene utilizzato per garantire che la rete di cancellazione del cross-talk funzioni bene non solo in termini di ampiezza, ma anche in termini di fase. L'algoritmo presuppone che sia possibile utilizzare filtri ottimali lunghi, e funziona bene solo quando due parametri di regolarizzazione, un fattore di forma e un fattore di guadagno, sono impostati in modo appropriato. In pratica, i valori dei due parametri di regolarizzazione sono determinati più facilmente da esperimenti per tentativi.%~\cite{kirkeby:deconvolution_design}
+Consideriamo una funzione costo del tipo
 \begin{equation}\label{funzione_costo_fd}
 J = E + \beta V(f)
 \end{equation}
@@ -305,7 +337,7 @@ dove $E$ è una misura dell'errore della pressione sonora
 E = | Y_1 - X_1 |^2  + | Y_2 - X_2 |^2
 \end{equation}
 e $V$ è una funzione della frequenza che indica il costo computazionale. Il numero $\beta \geq 0$ è un parametro di regolarizzazione che determina quanto peso
-assegnare alla funzione $V$. Poiché non sappiamo a priori se la matrice $C$ è non singolare per determinate frequenze, la matrice $H$ di cancellazione del crosstalk può contenere valori molto alti. All'aumentare di $\beta$ da zero a infinito, $J$ cambia gradualmente dalla minimizzazione della sola funzione di errore $E$ alla minimizzazione dello sforzo computazionale $V$.
+assegnare alla funzione $V$. La regolarizzazione dipendente dalla frequenza viene utilizzata per prevenire picchi elevati nella risposta in ampiezza dei filtri ottimali. Poiché non sappiamo a priori se la matrice $C$ è non singolare per determinate frequenze, la matrice $H$ di cancellazione del crosstalk può contenere valori molto alti. All'aumentare di $\beta$ da zero a infinito, $J$ cambia gradualmente dalla minimizzazione della sola funzione di errore $E$ alla minimizzazione dello sforzo computazionale $V$.
 
 Siano $S$ i segnali trasferiti agli altoparlanti facendo passare il segnale $X$ attraverso la matrice di cancellazione del crosstalk $H$. Otteniamo
 \begin{equation}
@@ -315,23 +347,25 @@ con
 \begin{equation}
 S_b = BS = BHX
 \end{equation}
-dove $B$ è una matrice $2 \times 2$ e il simbolo $+$ indica l'inversa generalizzata della matrice $S_b$. La soluzione approssimata della funzione $J$ è definita da 
+dove $B$ è una matrice $2 \times 2$ e il simbolo $^+$ indica l'inversa generalizzata della matrice $S_b$. La soluzione approssimata della funzione $J$ è definita da 
 \begin{equation}\label{eq:H_FD}
 H(z) = \left[C^T (z^{-1}) C(z) + \beta B^T B)\right]^{-1} C^T(z^{-1})
 \end{equation}
-dove l'apice $T$ denota la trasposta della matrice. Se la matrice $B$ è uguale alla matrice identità $I$, si ottiene $S_b = S$, dunque l'equazione~\eqref{eq:H_FD} diventa
+dove l'apice $^T$ denota la trasposta della matrice. Se la matrice $B$ è uguale alla matrice identità $I$, si ottiene $S_b = S$, dunque l'equazione~\eqref{eq:H_FD} diventa
 \begin{equation}\label{eq:H_FD2}
 H(z) = \left[C^T (z^{-1}) C(z) + \beta I)\right]^{-1} C^T(z^{-1}) z^{-m}
 \end{equation}
-dove la componente $z^{-m}$ implementa un ritardo di $m$ campioni.
+dove la componente $z^{-m}$ implementa un ritardo di $m$ campioni. Un ritardo di modellazione viene utilizzato per garantire che la rete di cancellazione del cross-talk funzioni bene non solo in termini di ampiezza, ma anche in termini di fase.
 
-Le equazioni~\eqref{eq:H_FD} e~\eqref{eq:H_FD2} rappresentano una espressione di $H(z)$ nel dominio continuo della frequenza. Se viene usata una FFT a $N$ punti per campionare la risposta in frequenza $H(z)$, allora il valore di $H[k]$ è dato da
+Le equazioni~\eqref{eq:H_FD} e~\eqref{eq:H_FD2} rappresentano una espressione di $H(z)$ nel dominio continuo della frequenza. Se, come nel nostro caso, il dominio della frequenza è discreto, occorre usare la formula~\eqref{eq:H_FD3}, in cui il valore di $H[k]$ è dato da
 \begin{equation}\label{eq:H_FD3}
 H[k] = \left[C^H[k] C[k] + \beta I)\right]^{-1} C^H[k]
 \end{equation}
-dove $k$ indica la $k$-esima frequenza corrispondente a $\exp(j2\pi k/N)$ e l'apice $H$ denota l'operatore Hermitiano che fa la trasposta coniugata del suo argomento. Dall'equazione~\eqref{eq:H_FD3} si può osservare che ponendo $\beta = 0$ si ottiene $H = C^{-1}$. In questo caso, poiché $Y = CHX = C C^{-1} X = IX = X$, si ottiene in uscita il segnale d'ingresso.
+dove $k$ indica la $k$-esima frequenza corrispondente a $\exp(j2\pi k/N)$ e l'apice~$^H$ denota l'operatore Hermitiano che fa la trasposta coniugata del suo argomento. Dall'equazione si può osservare che ponendo $\beta = 0$ si ottiene $H = C^{-1}$. In questo caso, poiché $Y = CHX = C C^{-1} X = IX = X$, si ottiene in uscita il segnale d'ingresso.
 
-Per calcolare la risposta impulsiva del filtro occorre seguire i seguenti passi:
+L'equazione~\eqref{eq:H_FD3} si ricava dalla~\eqref{eq:H_FD2} notando che la trasformata di Fourier a tempo discreto è la valutazione della trasformata zeta sul cerchio unitario, quindi ponendo $z = e^{j\omega}$ si ottiene la DTFT. Si noti che un generico segnale $X(z^{-1}) = X(e^{-j\omega}) = X^*(e^{j\omega})$ corrisponde nel dominio discreto della frequenza a $X^*[k]$ e nel tempo discreto all'inversione temporale $x[-n]$. Come precedentemente detto, l'operatore Hermitiano fa la trasposta coniugata del suo argomento, quindi si può capire perché $C^T(z^{-1})$ diventa $C^H[k]$ nell'equazione~\eqref{eq:H_FD3}.
+
+Il ritardo di $m$ campioni $z^{-m}$ viene esplicitato nella risposta impulsiva che viene calcolata implementando i seguenti passi:
 \begin{enumerate}
 \item si calcola la matrice $2 \times 2$ $C[k]$ tramite una FFT delle risposte impulsive $c_{ij}[n]$ con $i = 1, 2$ e $j = 1, 2$. Ad esempio, $C_{11}[k]$ contiene l'ampiezza della $k$-esima armonica della FFT di $c_{11}$,
 \item si calcola $H[k]$ usando la formula~\eqref{eq:H_FD3},
@@ -357,7 +391,7 @@ nell'implementazione pratica non si può calcolare tutta l'uscita con la sola op
 \begin{equation}
 y[n] = x[n] * h[n] = \sum_{m=-\infty}^{+\infty} {h[m] \cdot x[n-m]} = \sum_{m=1}^{M} {h[m] \cdot x[n-m]}
 \end{equation}
-poiché $h[m]$ = 0 per $m \in [1, M]$.
+poiché $h[m] \neq 0$ solo per $m \in [1, M]$.
 
 L'overlap and save permette di calcolare dei blocchi di $y[n]$ di lunghezza $L$ e concatenarli insieme per formare il segnale di uscita completo. Si definisce il $k$-esimo blocco d'ingresso come
 \begin{equation}
@@ -386,7 +420,7 @@ L'implementazione dell'overlap and save con un filtro composto da $(L + M - 1)$ 
 \item si scartano i primi $M - 1$ punti, ottenendo il $k$-esimo blocco in uscita di lunghezza $L$, come mostrato nei blocchi di uscita $y_k$ di figura~\ref{fig:ols}.
 \end{enumerate}
 
-Un'implementazione più efficiente è invece quella descritta di seguito, in cui i primi due punti precedentemente elencati rimangono uguali:
+Un'implementazione più efficiente è invece quella descritta di seguito e mostrata nella figura~\ref{fig:ols_digramma}, in cui i primi due punti precedentemente elencati rimangono uguali:
 \begin{enumerate}\setcounter{enumi}{2}
 \item si fa la FFT a $2 \cdot (L + M - 1)$ punti del $k$-esimo e del $(k-1)$-esimo blocco di ingresso lunghi rispettivamente $(L + M - 1)$ campioni,
 \item si fa la FFT a $2 \cdot (L + M - 1)$ punti del filtro FIR $h[n]$ con un padding di $(L + M - 1)$ zeri
@@ -397,9 +431,16 @@ Un'implementazione più efficiente è invece quella descritta di seguito, in cui
 
 \begin{figure}[h]
 	\centering	
-	\includegraphics[width=.7\textwidth]{Immagini/ols}
+	\includegraphics[width=.5\textwidth]{Immagini/ols}
 	\caption{Metodo Overlap and Save}
 	\label{fig:ols}
+\end{figure}
+
+\begin{figure}[h]
+	\centering	
+	\includegraphics[width=.5\textwidth]{Immagini/ols_diagram}
+	\caption{Diagramma dell'implementazione dell'Overlap and Save}
+	\label{fig:ols_digramma}
 \end{figure}
 
 \clearpage
@@ -646,10 +687,12 @@ end
 \label{sec:codice_c}
 \subsection{LMS}
 \label{sec:codice_c_lms}
-Nella libreria \texttt{Plugin.h} viene inizialmente definito il nome del Nuts come ``LMS Filter''.
+Nella libreria \texttt{Plugin.h} viene inizialmente definito il nome del Nuts come ``LMS Filter'' e l’indice \texttt{ID\_MU} dell'RTWatch che permette di cambiare
+il parametro $\mu$.
 
-\begin{lstlisting}[language=cpp]
+\begin{lstlisting}[language=cpp, label = dichiarazione_costanti_lms, caption = Dichiarazione delle costanti in \texttt{Plugin.h}, captionpos = b]
 #define NUTS_NAME	"LMS Filter"
+#define ID_MU 0 
 \end{lstlisting}
 Nella classe \texttt{class PlugIn :	public LEEffect} vengono definite le variabili che saranno utilizzate nell'algoritmo.
 
@@ -660,11 +703,56 @@ private:
 	int FrameSize, SampleRate;
 	int M, L, tau;
 	double mu;
-	double* x1, * x2, * d1, * d2, * y1, * y2, * e1, * e2, * x1buff, * x2buff;
+	double* x1, * x2, * d1, * d2, * y1, * y2, * e1, * e2,
+		* x1buff, * x2buff;
 	double* c11, * c12, * c21, * c22;
 	double* h11, * h12, * h21, * h22;
-	double* r111, * r112, * r211, * r212, * r222, * r221, * r122, * r121;
-	double* r111buff, * r112buff, * r211buff, * r212buff, * r222buff, * r221buff, * r122buff, * r121buff;
+	double* r111, * r112, * r211, * r212, * r222, * r221, 
+		* r122, * r121;
+	double* r111buff, * r112buff, * r211buff, * r212buff, 
+		* r222buff, * r221buff, * r122buff, * r121buff;
+\end{lstlisting}
+Nella libreria \texttt{myLib.h} vengono dichiarate le funzioni usate per scrivere e leggere i file ``.dat''.
+
+\begin{lstlisting}[language=cpp, label=code:myLib.h, caption = Libreria \texttt{myLib.h}, breaklines = false, captionpos = b]
+void read_dat(char *name, double *data, int dim);
+void write_dat(char *name, double *data, int dim, 
+	char*save_dir);
+\end{lstlisting}
+
+Nel codice sorgente \texttt{myLib.cpp} vengono definite le funzioni \texttt{read\_dat} e \texttt{write\_dat}. La prima apre in input e legge un file, mentre la seconda apre in output un file e ne scrive il dato \texttt{data}.
+
+\begin{lstlisting}[language=cpp, label=code:myLib.cpp, caption = File \texttt{myLib.cpp}, breaklines = false, breaklines = false, captionpos = b]
+#include "StdAfx.h"
+#include "myLib.h"
+
+void write_dat(char *name, double *data, int dim, 
+	char *save_name) 
+{
+	char name_a[MAX_FILE_NAME_LENGTH];
+	memset(name_a,0,MAX_FILE_NAME_LENGTH*sizeof(char));
+	strcpy(name_a,save_name);
+	strcat(name_a,name);
+
+	char *c;
+	c=(char *)(void *)data;
+
+	fstream File;
+	File.open(name_a,ios::out | ios::binary);
+	File.write(c,dim*sizeof(double));
+	File.close();
+}
+
+void read_dat(char *name, double *data, int dim) 
+{
+	char *c;
+	c=(char *)(void *)data;
+
+	ifstream File;
+	File.open(name, ios::in | ios::binary);
+	File.read(c, dim * sizeof(double));
+	File.close();
+}
 \end{lstlisting}
 Nel file \texttt{PlugIn.cpp} sono presenti le funzioni:
 \begin{itemize}
@@ -676,12 +764,15 @@ Nel file \texttt{PlugIn.cpp} sono presenti le funzioni:
 Plugin : viene chiamata quando il NUTS viene eliminato dalla board del NUTECH
 \end{itemize}
 Nel costruttore vengono inizializzate a zero le variabili precedentemente definite.
-\texttt{Framesize} e \texttt{Samplerate} vengono ricavati dagli ingressi del blocco che vengono impostati pari a due allo stesso modo delle uscite.
+\texttt{Framesize} e \texttt{Samplerate} vengono ricavati tramite la \texttt{CBFunction} e vengono impostati due pin di input e due pin di output, rispettivamente con la funzione \texttt{LESetNumInput(2)} e con \texttt{LESetNumOutput(2)}.
 \begin{lstlisting}[language=cpp, label=code:costr, caption = Costruttore, breaklines = false, captionpos = b]
-PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffect(_CBFunction,_PlugRef,ParentDlg)
+PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,
+	HWND ParentDlg): LEEffect(_CBFunction,_PlugRef,ParentDlg)
 {
-	FrameSize = CBFunction(this,NUTS_GET_FS_SR,0,(LPVOID)AUDIOPROC);
-	SampleRate = CBFunction(this,NUTS_GET_FS_SR,1,(LPVOID)AUDIOPROC);
+	FrameSize = CBFunction(this,NUTS_GET_FS_SR,0,
+		(LPVOID)AUDIOPROC);
+	SampleRate = CBFunction(this,NUTS_GET_FS_SR,1,
+		(LPVOID)AUDIOPROC);
 
 	LESetNumInput(2);
 	LESetNumOutput(2);
@@ -760,23 +851,23 @@ Inoltre vegono caricati i tappi dei filtri HRIR tramite la funzione \texttt{read
 Nella funzione Process avviene l'algoritmo vero e proprio. Questa funzione viene chiamata per ogni frame dell'ingresso e produce il corrispondente frame in uscita.
 Gli ingressi e le uscite vengono quindi caricati in variabili temporanee in modo da poter essere elaborate.
 Gli ingressi \texttt{InputData1} e \texttt{InputData2} vengono copiati nelle variabili \texttt{x1} e \texttt{x2} tramite la funzione \texttt{ippsCopy\_64f}.
-Usando la stessa funzione si crea il vettore del segnale desiderato ritardando l’ingresso di \texttt{tau} campioni copiando \texttt{tau} valori dal puntatore \texttt{x1 + FrameSize - tau} in \texttt{d1} e  allo stesso modo dal puntatore \texttt{x2 + FrameSize - tau} in \texttt{d2}.
+Usando la stessa funzione si crea il vettore del segnale desiderato ritardando l’ingresso di \texttt{tau} campioni copiando \texttt{tau} valori dal puntatore \texttt{x1 + FrameSize - tau} in \texttt{d1} e  allo stesso modo dal puntatore \texttt{x2 + FrameSize - tau} in \texttt{d2}. Si copiano successivamente i primi \texttt{FrameSize - tau} valori di \texttt{x1} e \texttt{x2} dall'indice \texttt{tau} in poi di \texttt{d1} e \texttt{d2}.
 I vettori di uscita \texttt{y1} e \texttt{y2} vengono invece posti pari a zero.
 \begin{lstlisting}[language=cpp, label=code:proc, caption = Process, breaklines = false, captionpos = b]
-int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID ExtraInfo)
+int __stdcall PlugIn::LEPlugin_Process(PinType **Input,
+	PinType **Output,LPVOID ExtraInfo)
 { 
 	double* InputData1 = ((double*)Input[0]->DataBuffer);
 	double* OutputData1 = ((double*)Output[0]->DataBuffer);
 	double* InputData2 = ((double*)Input[1]->DataBuffer);
 	double* OutputData2 = ((double*)Output[1]->DataBuffer);
-	
-	bufferNumber++;
 
 	// d1[0:tau] = x1[end - tau:end];
 	ippsCopy_64f(x1 + FrameSize - tau, d1, tau);
 	// copy InputData1 to x1
 	ippsCopy_64f(InputData1, x1, FrameSize);
-	// divide each element of the vector x1 by 32768 and store the result in x1
+	// divide each element of the vector x1 by 32768 and
+	//	 store the result in x1
 	ippsDivC_64f_I(32768.0, x1, FrameSize);
 	//d1[tau + 1:end] = x1[0:FrameSize - tau];	
 	ippsCopy_64f(x1, d1 + tau, FrameSize - tau);
@@ -784,7 +875,8 @@ int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID E
 	ippsCopy_64f(x2 + FrameSize - tau, d2, tau);
 	// copy InputData2 to x2
 	ippsCopy_64f(InputData2, x2, FrameSize);
-	// divide each element of the vector x2 by 32768 and store the result in x2
+	// divide each element of the vector x2 by 32768 and 
+	//	store the result in x2
 	ippsDivC_64f_I(32768.0, x2, FrameSize);
 	//d2[tau + 1:end] = x2[0:FrameSize - tau];	
 	ippsCopy_64f(x2, d2 + tau, FrameSize - tau);
@@ -793,8 +885,7 @@ int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID E
 	ippsZero_64f(y1, FrameSize);
 	ippsZero_64f(y2, FrameSize);
 \end{lstlisting}
-Il ciclo for corrisponde a quello usato in Matlab: vengono creati dei vettori di buffer temporanei e il segnale di ingresso viene elaborato un campione alla volta.
-Moltiplicando il buffer di ingresso per i filtri $c_{ij}$ si ottengono i segnali $r_{ijl}$ intermedi.
+Il ciclo for corrisponde a quello usato in Matlab: vengono creati dei vettori di buffer temporanei e il segnale di ingresso viene elaborato un campione alla volta. La creazione dei buffer di ingresso \texttt{x1buff} e \texttt{x2buff} avviene shiftando con \texttt{ippsMove\_64f} i primi \texttt{M - 1} valori di un posto verso destra e mettendo al primo posto l'\texttt{i}-esimo valore di \texttt{x1} e \texttt{x2}. I segnali $r_{ijl}$ intermedi si ottengono facendo il prodotto scalare con la funzione \texttt{ippsDotProd\_64f} tra i buffer di ingresso e i filtri $c_{ij}$.
 \begin{lstlisting}[language=cpp, label=code:rij, caption = Calcolo dei segnali intermedi, breaklines = false, captionpos = b]
 	for (int i = 0; i < FrameSize; i++)
 	{
@@ -813,9 +904,8 @@ Moltiplicando il buffer di ingresso per i filtri $c_{ij}$ si ottengono i segnali
 		ippsDotProd_64f(c22, x1buff, M, &(r122[i]));
 		ippsDotProd_64f(c21, x1buff, M, &(r121[i]));
 \end{lstlisting}
-A questo punto sono i segnali $r_{ijl}$ ad essere inseriti nel buffer. Moltiplicando ognuno di essi per $h_{ij}$ e sommando le 4 componenti si ottengono i segnali di uscita \texttt{y1} e \texttt{y2}.
+A questo punto sono i segnali $r_{ijl}$ ad essere inseriti nel buffer. Facendo il prodotto scalare di ognuno di essi per i filtri di ricostruzione $h_{ij}$ si ottengono le quattro componenti dell'uscita uscita. Ogni componente è salvata nella variabile di appoggio \texttt{ytmp} e sommata dopo ogni prodotto scalare alle variabili di uscita. In questo modo si ottengono i segnali di uscita \texttt{y1} e \texttt{y2}.
 
-La variabile \texttt{ytmp} viene utilizzata come variabile di appoggio per le componenti parziali dell'uscita.
 \begin{lstlisting}[language=cpp, label=code:uscite, caption = Calcolo delle uscite, breaklines = false, captionpos = b]
 		ippsMove_64f(r111buff, r111buff + 1, M - 1);
 		r111buff[0] = r111[i];
@@ -881,10 +971,14 @@ I filtri h vengono poi aggiornati analogamente a \ref{code:aggiornamento_filtro_
 \begin{lstlisting}[language=cpp, label=code:agg, caption = Aggiornamento dei filtri h, breaklines = false, captionpos = b]
 		for (int j = 0; j < M; j++)
 		{
-			h11[j] = h11[j] + mu * (e1[i] * r111buff[j] + e2[i] * r121buff[j]);
-			h12[j] = h12[j] + mu * (e1[i] * r211buff[j] + e2[i] * r221buff[j]);
-			h21[j] = h21[j] + mu * (e1[i] * r112buff[j] + e2[i] * r122buff[j]);
-			h22[j] = h22[j] + mu * (e1[i] * r212buff[j] + e2[i] * r222buff[j]);
+			h11[j] = h11[j] + mu * (e1[i] * r111buff[j] + 
+				e2[i] * r121buff[j]);
+			h12[j] = h12[j] + mu * (e1[i] * r211buff[j] + 
+				e2[i] * r221buff[j]);
+			h21[j] = h21[j] + mu * (e1[i] * r112buff[j] + 
+				e2[i] * r122buff[j]);
+			h22[j] = h22[j] + mu * (e1[i] * r212buff[j] + 
+				e2[i] * r222buff[j]);
 		}	
 	}
 \end{lstlisting}
@@ -903,8 +997,8 @@ I vettori in uscita vengono quindi di nuovo riportati in \texttt{OutputData1} e 
 	return COMPLETED;
 }
 \end{lstlisting}
-Nella funzione Delete vengono liberate dalla memoria tutte le variabili che erano state allocate nella Init.
-\begin{lstlisting}[language=cpp, label=code:delete, caption = Delete, breaklines = false, captionpos = b]
+Nella \texttt{LEPlugin\_Delete}, la funzione \texttt{ippsFree} rilascia la memoria precedentemente allocata in maniera dinamica nella Init. Un esempio di come usare questa funzione è mostrato di seguito.
+\begin{lstlisting}[language=cpp, label=code:delete_lms, caption = Delete, breaklines = false, captionpos = b]
 void __stdcall PlugIn::LEPlugin_Delete()
 {
 	if (y1 != 0)
@@ -913,6 +1007,61 @@ void __stdcall PlugIn::LEPlugin_Delete()
 		y1 = 0;
 	}
 \end{lstlisting}
+L'RT Watch per variare il parametro $\mu$ è creato nella funzione \texttt{LERTWatchInit} come di seguito. Come si può vedere, la variabile che accetta in ingresso può essere solo di tipo \texttt{double} e di dimensione \texttt{sizeof(double)} byte.
+
+\begin{lstlisting}[language=cpp, label=code:rtwatch_lms, caption = Creazione RT Watch, breaklines = false, captionpos = b]
+void __stdcall PlugIn::LERTWatchInit()
+{
+	WatchType NewWatch;
+
+	memset(&NewWatch, 0, sizeof(WatchType));
+	NewWatch.EnableWrite = true;
+	NewWatch.LenByte = sizeof(double);
+	NewWatch.TypeVar = WTC_DOUBLE;
+	NewWatch.IDVar = ID_MU;
+	sprintf(NewWatch.VarName, "mu\0");
+	CBFunction(this, NUTS_ADDRTWATCH, 0, &NewWatch);
+}
+\end{lstlisting}
+Per cambiare correttamente il parametro dalla finestra del NU-TECH è necessario usare le funzioni \texttt{LEGetParameter} e \texttt{LESetParameter}, rispettivamente illustrate nei codici~\ref{code:get_rtwatch_lms} e~\ref{code:set_rtwatch_lms}. Nella prima funzione, \texttt{memcpy} copia \texttt{sizeof(double)} byte dalla locazione puntata da \texttt{\&mu} a quella puntata da \texttt{Data}. Nella seconda funzione avviene l'opposto, cioè si copia il valore immesso dall'utente nella variabile \texttt{mu}. Questo accade solo se la variabile booleana \texttt{isRunning} è falsa, cioè se il programma non è in esecuzione. Il controllo descritto è necessario per non cambiare il valore $\mu$ durante l'esecuzione dell'algoritmo adattativo.
+
+\begin{lstlisting}[language=cpp, label=code:get_rtwatch_lms, caption = Funzione \texttt{LEGetParameter}, breaklines = false, captionpos = b]
+int  __stdcall PlugIn::LEGetParameter(int Index,void *Data)
+{
+
+	CBFunction(this, NUTS_GETSECURETIME, NUTSSECURE, 0);
+
+	if (Index == ID_MU)
+	{
+		memcpy((double*)Data, &mu, sizeof(double));
+	}
+
+	CBFunction(this, NUTS_RELEASESECURETIME, NUTSSECURE, 0);
+	return 0;
+}
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=cpp, label=code:set_rtwatch_lms, caption = Funzione \texttt{LESetParameter}, breaklines = false, captionpos = b]
+void __stdcall PlugIn::LESetParameter(int Index,void *Data,
+	LPVOID bBroadCastInfo)
+{
+	CBFunction(this, NUTS_GETSECURETIME, NUTSSECURE, 0);
+
+	if (Index == ID_MU)
+	{
+		if (!isRunning)
+		{
+			memcpy(&mu, (double*)Data, sizeof(double));
+			CBFunction(this, NUTS_UPDATERTWATCH, ID_MU, 0);
+		}
+	}
+
+	CBFunction(this, NUTS_RELEASESECURETIME, NUTSSECURE, 0);
+
+}
+\end{lstlisting}
+
 
 \subsection{Fast Deconvolution}
 \label{sec:codice_c_fd}
@@ -955,50 +1104,6 @@ int fftLen, fftOrd;
 
 bool isRunning;
 \end{lstlisting}
-
-Nella libreria \texttt{myLib.h} vengono dichiarate le funzioni usate per scrivere e leggere i file ``.dat''.
-
-\begin{lstlisting}[language=cpp, label=code:myLib.h, caption = Libreria \texttt{myLib.h}, breaklines = false, captionpos = b]
-void read_dat(char *name, double *data, int dim);
-void write_dat(char *name, double *data, int dim, 
-	char*save_dir);
-\end{lstlisting}
-
-Nel codice sorgente \texttt{myLib.cpp} vengono definite le funzioni \texttt{read\_dat} e \texttt{write\_dat}. La prima apre in input e legge un file, mentre la seconda apre in output un file e ne scrive il dato \texttt{data}.
-
-\begin{lstlisting}[language=cpp, label=code:myLib.cpp, caption = File \texttt{myLib.cpp}, breaklines = false, breaklines = false, captionpos = b]
-#include "StdAfx.h"
-#include "myLib.h"
-
-void write_dat(char *name, double *data, int dim, 
-	char *save_name) 
-{
-	char name_a[MAX_FILE_NAME_LENGTH];
-	memset(name_a,0,MAX_FILE_NAME_LENGTH*sizeof(char));
-	strcpy(name_a,save_name);
-	strcat(name_a,name);
-
-	char *c;
-	c=(char *)(void *)data;
-
-	fstream File;
-	File.open(name_a,ios::out | ios::binary);
-	File.write(c,dim*sizeof(double));
-	File.close();
-}
-
-void read_dat(char *name, double *data, int dim) 
-{
-	char *c;
-	c=(char *)(void *)data;
-
-	ifstream File;
-	File.open(name, ios::in | ios::binary);
-	File.read(c, dim * sizeof(double));
-	File.close();
-}
-\end{lstlisting}
-
 Nel costruttore vengono inizializzate le variabili dichiarate nella libreria \texttt{Plugin.h} come mostrato nel codice~\ref{code:costruttore}. Si ottengono il \texttt{FrameSize} e il \texttt{SampleRate} usando la funzione \texttt{CBFunction} che permette di interagire con il Nu-Tech. Vengono impostati due pin di input e due pin di output, rispettivamente con la funzione \texttt{LESetNumInput(2)} e con \texttt{LESetNumOutput(2)}. La variabile \texttt{L} è pari alla lunghezza del frame, cioè di default $4096$, l'overlap \texttt{M} è pari alla metà di \texttt{L}, quindi la lunghezza di tutto il buffer è \texttt{fs = L + M - 1}. La variabile booleana \texttt{isRunning} è inizializzata falsa.
 
 \begin{lstlisting}[language=cpp, label=code:costruttore, caption = Costruttore, breaklines = false, captionpos = b]
@@ -1517,7 +1622,18 @@ L'ultimo passo consiste nell'aggiornare il buffer di ingresso spostando gli ulti
 ippsMove_64fc(x1buff + L, x1buff, M - 1);
 ippsMove_64fc(x2buff + L, x2buff, M - 1);
 \end{lstlisting}
-L'RT Watch per variare il parametro $\beta$ è creato nella funzione \texttt{LERTWatchInit} come di seguito. Come si può vedere, la variabile che accetta in ingresso può essere solo di tipo \texttt{double} e di dimensione \texttt{sizeof(double)} byte.
+Nella funzione Delete, come precedentemente mostrato nel codice~\ref{code:delete_lms}, vengono liberate dalla memoria tutte le variabili che erano state allocate nella Init.
+\begin{lstlisting}[language=cpp, label=code:delete_fd, caption = Funzione \texttt{LEPlugin\_Delete}, breaklines = false, captionpos = b]
+void __stdcall PlugIn::LEPlugin_Delete()
+{
+	if (x1buff != 0)
+	{
+		ippsFree(x1buff);
+		x1buff = 0;
+	}
+\end{lstlisting}
+
+L'RT Watch per cambiare il parametro $\beta$ viene dichiarato in modo analogo a quanto visto per l'algoritmo LMS nel codice~\ref{code:rtwatch_lms}. Come per LMS, La variabile da modificare nel template è di tipo \texttt{double} e di dimensione \texttt{sizeof(double)} byte.
 
 \begin{lstlisting}[language=cpp, label=code:rtwatch_fd, caption = Creazione RT Watch, breaklines = false, captionpos = b]
 void __stdcall PlugIn::LERTWatchInit()
@@ -1531,6 +1647,45 @@ void __stdcall PlugIn::LERTWatchInit()
 	NewWatch.IDVar = ID_BETA;
 	sprintf(NewWatch.VarName, "Beta\0");
 	CBFunction(this, NUTS_ADDRTWATCH, 0, &NewWatch);
+}
+\end{lstlisting}
+Il parametro $\beta$ può essere variato dall'utente direttamente dal NU-TECH. Si usa \texttt{LEGetParameter} per portare la variabile \texttt{beta} nella board del NU-TECH come precedentemente illustrato nel codice~\ref{code:get_rtwatch_lms}.
+
+\begin{lstlisting}[language=cpp, label=code:get_rtwatch_fd, caption = Funzione \texttt{LEGetParameter}, breaklines = false, captionpos = b]
+int  __stdcall PlugIn::LEGetParameter(int Index,void *Data)
+{
+
+	CBFunction(this, NUTS_GETSECURETIME, NUTSSECURE, 0);
+
+	if (Index == ID_BETA)
+	{
+		memcpy((double*)Data, &beta, sizeof(double));
+	}
+
+	CBFunction(this, NUTS_RELEASESECURETIME, NUTSSECURE, 0);
+	return 0;
+}
+\end{lstlisting}
+Invece, se il programma non è in esecuzione l'utente può variare il $\beta$ poiché il calcolo dei filtri di ricostruzione $H$ con la formula~\eqref{eq:H_FD3} avviene a priori nella Init, cioè prima di iniziare qualsiasi operazione sul segnale. Cambiare il $\beta$ durante la process non porterebbe modifiche all'uscita. La funzione \texttt{LESetParameter} è descritta nel codice~\ref{code:set_rtwatch_fd}.
+
+\begin{lstlisting}[language=cpp, label=code:set_rtwatch_fd, caption = Funzione \texttt{LESetParameter}, breaklines = false, captionpos = b]
+void __stdcall PlugIn::LESetParameter(int Index,void *Data,
+	LPVOID bBroadCastInfo)
+{
+
+	CBFunction(this, NUTS_GETSECURETIME, NUTSSECURE, 0);
+
+	if(Index == ID_BETA)
+	{
+		if (!isRunning)
+		{
+			memcpy(&beta, (double*)Data, sizeof(double));
+			CBFunction(this, NUTS_UPDATERTWATCH, ID_BETA, 0);
+		}
+		
+	}
+
+	CBFunction(this, NUTS_RELEASESECURETIME, NUTSSECURE, 0);
 }
 \end{lstlisting}
 \clearpage

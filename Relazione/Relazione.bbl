@@ -282,6 +282,39 @@
       \verb 10.1109/78.143434
       \endverb
     \endentry
+    \entry{wand:a_stereo_crosstalk}{article}{}
+      \name{author}{2}{}{%
+        {{hash=90363e7455b37d0f07cd7e927b294868}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Lin},
+           giveni={L\bibinitperiod}}}%
+        {{hash=a4530294f0e83d5608005030c6379255}{%
+           family={Fuliang},
+           familyi={F\bibinitperiod},
+           given={Yin},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{ae6400c6479d78892132ff07edc20204}
+      \strng{fullhash}{ae6400c6479d78892132ff07edc20204}
+      \strng{bibnamehash}{ae6400c6479d78892132ff07edc20204}
+      \strng{authorbibnamehash}{ae6400c6479d78892132ff07edc20204}
+      \strng{authornamehash}{ae6400c6479d78892132ff07edc20204}
+      \strng{authorfullhash}{ae6400c6479d78892132ff07edc20204}
+      \field{sortinit}{W}
+      \field{sortinithash}{ecb89ff85896a47dc313960773ac311d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{EURASIP Journal on Advances in Signal Processing}
+      \field{month}{01}
+      \field{title}{A Stereo Crosstalk Cancellation System Based on the Common-Acoustical Pole/Zero Model}
+      \field{volume}{2010}
+      \field{year}{2010}
+      \true{nocite}
+      \verb{doi}
+      \verb 10.1155/2010/719197
+      \endverb
+    \endentry
   \enddatalist
 \endrefsection
 \endinput
