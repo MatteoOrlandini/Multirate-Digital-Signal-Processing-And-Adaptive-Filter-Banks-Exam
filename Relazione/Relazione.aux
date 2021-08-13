@@ -22,12 +22,16 @@
 \@writefile{lot}{\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax }
 \babel@aux{italian}{}
 \babel@aux{italian}{}
+\abx@aux@cite{wand:a_stereo_crosstalk}
+\abx@aux@segm{0}{0}{wand:a_stereo_crosstalk}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduzione}{1}{section.1}\protected@file@percent }
 \newlabel{sec:Introduzione}{{1}{1}{Introduzione}{section.1}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Diagramma a blocchi del sistema sonoro usato\relax }}{3}{figure.caption.2}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{fig:head}{{1}{3}{Diagramma a blocchi del sistema sonoro usato\relax }{figure.caption.2}{}}
 \newlabel{eq:sistema_sonoro}{{2}{3}{Introduzione}{equation.1.2}{}}
+\abx@aux@cite{Li:comprehensive_comparison}
+\abx@aux@segm{0}{0}{Li:comprehensive_comparison}
 \abx@aux@cite{Gardner:HRTF}
 \abx@aux@segm{0}{0}{Gardner:HRTF}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Dataset}{5}{section.2}\protected@file@percent }
@@ -46,6 +50,7 @@
 \newlabel{eq:r_ilm}{{5}{7}{LMS}{equation.3.5}{}}
 \newlabel{eq:r_ilm_prodotto_scalare}{{6}{7}{LMS}{equation.3.6}{}}
 \newlabel{eq:y_i_lms}{{7}{7}{LMS}{equation.3.7}{}}
+\newlabel{eq:errore_lms}{{8}{7}{LMS}{equation.3.8}{}}
 \newlabel{eq:y_lms}{{10}{7}{LMS}{equation.3.10}{}}
 \newlabel{eq:y_lms2}{{11}{7}{LMS}{equation.3.11}{}}
 \abx@aux@cite{kirkeby:deconvolution_regularization}
@@ -57,8 +62,8 @@
 \newlabel{eq:aggiornamento_lms}{{12}{8}{LMS}{equation.3.12}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Fast Deconvolution}{8}{subsection.3.2}\protected@file@percent }
 \newlabel{subsec:FD_teoria}{{3.2}{8}{Fast Deconvolution}{subsection.3.2}{}}
-\newlabel{funzione_costo_fd}{{13}{8}{Fast Deconvolution}{equation.3.13}{}}
-\newlabel{errore_fd}{{14}{8}{Fast Deconvolution}{equation.3.14}{}}
+\newlabel{eq:funzione_costo_fd}{{13}{8}{Fast Deconvolution}{equation.3.13}{}}
+\newlabel{eq:errore_fd}{{14}{8}{Fast Deconvolution}{equation.3.14}{}}
 \newlabel{eq:H_FD}{{17}{9}{Fast Deconvolution}{equation.3.17}{}}
 \newlabel{eq:H_FD2}{{18}{9}{Fast Deconvolution}{equation.3.18}{}}
 \newlabel{eq:H_FD3}{{19}{9}{Fast Deconvolution}{equation.3.19}{}}
@@ -114,7 +119,7 @@
 \@writefile{toc}{\contentsline {section}{\numberline {5}Codice C}{20}{section.5}\protected@file@percent }
 \newlabel{sec:codice_c}{{5}{20}{Codice C}{section.5}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1}LMS}{20}{subsection.5.1}\protected@file@percent }
-\newlabel{sec:codice_c_lms}{{5.1}{20}{LMS}{subsection.5.1}{}}
+\newlabel{subsec:codice_c_lms}{{5.1}{20}{LMS}{subsection.5.1}{}}
 \newlabel{dichiarazione_costanti_lms}{{20}{20}{Dichiarazione delle costanti in \texttt {Plugin.h}}{lstlisting.20}{}}
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {20}Dichiarazione delle costanti in \texttt  {Plugin.h}}{20}{lstlisting.20}\protected@file@percent }
 \newlabel{code:variabili_lms}{{21}{20}{Dichiarazione delle variabili in \texttt {Plugin.h}}{lstlisting.21}{}}
@@ -148,7 +153,7 @@
 \newlabel{code:set_rtwatch_lms}{{35}{29}{Funzione \texttt {LESetParameter}}{lstlisting.35}{}}
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {35}Funzione \texttt  {LESetParameter}}{29}{lstlisting.35}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Fast Deconvolution}{29}{subsection.5.2}\protected@file@percent }
-\newlabel{sec:codice_c_fd}{{5.2}{29}{Fast Deconvolution}{subsection.5.2}{}}
+\newlabel{subsec:codice_c_fd}{{5.2}{29}{Fast Deconvolution}{subsection.5.2}{}}
 \newlabel{code:costanti_c}{{36}{29}{Dichiarazione delle costanti in \texttt {Plugin.h}}{lstlisting.36}{}}
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {36}Dichiarazione delle costanti in \texttt  {Plugin.h}}{29}{lstlisting.36}\protected@file@percent }
 \newlabel{code:Ipp64fc}{{37}{30}{Struct \texttt {Ipp64fc}}{lstlisting.37}{}}
@@ -215,6 +220,64 @@
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {61}Funzione \texttt  {LEGetParameter}}{43}{lstlisting.61}\protected@file@percent }
 \newlabel{code:set_rtwatch_fd}{{62}{44}{Funzione \texttt {LESetParameter}}{lstlisting.62}{}}
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {62}Funzione \texttt  {LESetParameter}}{44}{lstlisting.62}\protected@file@percent }
+\abx@aux@segm{0}{0}{Li:comprehensive_comparison}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Risultati e conclusioni}{45}{section.6}\protected@file@percent }
+\newlabel{sec:risultati}{{6}{45}{Risultati e conclusioni}{section.6}{}}
+\newlabel{eq:JL}{{37}{45}{Risultati e conclusioni}{equation.6.37}{}}
+\newlabel{eq:JR}{{38}{45}{Risultati e conclusioni}{equation.6.38}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Confronto di $J_R$ e $J_L$ per l'algoritmo LMS per diversi $\mu $.\relax }}{45}{table.caption.6}\protected@file@percent }
+\newlabel{tab:LMS_result}{{1}{45}{Confronto di $J_R$ e $J_L$ per l'algoritmo LMS per diversi $\mu $.\relax }{table.caption.6}{}}
+\abx@aux@segm{0}{0}{Li:comprehensive_comparison}
+\abx@aux@segm{0}{0}{Li:comprehensive_comparison}
+\abx@aux@segm{0}{0}{Li:comprehensive_comparison}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Confronto di $J_R$ e $J_L$ per l'algoritmo Fast Deconvolution per diversi $\beta $.\relax }}{46}{table.caption.7}\protected@file@percent }
+\newlabel{tab:FD_result}{{2}{46}{Confronto di $J_R$ e $J_L$ per l'algoritmo Fast Deconvolution per diversi $\beta $.\relax }{table.caption.7}{}}
+\newlabel{left_channel_separation_FD}{{5a}{47}{\relax }{figure.caption.8}{}}
+\newlabel{sub@left_channel_separation_FD}{{a}{47}{\relax }{figure.caption.8}{}}
+\newlabel{right_channel_separation_FD}{{5b}{47}{\relax }{figure.caption.8}{}}
+\newlabel{sub@right_channel_separation_FD}{{b}{47}{\relax }{figure.caption.8}{}}
+\newlabel{left_channel_separation_LMS}{{5c}{48}{\relax }{figure.caption.9}{}}
+\newlabel{sub@left_channel_separation_LMS}{{c}{48}{\relax }{figure.caption.9}{}}
+\newlabel{right_channel_separation_LMS}{{5d}{48}{\relax }{figure.caption.9}{}}
+\newlabel{sub@right_channel_separation_LMS}{{d}{48}{\relax }{figure.caption.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Confronto del numeratore e del denominatore di (a) $J_L$ e (b) $J_R$ per FD con $\beta = 0.3$, (c) $J_L$ e (d) $J_R$ per LMS con $\mu = 10^{-3}$.\relax }}{48}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:channel_separation_LMS_FD}{{5}{48}{Confronto del numeratore e del denominatore di (a) $J_L$ e (b) $J_R$ per FD con $\beta = 0.3$, (c) $J_L$ e (d) $J_R$ per LMS con $\mu = 10^{-3}$.\relax }{figure.caption.9}{}}
+\newlabel{mse_e1}{{6a}{49}{\relax }{figure.caption.10}{}}
+\newlabel{sub@mse_e1}{{a}{49}{\relax }{figure.caption.10}{}}
+\newlabel{mse_e2}{{6b}{49}{\relax }{figure.caption.10}{}}
+\newlabel{sub@mse_e2}{{b}{49}{\relax }{figure.caption.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Confronto dell'MSE del canale (a) sinistro e (b) destro dell'algoritmo LMS.\relax }}{49}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:mse_LMS}{{6}{49}{Confronto dell'MSE del canale (a) sinistro e (b) destro dell'algoritmo LMS.\relax }{figure.caption.10}{}}
+\newlabel{fig:Confronto_H11_LMS_FD}{{7a}{50}{\relax }{figure.caption.11}{}}
+\newlabel{sub@fig:Confronto_H11_LMS_FD}{{a}{50}{\relax }{figure.caption.11}{}}
+\newlabel{fig:Confronto_H12_LMS_FD}{{7b}{50}{\relax }{figure.caption.11}{}}
+\newlabel{sub@fig:Confronto_H12_LMS_FD}{{b}{50}{\relax }{figure.caption.11}{}}
+\newlabel{fig:Confronto_H21_LMS_FD}{{7c}{51}{\relax }{figure.caption.12}{}}
+\newlabel{sub@fig:Confronto_H21_LMS_FD}{{c}{51}{\relax }{figure.caption.12}{}}
+\newlabel{fig:Confronto_H22_LMS_FD}{{7d}{51}{\relax }{figure.caption.12}{}}
+\newlabel{sub@fig:Confronto_H22_LMS_FD}{{d}{51}{\relax }{figure.caption.12}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Confronto dei filtri di cancellazione del crosstalk (a) $H_{11}$, (b) $H_{12}$, (c) $H_{21}$, (d) $H_{22}$ di LMS e Fast Deconvolution.\relax }}{51}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:confronto_H_LMS_FD}{{7}{51}{Confronto dei filtri di cancellazione del crosstalk (a) $H_{11}$, (b) $H_{12}$, (c) $H_{21}$, (d) $H_{22}$ di LMS e Fast Deconvolution.\relax }{figure.caption.12}{}}
+\newlabel{fig:Confronto_H11_LMS_FD_paper}{{8a}{52}{\relax }{figure.caption.13}{}}
+\newlabel{sub@fig:Confronto_H11_LMS_FD_paper}{{a}{52}{\relax }{figure.caption.13}{}}
+\newlabel{fig:Confronto_H12_LMS_FD_paper}{{8b}{52}{\relax }{figure.caption.13}{}}
+\newlabel{sub@fig:Confronto_H12_LMS_FD_paper}{{b}{52}{\relax }{figure.caption.13}{}}
+\newlabel{fig:Confronto_H21_LMS_FD_paper}{{8c}{53}{\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:Confronto_H21_LMS_FD_paper}{{c}{53}{\relax }{figure.caption.14}{}}
+\newlabel{fig:Confronto_H22_LMS_FD_paper}{{8d}{53}{\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:Confronto_H22_LMS_FD_paper}{{d}{53}{\relax }{figure.caption.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Confronto dei filtri di cancellazione del crosstalk (a) $H_{11}$, (b) $H_{12}$, (c) $H_{21}$, (d) $H_{22}$ di LMS e Fast Deconvolution dell'articolo~\cite {Li:comprehensive_comparison}.\relax }}{53}{figure.caption.14}\protected@file@percent }
+\newlabel{fig:confronto_H_LMS_FD_paper}{{8}{53}{Confronto dei filtri di cancellazione del crosstalk (a) $H_{11}$, (b) $H_{12}$, (c) $H_{21}$, (d) $H_{22}$ di LMS e Fast Deconvolution dell'articolo~\cite {Li:comprehensive_comparison}.\relax }{figure.caption.14}{}}
+\newlabel{fig:x1_y1_FD}{{9a}{54}{\relax }{figure.caption.15}{}}
+\newlabel{sub@fig:x1_y1_FD}{{a}{54}{\relax }{figure.caption.15}{}}
+\newlabel{fig:x2_y2_FD}{{9b}{54}{\relax }{figure.caption.15}{}}
+\newlabel{sub@fig:x2_y2_FD}{{b}{54}{\relax }{figure.caption.15}{}}
+\newlabel{fig:d1_y1_LMS}{{9c}{55}{\relax }{figure.caption.16}{}}
+\newlabel{sub@fig:d1_y1_LMS}{{c}{55}{\relax }{figure.caption.16}{}}
+\newlabel{fig:d2_y2_LMS}{{9d}{55}{\relax }{figure.caption.16}{}}
+\newlabel{sub@fig:d2_y2_LMS}{{d}{55}{\relax }{figure.caption.16}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Confronto degli ingressi e le uscite (a) sinistro e (b) destro della Fast Deconvolution, (c) sinistro e (d) destro di LMS.\relax }}{55}{figure.caption.16}\protected@file@percent }
+\newlabel{fig:confronto_ingressi_uscite_LMS_FD}{{9}{55}{Confronto degli ingressi e le uscite (a) sinistro e (b) destro della Fast Deconvolution, (c) sinistro e (d) destro di LMS.\relax }{figure.caption.16}{}}
 \abx@aux@refcontextdefaultsdone
 \abx@aux@defaultrefcontext{0}{Gardner:HRTF}{nty/global//global/global}
 \abx@aux@defaultrefcontext{0}{4217047}{nty/global//global/global}

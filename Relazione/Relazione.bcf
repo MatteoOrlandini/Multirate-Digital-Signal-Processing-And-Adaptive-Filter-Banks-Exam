@@ -1995,12 +1995,18 @@
     <bcf:datasource type="file" datatype="bibtex">Bibliografia.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">Gardner:HRTF</bcf:citekey>
-    <bcf:citekey order="2">143434</bcf:citekey>
-    <bcf:citekey order="3">4217047</bcf:citekey>
-    <bcf:citekey order="4">kirkeby:deconvolution_regularization</bcf:citekey>
-    <bcf:citekey order="5">kirkeby:deconvolution_analysis</bcf:citekey>
-    <bcf:citekey order="6">kirkeby:deconvolution_design</bcf:citekey>
+    <bcf:citekey order="1">wand:a_stereo_crosstalk</bcf:citekey>
+    <bcf:citekey order="2">Li:comprehensive_comparison</bcf:citekey>
+    <bcf:citekey order="3">Gardner:HRTF</bcf:citekey>
+    <bcf:citekey order="4">143434</bcf:citekey>
+    <bcf:citekey order="5">4217047</bcf:citekey>
+    <bcf:citekey order="6">kirkeby:deconvolution_regularization</bcf:citekey>
+    <bcf:citekey order="7">kirkeby:deconvolution_analysis</bcf:citekey>
+    <bcf:citekey order="8">kirkeby:deconvolution_design</bcf:citekey>
+    <bcf:citekey order="9">Li:comprehensive_comparison</bcf:citekey>
+    <bcf:citekey order="10">Li:comprehensive_comparison</bcf:citekey>
+    <bcf:citekey order="11">Li:comprehensive_comparison</bcf:citekey>
+    <bcf:citekey order="12">Li:comprehensive_comparison</bcf:citekey>
     <bcf:citekey order="0" nocite="1">*</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->

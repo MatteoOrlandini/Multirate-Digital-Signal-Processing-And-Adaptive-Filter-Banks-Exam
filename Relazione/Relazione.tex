@@ -7,7 +7,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{booktabs} %toprule, midrule, bottomrule
-\usepackage{subfig}
+\usepackage{subcaption}
 \usepackage{graphicx}
 \usepackage[dvipsnames,table,xcdraw]{xcolor}
 \usepackage[autolinebreaks, framed]{mcode} % matlab code
@@ -75,6 +75,10 @@
 
 \newcommand{\CoverName}{Cover}
 
+\makeatletter
+\providecommand\phantomcaption{\caption@refstepcounter\@captype}
+\makeatother
+
 \begin{document}
 
 \begin{titlepage}
@@ -105,7 +109,7 @@
 \setcounter{page}{1}
 \section{Introduzione}
 \label{sec:Introduzione}    
-La cancellazione della diafonia svolge un ruolo importante nell'ascolto di segnali binaurali tramite altoparlanti. Lo scopo della cancellazione del crosstalk è quello di riprodurre suoni binaurali alle orecchie dell'ascoltatore tramite l'inversione dei percorsi dell'onda sonora. Il filtro di cancellazione della diafonia richiede un'elevato sforzo computazionale per essere aggiornato in tempo reale in base alla posizione della testa. In questo progetto vengono analizzati, implementati e confrontati due algoritmi di cancellazione del crosstalk: LMS (Least Mean Square) e Fast Deconvolution.
+La cancellazione della diafonia svolge un ruolo importante nell'ascolto di segnali binaurali tramite altoparlanti. Lo scopo della cancellazione del crosstalk è quello di riprodurre suoni binaurali alle orecchie dell'ascoltatore tramite l'inversione dei percorsi dell'onda sonora. Il filtro di cancellazione della diafonia richiede un'elevato sforzo computazionale per essere aggiornato in tempo reale in base alla posizione della testa~\cite{wand:a_stereo_crosstalk}. In questo progetto vengono analizzati, implementati e confrontati due algoritmi di cancellazione del crosstalk: LMS (Least Mean Square) e Fast Deconvolution.
 
 A differenza dei sistemi stereo classici, un sistema audio 3D permette di posizionare i suoni intorno ad un ascoltatore in modo che questi siano percepiti come provenienti da punti arbitrari nello spazio. In questo modo, l'audio 3D può  aumentare il senso di realismo nella musica o nei film e può essere di grande beneficio nella realtà virtuale, nella realtà aumentata, nelle videoconferenze da remoto o per l'intrattenimento casalingo.
 
@@ -183,6 +187,8 @@ H_{22}\\
 \end{bmatrix}
 \end{equation}
 Per avere il segnale in uscita uguale a quello desiderato $H$ dovrebbe essere l'inversa di $C$. La diretta inversa di $C$ però non garantisce la cancellazione del crosstalk in quanto gli elementi potrebbero non soddisfare la condizione di fase minima. 
+
+Nell'elaborato, il capitolo~\ref{sec:Dataset} illustra il dataset usato per le HRIR e il capitolo~\ref{sec:descrizione_teorica} descrive in modo teorico gli algoritmi LMS e FD usati. Le sezioni~\ref{sec:codice_matlab} e~\ref{sec:codice_c} mostrano come vengono implementati gli algoritmi rispettivamente in Matlab e in C con il programma NU-TECH. Il capitolo~\ref{sec:risultati} illustra i risultati ottenuti facendo vari confronti tra gli algoritmi usati e tra i risultati proposti nel paper di riferimento~\cite{Li:comprehensive_comparison}.
 \clearpage
 
 \section{Dataset}
@@ -232,7 +238,7 @@ r_{2i1}[n] \circledast h_{12}[n]+r_{2i2}[n] \circledast h_{22}[n]
 \end{equation}
 dove $i,l,m$ assumono i valori 1 o 2.
 Il criterio dell'algoritmo LMS è la minimizzazione della funzione costo
-\begin{equation}
+\begin{equation}\label{eq:errore_lms}
 J=E[e[n]^2]=E[(d[n]-y[n])^2]
 \end{equation}
 dove $e[n]$, $d[n]$ e $y[n]$ sono definiti come
@@ -329,11 +335,11 @@ La deconvoluzione~\cite{kirkeby:deconvolution_regularization}~\cite{kirkeby:deco
 %Nel progetto siamo interessati alle tecniche di deconvoluzione allo scopo di progettare filtri digitali per la riproduzione del suono su due canali. Più specificamente, dato un set di altoparlanti S, l'obiettivo è riprodurre un campo sonoro desiderato nei punti R dello spazio nel modo più accurato possibile. Questo principio è applicato dai cosiddetti sistemi di cancellazione della diafonia che vengono utilizzati per riprodurre registrazioni binaurali su due altoparlanti. In questo caso, viene utilizzata una matrice $2 \times 2$ di filtri digitali per compensare sia la risposta ambientale che la risposta degli altoparlanti, e anche per annullare la diafonia dall'altoparlante sinistro all'orecchio destro e viceversa. Un problema correlato è quello di ottenere una perfetta ``dereverberazione'' della risposta di una stanza in una posizione del microfono utilizzando due filtri digitali per calcolare l'ingresso a due altoparlanti. La fast deconvolution un metodo molto veloce per calcolare una matrice di filtri digitali che può essere utilizzata per controllare le uscite di un impianto multicanale. Questo metodo è tipicamente più veloce di diversi ordini di grandezza rispetto ai metodi nel dominio del tempo. Combina i principi dell'inversione dei minimi quadrati nel dominio della frequenza e il metodo di regolarizzazione di ordine zero che viene tradizionalmente utilizzato quando ci si trova di fronte a un problema di inversione mal condizionata.%~\cite{kirkeby:deconvolution_regularization}
 %La regolarizzazione dipendente dalla frequenza viene utilizzata per prevenire picchi elevati nella risposta in ampiezza dei filtri ottimali. Un ritardo di modellazione viene utilizzato per garantire che la rete di cancellazione del cross-talk funzioni bene non solo in termini di ampiezza, ma anche in termini di fase. L'algoritmo presuppone che sia possibile utilizzare filtri ottimali lunghi, e funziona bene solo quando due parametri di regolarizzazione, un fattore di forma e un fattore di guadagno, sono impostati in modo appropriato. In pratica, i valori dei due parametri di regolarizzazione sono determinati più facilmente da esperimenti per tentativi.%~\cite{kirkeby:deconvolution_design}
 Consideriamo una funzione costo del tipo
-\begin{equation}\label{funzione_costo_fd}
+\begin{equation}\label{eq:funzione_costo_fd}
 J = E + \beta V(f)
 \end{equation}
 dove $E$ è una misura dell'errore della pressione sonora
-\begin{equation}\label{errore_fd}
+\begin{equation}\label{eq:errore_fd}
 E = | Y_1 - X_1 |^2  + | Y_2 - X_2 |^2
 \end{equation}
 e $V$ è una funzione della frequenza che indica il costo computazionale. Il numero $\beta \geq 0$ è un parametro di regolarizzazione che determina quanto peso
@@ -686,7 +692,7 @@ end
 \section{Codice C}
 \label{sec:codice_c}
 \subsection{LMS}
-\label{sec:codice_c_lms}
+\label{subsec:codice_c_lms}
 Nella libreria \texttt{Plugin.h} viene inizialmente definito il nome del Nuts come ``LMS Filter'' e l’indice \texttt{ID\_MU} dell'RTWatch che permette di cambiare
 il parametro $\mu$.
 
@@ -1064,7 +1070,7 @@ void __stdcall PlugIn::LESetParameter(int Index,void *Data,
 
 
 \subsection{Fast Deconvolution}
-\label{sec:codice_c_fd}
+\label{subsec:codice_c_fd}
 Nella libreria \texttt{Plugin.h} viene inizialmente definito il nome del Nuts come ``Fast Deconvolution'' e l'indice \texttt{ID\_BETA} dell'RT Watch che permette di cambiare il parametro $\beta$.
 
 \begin{lstlisting}[language=cpp, label=code:costanti_c, caption = Dichiarazione delle costanti in \texttt{Plugin.h},captionpos = b]
@@ -1688,6 +1694,200 @@ void __stdcall PlugIn::LESetParameter(int Index,void *Data,
 	CBFunction(this, NUTS_RELEASESECURETIME, NUTSSECURE, 0);
 }
 \end{lstlisting}
+\clearpage
+
+\section{Risultati e conclusioni}
+\label{sec:risultati}
+Abbiamo confrontato l'algoritmo LSM e FD usando il fattore di separazione dei canali (channel separation factor). Questo fattore è definito come il rapporto tra la potenza del percorso ipsilaterale e quello controlaterale, come mostrato nelle equazioni~\eqref{eq:JL} e~\eqref{eq:JR} rispettivamente per il canale sinistro e destro.
+\begin{equation}\label{eq:JL}
+J_L = E\left\{20\log_{10} \dfrac{C_{11}H_{11}+C_{12}H_{21}}{C_{21}H_{11}+C_{22}H_{21}}\right\} \quad [\si{\decibel}]
+\end{equation}
+
+\begin{equation}\label{eq:JR}
+J_R = E\left\{20\log_{10} \dfrac{C_{22}H_{22}+C_{21}H_{12}}{C_{12}H_{22}+C_{11}H_{12}}\right\} \quad [\si{\decibel}]
+\end{equation}
+dove $E\{\cdot\}$ indica il valore medio su tutte le frequenze.
+
+Le tabelle~\ref{tab:LMS_result} e~\ref{tab:FD_result} mostrato i valori di channel separation factor rispettivamente per LMS e FD al variare di $\mu$ e $\beta$. Si può notare dalla tabella~\ref{tab:LMS_result} che il fattore di separazione dei canali aumenta all'aumentare di $\mu$, mentre per la tabella~\ref{tab:FD_result} questo fattore aumenta al diminuire di $\beta$. Entrambi i parametri vengono aggiustati durante l'implementazione pratica, in particolare, il comportamento del $\beta$ per la fast deconvolution è in linea con quanto ci si aspetta dalla formula~\eqref{eq:funzione_costo_fd} spiegata nel capitolo~\ref{subsec:FD_teoria}.
+
+A differenza del paper di riferimento~\cite{Li:comprehensive_comparison} in cui il fattore di separazione dei canali è migliore per il canale destro, nel nostro caso otteniamo valori migliori per il canale sinistro. Questo può essere dovuto ad una diversa scelta delle HRIR tra l'implementazione dell'articolo e la nostra.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c c c}
+\toprule
+$\mu$   & $J_R$ [\si{\decibel}]   & $J_L$ [\si{\decibel}]   \\ \midrule
+$10^{-3}$ & 22.032 & 21.924 \\
+$5\cdot10^{-4}$ & 17.610 & 20.375 \\
+$10^{-4}$& 11.063 & 16.921 \\
+$5\cdot10^{-5}$ & 9.742  & 16.161 \\ \bottomrule
+\end{tabular}
+\caption{\label{tab:LMS_result}Confronto di $J_R$ e $J_L$ per l'algoritmo LMS per diversi $\mu$.}
+\end{table}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c c c}
+\toprule
+$\beta$   & $J_R$ [\si{\decibel}]   & $J_L$ [\si{\decibel}]   \\ \midrule
+$1$ &  25.062 &  26.538\\
+$0.3$ &  28.829 &  30.498\\
+$0.1$&  34.908 & 36.532 \\
+$0.01$ &  47.657 &  48.661 \\ \bottomrule
+\end{tabular}
+\caption{\label{tab:FD_result}Confronto di $J_R$ e $J_L$ per l'algoritmo Fast Deconvolution per diversi $\beta$.}
+\end{table}
+
+La figura~\ref{fig:channel_separation_LMS_FD} mostra l'andamento in frequenza del numeratore e denominatore delle formule~\eqref{eq:JL} e~\eqref{eq:JR} per entrambi gli algoritmi implementati. Si può vedere che il numeratore è quasi sempre maggiore del denominatore in tutte le figure: questo indica che la separazione dei canali sta avvenendo in modo corretto. Poiché le figure sono esposte in \si{\decibel} si può fare la differenza tra il numeratore e il denominatore per ottenere l'effettivo valore di $J_L$ e $J_R$ per ogni frequenza.
+
+\begin{figure}[h]
+\begin{subfigure}{1\textwidth}
+	\includegraphics[width=1\textwidth]{Immagini/left_channel_separation_FD}
+	\caption{}
+	\label{left_channel_separation_FD}
+\end{subfigure}\\
+\begin{subfigure}{1\textwidth}
+	\includegraphics[width=1\textwidth]{Immagini/right_channel_separation_FD}
+	\caption{}
+	\label{right_channel_separation_FD}
+\end{subfigure}
+\end{figure}
+
+\begin{figure}[h]
+	\ContinuedFloat
+	\centering	
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/left_channel_separation_LMS}
+		\caption{}
+		\label{left_channel_separation_LMS}
+	\end{subfigure}\\
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/right_channel_separation_LMS}
+		\caption{}
+		\label{right_channel_separation_LMS}
+	\end{subfigure}
+	\caption{Confronto del numeratore e del denominatore di (a) $J_L$ e (b) $J_R$ per FD con $\beta = 0.3$, (c) $J_L$ e (d) $J_R$ per LMS con $\mu = 10^{-3}$.}
+	\label{fig:channel_separation_LMS_FD}
+\end{figure}
+
+La figura~\ref{fig:mse_LMS} mostra l'andamento nel tempo del mean square error in \si{\decibel} dell'algoritmo LMS. Si può osservare che all'aumentare del tempo l'errore diminuisce: questo indica che l'algoritmo produrrà un'uscita sempre più vicina a quella desiderata. Dalla formula~\eqref{eq:errore_lms} si ha che l'$n$-esimo valore dell'errore è dato dalla differenza tra l'$n$-esimo valore del segnale desiderato e dall'$n$-esimo valore dell'uscita.
+
+\begin{figure}[h]
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/mse_e1}
+		\caption{}
+		\label{mse_e1}
+	\end{subfigure}\\
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/mse_e2}
+		\caption{}
+		\label{mse_e2}
+	\end{subfigure}
+	\caption{Confronto dell'MSE del canale (a) sinistro e (b) destro dell'algoritmo LMS.}
+	\label{fig:mse_LMS}
+\end{figure}
+
+La figura~\ref{fig:confronto_H_LMS_FD} mostra un confronto tra i filtri di ricostruzione $H$ degli algoritmi LMS e FD. Si può notare che i filtri $H_{11}$ e $H_{22}$ trovati con LMS e FD sono più simili tra loro rispetto ai filtri $H_{12}$ e $H_{21}$.
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/H11_FD_LMS}
+		\caption{}
+		\label{fig:Confronto_H11_LMS_FD}
+	\end{subfigure}\\
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/H12_FD_LMS}
+		\caption{}
+		\label{fig:Confronto_H12_LMS_FD}
+	\end{subfigure}
+\end{figure}
+
+\begin{figure}[h]
+	\ContinuedFloat
+	\centering
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/H21_FD_LMS}
+		\caption{}
+		\label{fig:Confronto_H21_LMS_FD}
+	\end{subfigure}\\
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/H22_FD_LMS}
+		\caption{}
+		\label{fig:Confronto_H22_LMS_FD}
+	\end{subfigure}
+	\caption{Confronto dei filtri di cancellazione del crosstalk (a) $H_{11}$, (b) $H_{12}$, (c) $H_{21}$, (d) $H_{22}$ di LMS e Fast Deconvolution.}
+	\label{fig:confronto_H_LMS_FD}
+\end{figure}
+
+Un confronto tra i filtri ottenuti nel progetto, figura~\ref{fig:confronto_H_LMS_FD}, e quelli proposti nel paper, figura~\ref{fig:confronto_H_LMS_FD_paper}, mostra che per alcune frequenze non si ha una perfetta uguaglianza tra i filtri calcolati con LMS e quelli calcolati con FD.
+
+\begin{figure}[h]
+	\centering	
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/H11_paper}
+		\caption{}
+		\label{fig:Confronto_H11_LMS_FD_paper}
+	\end{subfigure}\\
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/H12_paper}
+		\caption{}
+		\label{fig:Confronto_H12_LMS_FD_paper}
+	\end{subfigure}	
+\end{figure}
+	
+\begin{figure}[h]
+	\ContinuedFloat
+	\centering
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/H21_paper}
+		\caption{}
+		\label{fig:Confronto_H21_LMS_FD_paper}
+	\end{subfigure}\\
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/H22_paper}
+		\caption{}
+		\label{fig:Confronto_H22_LMS_FD_paper}
+	\end{subfigure}
+	\caption{Confronto dei filtri di cancellazione del crosstalk (a) $H_{11}$, (b) $H_{12}$, (c) $H_{21}$, (d) $H_{22}$ di LMS e Fast Deconvolution dell'articolo~\cite{Li:comprehensive_comparison}.}
+	\label{fig:confronto_H_LMS_FD_paper}
+\end{figure}
+
+Le figure~\ref{fig:x1_y1_FD} e~\ref{fig:x2_y2_FD} mostrano un confronto tra gli ingressi e le uscite nell'algoritmo fast deconvolution, mentre le figure~\ref{fig:d1_y1_LMS} e~\ref{fig:d2_y2_LMS} confrontano il segnale desiderato con l'uscita prodotta dall'LMS.
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/x1_y1_FD}
+		\caption{}
+		\label{fig:x1_y1_FD}
+	\end{subfigure}\\
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/x2_y2_FD}
+		\caption{}
+		\label{fig:x2_y2_FD}
+	\end{subfigure}
+\end{figure}
+
+\begin{figure}[h]
+	\ContinuedFloat
+	\centering
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/d1_y1_LMS}
+		\caption{}
+		\label{fig:d1_y1_LMS}
+	\end{subfigure}\\
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/d2_y2_LMS}
+		\caption{}
+		\label{fig:d2_y2_LMS}
+	\end{subfigure}
+	\caption{Confronto degli ingressi e le uscite (a) sinistro e (b) destro della Fast Deconvolution, (c) sinistro e (d) destro di LMS.}
+	\label{fig:confronto_ingressi_uscite_LMS_FD}
+\end{figure}
+
+I risultati ottenuti con il NU-TECH sono uguali a quelli prodotti dal Matlab. Dalle tabelle~\ref{tab:LMS_result} e~\ref{tab:FD_result} si ottengono risultati molto simili a quelli proposti in~\cite{Li:comprehensive_comparison}, possiamo dunque affermare che i filtri di cancellazione del crosstalk lavorano in modo corretto.
+
 \clearpage
 
 \nocite{*}
