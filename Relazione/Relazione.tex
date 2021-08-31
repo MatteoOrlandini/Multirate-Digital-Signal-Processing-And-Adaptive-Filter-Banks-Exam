@@ -217,7 +217,7 @@ Le variabili con lettera minuscola rappresentano il segnale nel dominio del temp
 
 In generale, si può scrivere il filtraggio nell'$n$-esimo istante di un segnale $\mathbf{a[n]} = \left[a[n], a[n-1], \dots, a[n - M + 1]\right]^T$ con un filtro $\mathbf{b[n]} =  \left[b_{0}[n], b_{1}[n], \dots, b_{M-1}[n]\right]^T$ di lunghezza $M$ come
 \begin{equation}\label{eq:filtraggio_prodotto_scalare}
-y[n] = \sum_{j=0}^{M-1}b_{j}[n]a[n-j] = \mathbf{b}^T[\mathbf{n}] \cdot \mathbf{a}^T[\mathbf{n}].
+y[n] = \sum_{j=0}^{M-1}b_{j}[n]a[n-j] = \mathbf{b}^T[\mathbf{n}] \cdot \mathbf{a}[\mathbf{n}].
 \end{equation}
 
 Il filtraggio dei segnali di riferimento $x_i[n]$ con le hrir $c_{lm}$ è dato dalla seguente equazione
@@ -228,7 +228,7 @@ r_{ilm}[n]=\sum_{j=0}^{M-1}c_{lm}[j]x_i[n-j].
 Si può applicare la formula~\eqref{eq:filtraggio_prodotto_scalare} all'equazione~\eqref{eq:r_ilm} per calcolare le $r_{ilm}[n]$ nel seguente modo:
 
 \begin{equation}\label{eq:r_ilm_prodotto_scalare}
-r_{ilm}[n]=\sum_{j=0}^{M-1}c_{lm,j}[n]x_i[n-j] = \mathbf{c_{lm}}^T[\mathbf{n}] \cdot \mathbf{x_i}^T[\mathbf{n}].
+r_{ilm}[n]=\sum_{j=0}^{M-1}c_{lm,j}[n]x_i[n-j] = \mathbf{c_{lm}}^T[\mathbf{n}] \cdot \mathbf{x_i}[\mathbf{n}].
 \end{equation}
 
 Il segnale ricevuto ad ogni orecchio è dato da:
