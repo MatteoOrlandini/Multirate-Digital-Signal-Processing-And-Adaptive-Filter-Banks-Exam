@@ -108,8 +108,16 @@
 \newpage
 \setcounter{page}{1}
 \section{Introduzione}
-\label{sec:Introduzione}    
+La presente tesina ha lo scopo di riprodurre i risultati ottenuti nel paper \cite{Li:comprehensive_comparison}. 
 La cancellazione della diafonia svolge un ruolo importante nell'ascolto di segnali binaurali tramite altoparlanti. Lo scopo della cancellazione del crosstalk è quello di riprodurre suoni binaurali alle orecchie dell'ascoltatore tramite l'inversione dei percorsi dell'onda sonora. Il filtro di cancellazione della diafonia richiede un'elevato sforzo computazionale per essere aggiornato in tempo reale in base alla posizione della testa~\cite{wand:a_stereo_crosstalk}. In questo progetto vengono analizzati, implementati e confrontati due algoritmi di cancellazione del crosstalk: LMS (Least Mean Square) e Fast Deconvolution.
+Questo viene fatto dapprima tramite degli script in Matlab che poi saranno replicati in C++ utilizzando il software NuTech che permette il processamento dei segnali audio in tempo reale.
+Il capitolo \ref{sec:Stato_arte} descrive gli algoritmi più comuni in letteratura.
+Il capitolo \ref{sec:Dataset} illustra le funzioni di trasferimento della testa che sono state utilizzate: la loro origine e il significato.
+Nel capitolo \ref{sec:descrizione_teorica} è presente la teoria dietro i due algoritmi che vengono confrontati.
+I capitoli \ref{sec:codice_matlab} e \ref{sec:codice_c} presentano e spiegano il codice che è stato sviluppato.
+Infine si confrontano i risultati ottenuti con quelli del paper per verificare l'efficacia del codice.
+\section{Stato dell'arte}
+\label{sec:Stato_arte}    
 
 A differenza dei sistemi stereo classici, un sistema audio 3D permette di posizionare i suoni intorno ad un ascoltatore in modo che questi siano percepiti come provenienti da punti arbitrari nello spazio. In questo modo, l'audio 3D può  aumentare il senso di realismo nella musica o nei film e può essere di grande beneficio nella realtà virtuale, nella realtà aumentata, nelle videoconferenze da remoto o per l'intrattenimento casalingo.
 
