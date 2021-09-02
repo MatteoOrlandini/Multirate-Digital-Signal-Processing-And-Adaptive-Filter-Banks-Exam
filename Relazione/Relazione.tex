@@ -108,36 +108,163 @@
 \newpage
 \setcounter{page}{1}
 \section{Introduzione}
-La presente tesina ha lo scopo di riprodurre i risultati ottenuti nel paper \cite{Li:comprehensive_comparison}. 
-La cancellazione della diafonia svolge un ruolo importante nell'ascolto di segnali binaurali tramite altoparlanti. Lo scopo della cancellazione del crosstalk è quello di riprodurre suoni binaurali alle orecchie dell'ascoltatore tramite l'inversione dei percorsi dell'onda sonora. Il filtro di cancellazione della diafonia richiede un'elevato sforzo computazionale per essere aggiornato in tempo reale in base alla posizione della testa~\cite{wand:a_stereo_crosstalk}. In questo progetto vengono analizzati, implementati e confrontati due algoritmi di cancellazione del crosstalk: LMS (Least Mean Square) e Fast Deconvolution.
-Questo viene fatto dapprima tramite degli script in Matlab che poi saranno replicati in C++ utilizzando il software NuTech che permette il processamento dei segnali audio in tempo reale.
-Il capitolo \ref{sec:Stato_arte} descrive gli algoritmi più comuni in letteratura.
-Il capitolo \ref{sec:Dataset} illustra le funzioni di trasferimento della testa che sono state utilizzate: la loro origine e il significato.
-Nel capitolo \ref{sec:descrizione_teorica} è presente la teoria dietro i due algoritmi che vengono confrontati.
-I capitoli \ref{sec:codice_matlab} e \ref{sec:codice_c} presentano e spiegano il codice che è stato sviluppato.
-Infine si confrontano i risultati ottenuti con quelli del paper per verificare l'efficacia del codice.
-\section{Stato dell'arte}
-\label{sec:Stato_arte}    
+La presente tesina ha lo scopo di riprodurre i risultati ottenuti nel paper \cite{Li:comprehensive_comparison}, il quale mostra un confronto tra l'algoritmo Least Mean Square e Fast Deconvolution per la cancellazione della diafonia che svolge un ruolo importante nell'ascolto di segnali binaurali tramite altoparlanti.
 
 A differenza dei sistemi stereo classici, un sistema audio 3D permette di posizionare i suoni intorno ad un ascoltatore in modo che questi siano percepiti come provenienti da punti arbitrari nello spazio. In questo modo, l'audio 3D può  aumentare il senso di realismo nella musica o nei film e può essere di grande beneficio nella realtà virtuale, nella realtà aumentata, nelle videoconferenze da remoto o per l'intrattenimento casalingo.
 
-La percezione del suono virtuale è ottenuta sintetizzando una coppia di segnali binaurali da un segnale di ingresso monoaurale con le informazioni acustiche 3D fornite: la distanza e la direzione della sorgente sonora rispetto all'ascoltatore. In particolare, il senso dell'orientamento può essere reso utilizzando informazioni acustiche relative alla testa, come le funzioni di trasferimento correlate alla testa (HRTF) che possono essere ottenute in modo sperimentale o teorico. Per fornire segnali binaurali, il modo più semplice è attraverso le cuffie. Tuttavia, in molti scenari, ad esempio, a casa o in teleconferenza, molti ascoltatori preferiscono non indossare le cuffie. Se vengono utilizzati altoparlanti, la riproduzione di questi segnali binaurali all'orecchio dell'ascoltatore non è semplice. Ogni orecchio riceve una cosiddetta componente di diafonia, inoltre, i segnali diretti sono distorti dal riverbero della stanza. Per superare i problemi descritti sopra, è necessario un filtro inverso prima di riprodurre il segnale binaurale attraverso gli altoparlanti. Il concetto di cancellazione ed equalizzazione della diafonia è stato introdotto da Atal e Schroeder e Bauer nei primi anni Sessanta.
+La percezione del suono virtuale è ottenuta sintetizzando una coppia di segnali binaurali da un segnale di ingresso monoaurale con le informazioni acustiche 3D fornite: la distanza e la direzione della sorgente sonora rispetto all'ascoltatore. In particolare, il senso dell'orientamento può essere dato dalle funzioni di trasferimento relative alla testa (HRTF), le quali si possono ottenere in modo sperimentale o teorico. Per fornire segnali binaurali, il modo più semplice è attraverso le cuffie. Tuttavia, in molti scenari, ad esempio, a casa o in teleconferenza, molti ascoltatori preferiscono non indossare le cuffie. Se vengono utilizzati altoparlanti, la riproduzione di segnali binaurali all'orecchio dell'ascoltatore non è semplice. Ogni orecchio riceve una cosiddetta componente di diafonia, inoltre, i segnali diretti sono distorti dal riverbero della stanza. Per superare i problemi descritti sopra, è necessario un filtro inverso prima di riprodurre il segnale binaurale attraverso gli altoparlanti. 
 
-Da allora sono stati presentati diversi algoritmi sofisticati per la cancellazione della diafonia, utilizzando due o più altoparlanti, in modo diretto o adattivo. Supponendo che i percorsi di trasferimento acustico dagli altoparlanti alle orecchie siano noti, il metodo di implementazione diretto calcola il filtro di cancellazione della diafonia invertendo direttamente le funzioni di trasferimento. Solitamente viene utilizzato un manichino di una testa con dei microfoni all'interno per stimare queste funzioni.
+Poiché occorre invertire i percorsi dell'onda sonora, la cancellazione del crosstalk è un tipico problema di inversione del sistema, che può essere realizzato direttamente o in modo adattivo. Nel primo caso, si presuppone che i percorsi di trasferimento acustico dagli altoparlanti alle orecchie siano noti. Questi percorsi sono spesso descritti dalle HRTF.
 
-Il metodo della stima diretta può essere implementato nel dominio del tempo o della frequenza. I primi sono generalmente dispendiosi dal punto di vista computazionale, mentre i secondi hanno una complessità inferiore. D'altra parte, gli algoritmi nel dominio del tempo hanno prestazioni migliori di quelli nel dominio della frequenza data la stessa lunghezza del filtro di cancellazione.
+In questo progetto vengono analizzati, implementati e confrontati due algoritmi di cancellazione del crosstalk: LMS (Least Mean Square) e Fast Deconvolution.
+Questo viene fatto dapprima tramite degli script in Matlab che poi saranno replicati in C++ utilizzando il software NuTech che permette il processamento dei segnali audio in tempo reale.
 
-Ad esempio, un metodo nel dominio della frequenza, noto come metodo di fast deconvolution, che è stato dimostrato essere molto utile e facile da usare in diversi casi pratici, può subire un effetto di convoluzione circolare quando
-i filtri inversi non sono sufficientemente lunghi rispetto alla durata del percorso acustico.
+La sezione~\ref{sec:Stato_arte} descrive gli algoritmi più comuni in letteratura, mentre la~\ref{sec:Dataset} illustra le funzioni di trasferimento della testa che sono state utilizzate: la loro origine e il significato. Nel capitolo~\ref{sec:descrizione_teorica} è presente la teoria dietro i due algoritmi confrontati. Le sezioni~\ref{sec:codice_matlab} e~\ref{sec:codice_c} presentano e spiegano il codice che è stato sviluppato. Infine i capitoli~\ref{sec:risultati} e~\ref{sec:conclusioni} mostrano i risultati e li confrontano con quelli ottenuti nel paper di riferimento per verificare l'efficacia del codice.
+\clearpage
 
-In un metodo di implementazione adattivo, il filtro di cancellazione della  diafonia è calcolato in modo adattivo con i segnali di feedback ricevuti da
-microfoni in miniatura collocati nelle orecchie dell'utente. Molti metodi adattativi impiegano tipicamente qualche variazione degli algoritmi LMS o RLS (Recursive Least Squares). L'algoritmo LMS tende a ridurre l'errore quadratico medio tra il segnale desiderato e l'uscita ed è noto per la sua semplicità e robustezza. Questo algoritmo è ampiamente utilizzato, anche se la sua velocità di convergenza è lenta. A differenza di LMS, l'RLS trova ricorsivamente i coefficienti che minimizzano una funzione costo ai minimi quadrati ponderati relativa ai segnali di ingresso. Nella derivazione dell'RLS, gli input sono considerati deterministici, mentre per LMS sono stocastici. L'algoritmo RLS può arrivare a convergenza in modo più veloce di LMS, aumentando però il carico computazionale.
+\section{Stato dell'arte}
+\label{sec:Stato_arte}    
+Il concetto di cancellazione ed equalizzazione della diafonia è stato introdotto da Atal e Schroeder e Bauer nei primi anni Sessanta. Da allora sono stati presentati diversi algoritmi sofisticati per la cancellazione della diafonia, utilizzando due o più altoparlanti, in modo diretto o adattivo. 
 
-Sebbene molti algoritmi siano stati proposti, il metodo adattativo viene usato più in ambito accademico rispetto alla vita di tutti i giorni. Il motivo è che le persone che non vogliono usare le cuffie probabilmente non vorrebbero utilizzare neanche un paio di microfoni nelle orecchie per ottimizzare la riproduzione degli altoparlanti. Una limitazione di un sistema di cancellazione della diafonia nasce dal fatto che ogni movimento dell'ascoltatore che supera i $75-100$ \si{\milli \meter} può cambiare completamente l'effetto desiderato. Questo problema può essere risolto seguendo in tempo reale la testa dell'ascoltatore nello spazio 3D. La posizione della testa viene determinata da un localizzatore magnetico o basato su fotocamera, quindi i filtri HRTF e quelli di cancellazione della diafonia sono aggiornati in tempo reale in base alla posizione dell'ascoltatore.
 
-In acustica e audio, la deconvoluzione a singolo canale è particolarmente utile poiché può compensare la risposta di trasduttori imperfetti come cuffie, altoparlanti e amplificatori. La deconvoluzione multicanale è necessaria nella progettazione di sistemi di cancellazione della diafonia e sistemi di imaging di sorgenti virtuali.%~\cite{kirkeby:deconvolution_analysis} 
+Supponendo che i percorsi di trasferimento acustico dagli altoparlanti alle orecchie siano noti, il metodo di implementazione diretto calcola il filtro di cancellazione della diafonia invertendo direttamente le funzioni di trasferimento HRTF. Solitamente viene utilizzato un manichino di una testa con dei microfoni all'interno per stimare queste funzioni.
 
-La fast deconvolution è un metodo molto veloce per calcolare una matrice di filtri digitali che può essere utilizzata per controllare le uscite di un impianto multicanale. Questo metodo è tipicamente più veloce di diversi ordini di grandezza rispetto ai metodi nel dominio del tempo e combina i principi dell'inversione dei minimi quadrati nel dominio della frequenza e il metodo di regolarizzazione di ordine zero.%~\cite{kirkeby:deconvolution_regularization}
+Il metodo della stima diretta può essere implementato nel dominio del tempo o della frequenza. I primi sono generalmente dispendiosi dal punto di vista computazionale, mentre i secondi hanno una complessità inferiore. D'altra parte, gli algoritmi nel dominio del tempo hanno prestazioni migliori di quelli nel dominio della frequenza, data la stessa lunghezza del filtro di cancellazione.
+
+Ad esempio, il metodo nel dominio della frequenza chiamato Fast Deconvolution, che è stato dimostrato essere molto utile e facile da usare in diversi casi pratici, può subire un effetto di convoluzione circolare quando i filtri inversi non sono sufficientemente lunghi rispetto alla durata del percorso acustico.
+
+Nei metodi di implementazione adattivi, il filtro di cancellazione della  diafonia è calcolato adattando i relativi coefficienti usando i segnali di feedback ricevuti da microfoni in miniatura collocati nelle orecchie dell'utente. Molti metodi adattativi impiegano tipicamente qualche variazione degli algoritmi LMS o RLS (Recursive Least Squares). L'algoritmo LMS cerca di ridurre una funzione costo $J$ pari all'errore quadratico medio tra il segnale desiderato e l'uscita:
+\begin{equation*}
+J=E[e[n]^2]=E[(d[n]-y[n])^2],
+\end{equation*}
+dove $E$ indica il valore medio, $d[n]$ è il segnale desiderato e $y[n]$ è l'uscita del filtro di cancellazione del crosstalk. Questo algoritmo è noto per la sua semplicità e robustezza ed è ampiamente utilizzato, anche se la sua velocità di convergenza è lenta. 
+
+Il metodo LMS non è molto adatto per dati real-time, in quanto per stimare i coefficienti del filtro di cancellazione del crosstalk $h$ usando dati acquisiti in modo continuo si preferiscono metodi ricorsivi~\cite{Ifeachor:DSP}. L'algoritmo RLS si ottiene pesando in modo esponenziale i dati in modo da rimuovere gradualmente gli effetti dei vecchi dati sui coefficienti del filtro e permettere il tracciamento di segnali che variano lentamente. La funzione costo $J$ in questo caso è data da
+\begin{equation*}
+J(\mathbf{h}_n) = \sum_{i = 0}^{n} \lambda^{n-i}e^2[i],
+\end{equation*}
+dove $e$ è l'errore definito come la differenza tra il segnale desiderato e l'uscita del filtro di cancellazione del crosstalk e $\mathbf{h}_n$ è il vettore contenente i coefficienti del filtro all'istante $n$. La funzione costo si riduce a quella dell'LMS quando $\lambda = 1$. Il parametro $\lambda$ è chiamato ``forgetting factor'' e viene tipicamente scelto nell'intervallo tra $0.98$ e $1$. 
+
+La funzione costo viene minimizzata facendo la derivata parziale rispetto a tutti i coefficienti $k$ del filtro di cancellazione del crosstalk $h$ e ponendo il risultato pari a zero.
+\begin{equation*}
+\dfrac{\partial J(\mathbf{h}_n)}{\partial h_n[k]} =  \sum_{i = 0}^{n} 2\lambda^{n-i}e[i]\dfrac{\partial e[i]}{\partial h_n[k]} = - \sum_{i = 0}^{n} 2\lambda^{n-i}e[i]x[i-k] = 0 \quad k = 0, 1, \dots, p
+\end{equation*}
+dove $p$ è il numero di coefficienti del filtro $h$. Successivamente, sostituendo $e[i]$ con la definizione di errore si ha
+\begin{equation}\label{eq:RLS}
+\dfrac{\partial J(\mathbf{h}_n)}{\partial h_n[k]} = \sum_{i = 0}^{n}\lambda^{n-i}\left[d[i] -\sum_{l=0}^{p} {h_n[l]x[i-l]}\right] x[i-k] = 0 \quad k = 0, 1, \dots, p
+\end{equation} 
+dove $\sum_{l=0}^{p} {h_n[l]x[i-l]}$ rappresenta l'uscita del filtro $h$ con ingresso $x$. Manipolando l'equazione~\eqref{eq:RLS} si ottiene
+\begin{equation}\label{eq:RLS2}
+\sum_{l=0}^{p} {h_n[l]} \left[\sum_{i=0}^{n} \lambda^{n-i}x[i-l]x[i-k]\right] = \sum_{i=0}^{n} \lambda^{n-i} d[i]x[i-k] \quad k = 0, 1,\dots, p.
+\end{equation}\label{eq:RLS3}
+L'equazione~\eqref{eq:RLS2} si può esprimere in forma matriciale come
+\begin{equation}
+\mathbf{R}_x[n]\mathbf{h}_n = \mathbf{r}_{dx}[n]
+\end{equation}
+dove $\mathbf{R}_x[n]$ è la matrice di covarianza di $x[n]$ e $\mathbf{r}_{dx}[n]$ è la cross-covarianza, o covarianza incrociata, tra $d[n]$ e $x[n]$. Basandoci sull'espressione~\eqref{eq:RLS3} possiamo trovare i coefficienti che minimizzano la funzione costo come 
+\begin{equation*}
+\mathbf{h}_n = \mathbf{R}^{-1}_x[n]\mathbf{r}_{dx}[n].
+\end{equation*}
+
+Occorre ora trovare una forma di soluzione ricorsiva nella forma 
+\begin{equation*}
+\mathbf{h}_n = \mathbf{h}_{n-1} + \Delta \mathbf{h}_{n-1}
+\end{equation*}
+dove $\Delta \mathbf{h}_{n-1}$ indica il fattore di correzione all'istante $n-1$. Si può dimostrare che 
+\begin{equation*}
+\Delta \mathbf{h}_{n-1} = \mathbf{g}[n]\alpha[n]
+\end{equation*}
+dove 
+\begin{equation*}
+\mathbf{g}[n] = \mathbf{P}[n-1]\mathbf{x}[n]\left\{\lambda + \mathbf{x}^T[n] \mathbf{P}[n-1] \mathbf{x}[n]\right\}^{-1}
+\end{equation*}
+in cui 
+\begin{equation*}
+\mathbf{P}[n] = \mathbf{R}^{-1}_x[n] = \lambda ^ {-1} \mathbf{P}[n-1] -  \mathbf{g}[n]\mathbf{x}^T[n]\lambda^{-1}\mathbf{P}[n-1]
+\end{equation*}
+e
+\begin{equation*}
+\alpha[n] = d[n] - \mathbf{x}^T[n]\mathbf{h}_{n-1}
+\end{equation*}
+dove $\alpha[n]$ è l'\textit{errore a priori}, differente dall'\textit{errore a posteriori} mostrato nella formula seguente
+\begin{equation}
+e[n] = d[n] - \mathbf{x}^T[n]\mathbf{h}_{n}.
+\end{equation}
+
+Nella derivazione dell'RLS, gli input sono considerati deterministici, mentre per LMS sono stocastici. L'algoritmo RLS può arrivare a convergenza in modo più veloce di LMS, aumentando però il carico computazionale.
+
+Un ulteriore algoritmo derivato da LMS è FLMS (Fast Least Mean Square), descritto in~\cite{Ferrara:FLMS}, viene implementato nel dominio della frequenza e richiede uno sforzo computazionale minore rispetto alla sua controparte nel dominio del tempo. Se l'input del filtro adattativo è un segnale discreto $x_j$, allora l'algoritmo LMS è descritto dalla seguente equazione
+\begin{equation}\label{eq:FLMS1}
+\mathbf{h}_{j+1} = \mathbf{h}_j + 2 \mu \epsilon_j \mathbf{x}_j
+\end{equation}
+dove $\mathbf{h}_j$ e $\mathbf{x}_j$ sono vettori che rappresentano, rispettivamente, i pesi del filtro e le uscite nella linea di ritardo all'istante $j$.
+\begin{equation*}
+\begin{split}
+\mathbf{h}_j^T = [h_{1,j}, h_{2,j}, \dots, h_{n,j} ]\\
+\mathbf{x}_j^T = [x_{j}, x_{j-1}, \dots, x_{j-n+1}]
+\end{split} 
+\end{equation*}
+L'errore $\epsilon_j$ è la differenza tra il segnale desiderato $d_j$ e l'uscita $y_j$, dove $y_j = \mathbf{x}_j^T \mathbf{h}_j$. Per implementare l'equivalente dell'algoritmo LMS in frequenza usando un filtro con $n$ tappi è conveniente dividere il segnale in blocchi da $n$ valori. Durante il $k$-esimo blocco, l'uscita del filtro è data da 
+\begin{equation}\label{eq:FLMS2}
+y_{kn+i} = \mathbf{x}^T_{kn+i} \mathbf{h}_k	\quad 0 \leq i \leq n-1
+\end{equation}
+dove $\mathbf{h}_k$ è il vettore contenente i coefficienti del filtro nel dominio del tempo durante il $k$-esimo blocco. Dopo aver processato il $k$-esimo blocco, il vettore $\mathbf{h}_k$ viene aggiornato iterando l'equazione~\eqref{eq:FLMS1} su $n$ punti come di seguito
+\begin{equation}\label{eq:FLMS3}
+\mathbf{h}_{k+1} = \mathbf{h}_k + 2\mu\sum_{i=0}^{n-1}\epsilon_{kn+i}x_{kn+i} = \mathbf{h}_k + 2\mu\nabla_k.
+\end{equation}
+Le equazioni~\eqref{eq:FLMS2} e~\eqref{eq:FLMS3} possono essere implementate nel dominio della frequenza. Si inizia riscrivendo~\eqref{eq:FLMS2} come convoluzione dei coefficienti del filtro con l'ingresso
+\begin{equation}\label{eq:FLMS4}
+y_{kn+j} = \sum_{i=0}^{n-1} h_{i,k}x_{kn+j-i}.
+\end{equation}
+Per implementare~\eqref{eq:FLMS4} con il metodo \textit{overlap and add} usando la FFT occorre fare un padding di $n$ zeri e usare una FFT a $2n$ punti. Sia $\mathbf{H}_k$ un vettore di lunghezza $2n$ i cui elementi sono i coefficienti nel dominio della frequenza di $\mathbf{h}$ paddati con $n$ zeri
+\begin{equation*}
+\mathbf{H}_k^T = \text{FFT}[\mathbf{h}_k^T, 0, \dots, 0].
+\end{equation*} 
+Sia $\mathbf{X}_k$ la FFT a $2n$ punti del $(k-1)$-esimo e e del $k$-esimo blocco:
+\begin{equation*}
+\mathbf{X}_k^T = \text{FFT}[x_{(k-1)n}, \dots, x_{kn-1}, x_{kn}, \dots, x_{kn+n-1}].
+\end{equation*}
+La convoluzione in~\eqref{eq:FLMS4} si realizza calcolando
+\begin{equation}\label{eq:FLMS5}
+[y_{kn}, \dots, y_{kn+n-1}]^T = \text{ultimi }n\text{ termini della IFFT di}\left\{\mathbf{H}_k\otimes \mathbf{X}_k\right\}  
+\end{equation}
+dove $\otimes$ indica la moltiplicazione elemento per elemento dei vettori $\mathbf{H}_k$ e $\mathbf{X}_k$. L'equazione~\eqref{eq:FLMS5} permette di calcolare i valori dell'uscita del $k$-esimo blocco. Si può osservare che un filtro a $n$ tappi nel dominio del tempo richiede un filtro a $2n$ coefficienti nel dominio della frequenza.
+
+Per implementare l'aggiornamento dei tappi del filtro come mostrato nell'equazione~\eqref{eq:FLMS3} si può scrivere
+\begin{equation*}
+\nabla_{j,k} = \sum_{i = 0}^{n-1}\epsilon_{kn+i}x_{kn+i-(j-1)} \quad 1 \leq j \leq n
+\end{equation*}
+Il valore $\nabla_{k}$ può essere calcolato tramite la FFT se prima viene determinato l'errore $\mathbf{E}_k$ preceduto da $n$ zeri
+\begin{equation*}
+\mathbf{E}_k = \text{FFT} [0, \dots, 0, (d_{kn}-y_{kn}), \dots, (d_{kn+n-1}-y_{kn+n-1})]^T.
+\end{equation*}
+Successivamente, si calcola 
+\begin{equation*}
+\nabla_{k} = \text{primi }n\text{ termini della IFFT di}\left\{\mathbf{E}_k\otimes \mathbf{X}^*_k\right\}  
+\end{equation*}
+dove $^*$ indica il complesso coniugato. Infine, vengono calcolati i coefficienti del filtro in frequenza come di seguito
+\begin{equation}\label{eq:FLMS6}
+\mathbf{H}_{k+1} = \mathbf{H}_k + 2 \mu \text{ FFT} 
+\begin{bmatrix}
+\nabla_k\\
+0\\
+\vdots\\
+0
+\end{bmatrix}
+\end{equation}
+con $n$ zeri sotto il vettore $\nabla_k$. Se gli ultimi $n$ valori della IFFT dei coefficienti iniziali di $\mathbf{H}_0$ sono forzati a zero, allora l'equazione~\eqref{eq:FLMS6} è l'implementazione esatta di~\eqref{eq:FLMS3} nel dominio della frequenza.
+
+Per ognuno degli $n$ valori del blocco, l'algoritmo FLMS richiede cinque FFT a $2n$ punti e due moltiplicazioni complesse a $2n$ punti. Per ingressi reali, le trasformate sono simmetriche, quindi richiedono il calcolo solamente dei primi $n+1$ punti. Assumendo che una moltiplicazione complessa sia equivalente a quattro moltiplicazioni reali, si può dimostrare il seguente rapporto
+\begin{equation}\label{eq:FLMS7}
+\dfrac{\text{Moltiplicazioni reali FLMS}}{\text{Moltiplicazioni reali LMS}} = \dfrac{5\left(\log\dfrac{n}{2}\right)+14}{n}.
+\end{equation}
+Per $n \geq 64$ il rapporto~\eqref{eq:FLMS7} diventa minore di 1, quindi le moltiplicazioni reali dell'algoritmo LMS sono maggiori di quelle di FLMS.
+
+Sebbene molti algoritmi siano stati proposti, il metodo adattativo viene usato più in ambito accademico che nella vita di tutti i giorni. Il motivo è che le persone che non vogliono usare le cuffie probabilmente non vorrebbero utilizzare neanche un paio di microfoni nelle orecchie per ottimizzare la riproduzione degli altoparlanti. Una limitazione di un sistema di cancellazione della diafonia nasce dal fatto che ogni movimento dell'ascoltatore che supera i $75-100$ \si{\milli \meter} può cambiare completamente l'effetto desiderato. Questo problema può essere risolto seguendo in tempo reale la testa dell'ascoltatore nello spazio 3D. La posizione della testa viene determinata da un localizzatore magnetico o basato su fotocamera, quindi i filtri HRTF e quelli di cancellazione della diafonia sono aggiornati in tempo reale in base alla posizione dell'ascoltatore. In questo caso, il filtro di cancellazione della diafonia richiede un'elevato sforzo computazionale per essere aggiornato in tempo reale in base alla posizione della testa~\cite{wand:a_stereo_crosstalk}. 
+
+In acustica, la deconvoluzione a singolo canale è particolarmente utile poiché può compensare la risposta di trasduttori imperfetti come cuffie, altoparlanti e amplificatori. La deconvoluzione multicanale è necessaria nella progettazione di sistemi di cancellazione della diafonia e sistemi di imaging di sorgenti virtuali.%~\cite{kirkeby:deconvolution_analysis} 
+
+La Fast Deconvolution è un metodo molto veloce per calcolare una matrice di filtri digitali che può essere utilizzata per controllare le uscite di un impianto multicanale. Questo metodo è tipicamente più veloce di diversi ordini di grandezza rispetto ai metodi nel dominio del tempo e combina i principi dell'inversione dei minimi quadrati nel dominio della frequenza e il metodo di regolarizzazione di ordine zero. I metodi di regolarizzazione rinunciano a trovare la soluzione esatta del problema, calcolando invece la soluzione di un problema leggermente diverso ma meglio condizionato. %~\cite{kirkeby:deconvolution_regularization}
 
 L'algoritmo presuppone che sia possibile utilizzare filtri ottimali lunghi, e funziona bene solo quando il parametro di regolarizzazione è impostato in modo appropriato. Nella pratica questo parametro viene determinato per tentativi.%~\cite{kirkeby:deconvolution_design}
 
@@ -195,8 +322,6 @@ H_{22}\\
 \end{bmatrix}
 \end{equation}
 Per avere il segnale in uscita uguale a quello desiderato $H$ dovrebbe essere l'inversa di $C$. La diretta inversa di $C$ però non garantisce la cancellazione del crosstalk in quanto gli elementi potrebbero non soddisfare la condizione di fase minima. 
-
-Nell'elaborato, il capitolo~\ref{sec:Dataset} illustra il dataset usato per le HRIR e il capitolo~\ref{sec:descrizione_teorica} descrive in modo teorico gli algoritmi LMS e FD usati. Le sezioni~\ref{sec:codice_matlab} e~\ref{sec:codice_c} mostrano come vengono implementati gli algoritmi rispettivamente in Matlab e in C con il programma NU-TECH. Il capitolo~\ref{sec:risultati} illustra i risultati ottenuti facendo vari confronti tra gli algoritmi usati e tra i risultati proposti nel paper di riferimento~\cite{Li:comprehensive_comparison}.
 \clearpage
 
 \section{Dataset}
@@ -211,8 +336,7 @@ I dati HRTF vengono archiviati nelle directory per elevazione. Ogni nome di dire
 \label{sec:descrizione_teorica}
 \subsection{LMS}
 \label{subsec:LMS_teoria}
-Per la cancellazione del crosstalk l'algoritmo più comune è quello dell'LMS \cite{143434}, \cite{4217047}.
-Nonostante sia semplice e accurato ha una veloce convergenza. La figura~\ref{fig:lms} mostra il diagramma di cancellazione del crosstalk usando LMS. 
+Per la cancellazione del crosstalk l'algoritmo più comune è quello dell'LMS che nonostante sia semplice e accurato, ha una veloce convergenza~\cite{143434},~\cite{4217047}. La figura~\ref{fig:lms} mostra il diagramma di cancellazione del crosstalk usando LMS, $x$ indica l'ingresso, $y$ l'uscita, $d$ il segnale desiderato ed $e$ l'errore.
 
 \begin{figure}[h]
 	\centering	
@@ -221,9 +345,9 @@ Nonostante sia semplice e accurato ha una veloce convergenza. La figura~\ref{fig
 	\label{fig:lms}
 \end{figure}
 
-Le variabili con lettera minuscola rappresentano il segnale nel dominio del tempo e $\tau$ rappresenta il ritardo del sistema. Per sistemi causali, $y_i[n]$ dovrebbe essere idealmente una versione ritardata di $x_i[n]$. Le sequenze $r_{ilm}$ sono i segnali $x_i[n]$ di ingresso filtrati dalle funzioni $c_{lm}$ che hanno $M$ tappi nel dominio del tempo.
+Le variabili con lettera minuscola rappresentano il segnale nel dominio del tempo e $\tau$ rappresenta il ritardo del sistema. Per sistemi causali, l'uscita $y_i[n]$ dovrebbe essere idealmente una versione ritardata dell'ingresso $x_i[n]$. Le sequenze $r_{ilm}$ sono i segnali $x_i[n]$ di ingresso filtrati dalle funzioni $c_{lm}$ che hanno $M$ tappi nel dominio del tempo.
 
-In generale, si può scrivere il filtraggio nell'$n$-esimo istante di un segnale $\mathbf{a[n]} = \left[a[n], a[n-1], \dots, a[n - M + 1]\right]^T$ con un filtro $\mathbf{b[n]} =  \left[b_{0}[n], b_{1}[n], \dots, b_{M-1}[n]\right]^T$ di lunghezza $M$ come
+In generale, si può scrivere il filtraggio nell'$n$-esimo istante di un segnale $\mathbf{a[n]} = \left[a[n], a[n-1], \dots, a[n - M + 1]\right]^T$ con un filtro $\mathbf{b[n]} =  \left[b_{0}[n], b_{1}[n], \dots,\\ b_{M-1}[n]\right]^T$ di lunghezza $M$ come
 \begin{equation}\label{eq:filtraggio_prodotto_scalare}
 y[n] = \sum_{j=0}^{M-1}b_{j}[n]a[n-j] = \mathbf{b}^T[\mathbf{n}] \cdot \mathbf{a}[\mathbf{n}].
 \end{equation}
@@ -244,8 +368,7 @@ Il segnale ricevuto ad ogni orecchio è dato da:
 y_i[n]=r_{1i1}[n] \circledast h_{11}[n]+r_{1i2}[n] \circledast h_{21}[n]+
 r_{2i1}[n] \circledast h_{12}[n]+r_{2i2}[n] \circledast h_{22}[n]
 \end{equation}
-dove $i,l,m$ assumono i valori 1 o 2.
-Il criterio dell'algoritmo LMS è la minimizzazione della funzione costo
+dove $i,l,m$ assumono i valori 1 o 2 e $\circledast$ rappresenta la convoluzione. Il criterio dell'algoritmo LMS è la minimizzazione della funzione costo
 \begin{equation}\label{eq:errore_lms}
 J=E[e[n]^2]=E[(d[n]-y[n])^2]
 \end{equation}
@@ -1704,21 +1827,19 @@ void __stdcall PlugIn::LESetParameter(int Index,void *Data,
 \end{lstlisting}
 \clearpage
 
-\section{Risultati e conclusioni}
+\section{Risultati}
 \label{sec:risultati}
-Abbiamo confrontato l'algoritmo LSM e FD usando il fattore di separazione dei canali (channel separation factor). Questo fattore è definito come il rapporto tra la potenza del percorso ipsilaterale e quello controlaterale, come mostrato nelle equazioni~\eqref{eq:JL} e~\eqref{eq:JR} rispettivamente per il canale sinistro e destro.
+In questo capitolo vengono presentati tutti i risultati ottenuti dall'implementazione dei due programmi. Abbiamo confrontato l'algoritmo LSM e FD usando il fattore di separazione dei canali (channel separation factor). Questo fattore è definito come il rapporto tra la potenza del percorso ipsilaterale e quello controlaterale, come mostrato nelle equazioni~\eqref{eq:JL} e~\eqref{eq:JR} rispettivamente per il canale sinistro e destro.
 \begin{equation}\label{eq:JL}
-J_L = E\left\{20\log_{10} \dfrac{C_{11}H_{11}+C_{12}H_{21}}{C_{21}H_{11}+C_{22}H_{21}}\right\} \quad [\si{\decibel}]
+J_L = E\left\{20\cdot\log_{10} \dfrac{C_{11}H_{11}+C_{12}H_{21}}{C_{21}H_{11}+C_{22}H_{21}}\right\} \quad [\si{\decibel}]
 \end{equation}
 
 \begin{equation}\label{eq:JR}
-J_R = E\left\{20\log_{10} \dfrac{C_{22}H_{22}+C_{21}H_{12}}{C_{12}H_{22}+C_{11}H_{12}}\right\} \quad [\si{\decibel}]
+J_R = E\left\{20\cdot\log_{10} \dfrac{C_{22}H_{22}+C_{21}H_{12}}{C_{12}H_{22}+C_{11}H_{12}}\right\} \quad [\si{\decibel}]
 \end{equation}
 dove $E\{\cdot\}$ indica il valore medio su tutte le frequenze.
 
-Le tabelle~\ref{tab:LMS_result} e~\ref{tab:FD_result} mostrato i valori di channel separation factor rispettivamente per LMS e FD al variare di $\mu$ e $\beta$. Si può notare dalla tabella~\ref{tab:LMS_result} che il fattore di separazione dei canali aumenta all'aumentare di $\mu$, mentre per la tabella~\ref{tab:FD_result} questo fattore aumenta al diminuire di $\beta$. Entrambi i parametri vengono aggiustati durante l'implementazione pratica, in particolare, il comportamento del $\beta$ per la fast deconvolution è in linea con quanto ci si aspetta dalla formula~\eqref{eq:funzione_costo_fd} spiegata nel capitolo~\ref{subsec:FD_teoria}.
-
-A differenza del paper di riferimento~\cite{Li:comprehensive_comparison} in cui il fattore di separazione dei canali è migliore per il canale destro, nel nostro caso otteniamo valori migliori per il canale sinistro. Questo può essere dovuto ad una diversa scelta delle HRIR tra l'implementazione dell'articolo e la nostra.
+Le tabelle~\ref{tab:LMS_result} e~\ref{tab:FD_result} mostrano i valori di channel separation factor rispettivamente per LMS e FD al variare di $\mu$ e $\beta$.
 
 \begin{table}[h]
 \centering
@@ -1746,7 +1867,7 @@ $0.01$ &  47.657 &  48.661 \\ \bottomrule
 \caption{\label{tab:FD_result}Confronto di $J_R$ e $J_L$ per l'algoritmo Fast Deconvolution per diversi $\beta$.}
 \end{table}
 
-La figura~\ref{fig:channel_separation_LMS_FD} mostra l'andamento in frequenza del numeratore e denominatore delle formule~\eqref{eq:JL} e~\eqref{eq:JR} per entrambi gli algoritmi implementati. Si può vedere che il numeratore è quasi sempre maggiore del denominatore in tutte le figure: questo indica che la separazione dei canali sta avvenendo in modo corretto. Poiché le figure sono esposte in \si{\decibel} si può fare la differenza tra il numeratore e il denominatore per ottenere l'effettivo valore di $J_L$ e $J_R$ per ogni frequenza.
+La figura~\ref{fig:channel_separation_LMS_FD} mostra l'andamento in frequenza del numeratore e denominatore delle formule~\eqref{eq:JL} e~\eqref{eq:JR} per entrambi gli algoritmi implementati. Poiché le figure sono esposte in \si{\decibel} si può fare la differenza tra il numeratore e il denominatore per ottenere l'effettivo valore di $J_L$ e $J_R$ per ogni frequenza.
 
 \begin{figure}[h]
 \begin{subfigure}{1\textwidth}
@@ -1778,7 +1899,9 @@ La figura~\ref{fig:channel_separation_LMS_FD} mostra l'andamento in frequenza de
 	\label{fig:channel_separation_LMS_FD}
 \end{figure}
 
-La figura~\ref{fig:mse_LMS} mostra l'andamento nel tempo del mean square error in \si{\decibel} dell'algoritmo LMS. Si può osservare che all'aumentare del tempo l'errore diminuisce: questo indica che l'algoritmo produrrà un'uscita sempre più vicina a quella desiderata. Dalla formula~\eqref{eq:errore_lms} si ha che l'$n$-esimo valore dell'errore è dato dalla differenza tra l'$n$-esimo valore del segnale desiderato e dall'$n$-esimo valore dell'uscita.
+La figura~\ref{fig:mse_LMS} mostra l'andamento nel tempo del mean square error in \si{\decibel} dell'algoritmo LMS. Dalla formula~\eqref{eq:errore_lms} si ha che l'$n$-esimo valore dell'errore è dato dalla differenza tra l'$n$-esimo valore del segnale desiderato e dall'$n$-esimo valore dell'uscita. 
+
+La figura~\ref{fig:confronto_H_LMS_FD} mostra un confronto tra i filtri di ricostruzione $H_{11}$, $H_{12}$, $H_{21}$ e $H_{22}$ degli algoritmi LMS e FD. Un confronto tra i filtri ottenuti nel progetto, figura~\ref{fig:confronto_H_LMS_FD}, e quelli proposti nel paper, figura~\ref{fig:confronto_H_LMS_FD_paper}, mostra che per alcune frequenze non si ha una perfetta uguaglianza tra i filtri calcolati con LMS e quelli calcolati con FD.
 
 \begin{figure}[h]
 	\begin{subfigure}{1\textwidth}
@@ -1794,8 +1917,6 @@ La figura~\ref{fig:mse_LMS} mostra l'andamento nel tempo del mean square error i
 	\caption{Confronto dell'MSE del canale (a) sinistro e (b) destro dell'algoritmo LMS.}
 	\label{fig:mse_LMS}
 \end{figure}
-
-La figura~\ref{fig:confronto_H_LMS_FD} mostra un confronto tra i filtri di ricostruzione $H$ degli algoritmi LMS e FD. Si può notare che i filtri $H_{11}$ e $H_{22}$ trovati con LMS e FD sono più simili tra loro rispetto ai filtri $H_{12}$ e $H_{21}$.
 
 \begin{figure}[h]
 	\centering
@@ -1828,8 +1949,6 @@ La figura~\ref{fig:confronto_H_LMS_FD} mostra un confronto tra i filtri di ricos
 	\label{fig:confronto_H_LMS_FD}
 \end{figure}
 
-Un confronto tra i filtri ottenuti nel progetto, figura~\ref{fig:confronto_H_LMS_FD}, e quelli proposti nel paper, figura~\ref{fig:confronto_H_LMS_FD_paper}, mostra che per alcune frequenze non si ha una perfetta uguaglianza tra i filtri calcolati con LMS e quelli calcolati con FD.
-
 \begin{figure}[h]
 	\centering	
 	\begin{subfigure}{1\textwidth}
@@ -1861,7 +1980,7 @@ Un confronto tra i filtri ottenuti nel progetto, figura~\ref{fig:confronto_H_LMS
 	\label{fig:confronto_H_LMS_FD_paper}
 \end{figure}
 
-Le figure~\ref{fig:x1_y1_FD} e~\ref{fig:x2_y2_FD} mostrano un confronto tra gli ingressi e le uscite nell'algoritmo fast deconvolution, mentre le figure~\ref{fig:d1_y1_LMS} e~\ref{fig:d2_y2_LMS} confrontano il segnale desiderato con l'uscita prodotta dall'LMS.
+Le figure~\ref{fig:x1_y1_FD} e~\ref{fig:x2_y2_FD} mostrano un confronto tra gli ingressi e le uscite nell'algoritmo Fast Deconvolution, mentre le figure~\ref{fig:d1_y1_LMS} e~\ref{fig:d2_y2_LMS} confrontano il segnale desiderato con l'uscita prodotta dall'LMS.
 
 \begin{figure}[h]
 	\centering
@@ -1894,10 +2013,28 @@ Le figure~\ref{fig:x1_y1_FD} e~\ref{fig:x2_y2_FD} mostrano un confronto tra gli 
 	\label{fig:confronto_ingressi_uscite_LMS_FD}
 \end{figure}
 
-I risultati ottenuti con il NU-TECH sono uguali a quelli prodotti dal Matlab. Dalle tabelle~\ref{tab:LMS_result} e~\ref{tab:FD_result} si ottengono risultati molto simili a quelli proposti in~\cite{Li:comprehensive_comparison}, possiamo dunque affermare che i filtri di cancellazione del crosstalk lavorano in modo corretto.
 
 \clearpage
 
+\section{Conclusioni}
+\label{sec:conclusioni}
+Dai risultati mostrati nel capitolo~\ref{sec:risultati}, si possono fare diverse osservazioni. Si può notare dalla figura~\ref{fig:channel_separation_LMS_FD} che nel fattore di separazione dei canali il numeratore è quasi sempre maggiore del denominatore: questo indica che la separazione dei canali sta avvenendo in modo corretto. 
+
+Si può osservare dalla figura~\ref{fig:mse_LMS} che all'aumentare del tempo l'errore dell'algorimo LMS diminuisce: questo indica che l'algoritmo produrrà un'uscita sempre più vicina a quella desiderata. 
+
+Dalla figura~\ref{fig:confronto_H_LMS_FD} si nota che i filtri $H_{11}$ e $H_{22}$ trovati con LMS e FD sono più simili tra loro rispetto ai filtri $H_{12}$ e $H_{21}$.
+
+Si può notare dalla tabella~\ref{tab:LMS_result} che il fattore di separazione dei canali aumenta all'aumentare di $\mu$, mentre per la tabella~\ref{tab:FD_result} questo fattore aumenta al diminuire di $\beta$. Entrambi i parametri vengono aggiustati durante l'implementazione pratica, in particolare, il comportamento del $\beta$ per la Fast Deconvolution è in linea con quanto ci si aspetta dalla formula~\eqref{eq:funzione_costo_fd} spiegata nel capitolo~\ref{subsec:FD_teoria}.
+
+A differenza del paper di riferimento~\cite{Li:comprehensive_comparison}, in cui il fattore di separazione dei canali è migliore per il canale destro, nel nostro caso otteniamo valori migliori per il canale sinistro. Questo può essere dovuto ad una diversa scelta delle HRIR tra l'implementazione dell'articolo e la nostra. Nelle simulazioni dell'articolo, infatti, è stato utilizzato il valore medio di 10 set di HRTF per calcolare la matrice di cancellazione della diafonia $H$, e successivamente sono stati utilizzati i 10 set originali di HRTF per calcolare i rispettivamente fattori di separazione dei canali.
+
+Dalle tabelle~\ref{tab:LMS_result} e~\ref{tab:FD_result} si ottengono dei fattori di separazione dei molto simili a quelli proposti in~\cite{Li:comprehensive_comparison}, in cui si ha in media $J_L = \SI{12.6251}{\decibel}$ e $J_R = \SI{16.0611}{\decibel}$ per LMS e $J_L = \SI{12.8147}{\decibel}$ e $J_R = \SI{17.2171}{\decibel}$ per FD. Possiamo dunque affermare che i filtri di cancellazione del crosstalk lavorano in modo corretto.
+
+Dal confronto tra l'uscita desiderata e l'ingresso in figura~\ref{fig:confronto_ingressi_uscite_LMS_FD} si può notare come questi segnali siano sovrapposti: possiamo sostenere dunque che la cancellazione del crosstalk avviene in modo corretto.
+
+I risultati ottenuti per ognuno dei due algoritmi con il Nu-Tech sono uguali a quelli prodotti dal Matlab, questo ci permette di affermare che gli algoritmi sviluppati nei due diversi linguaggi di programmazione sono equivalenti e producono le stesse uscite.
+
+\clearpage 
 \nocite{*}
 %Il comando \printbibliography produce la sezione bibliografica con relativi
 %titolo e testatina. Per mandarne il relativo titolo nell’indice generale si

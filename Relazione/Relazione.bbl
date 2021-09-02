@@ -19,6 +19,32 @@
 
 \refsection{0}
   \datalist[entry]{nty/global//global/global}
+    \entry{Ferrara:FLMS}{article}{}
+      \name{author}{1}{}{%
+        {{hash=3d38a68e4804fa5fd0a61c77c981c40e}{%
+           family={Ferrara},
+           familyi={F\bibinitperiod},
+           given={E.},
+           giveni={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{3d38a68e4804fa5fd0a61c77c981c40e}
+      \strng{fullhash}{3d38a68e4804fa5fd0a61c77c981c40e}
+      \strng{bibnamehash}{3d38a68e4804fa5fd0a61c77c981c40e}
+      \strng{authorbibnamehash}{3d38a68e4804fa5fd0a61c77c981c40e}
+      \strng{authornamehash}{3d38a68e4804fa5fd0a61c77c981c40e}
+      \strng{authorfullhash}{3d38a68e4804fa5fd0a61c77c981c40e}
+      \field{sortinit}{F}
+      \field{sortinithash}{669c706c6f1fbf3b5a83d26f1d9e9e72}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Acoustics, Speech, and Signal Processing}
+      \field{title}{Fast implementations of LMS adaptive filters}
+      \field{volume}{28}
+      \field{year}{1980}
+      \true{nocite}
+      \field{pages}{474\bibrangedash 475}
+      \range{pages}{2}
+    \endentry
     \entry{Gardner:HRTF}{inproceedings}{}
       \name{author}{1}{}{%
         {{hash=68ad5c799d64dfae5cce5e75fc60e29d}{%
@@ -39,6 +65,38 @@
       \field{labeltitlesource}{title}
       \field{title}{HRTF Measurements of a KEMAR Dummy-Head Microphone}
       \field{year}{1994}
+      \true{nocite}
+    \endentry
+    \entry{Ifeachor:DSP}{book}{}
+      \name{author}{2}{}{%
+        {{hash=07b2a1c507924a4ebbb66e718f2da5cc}{%
+           family={Ifeachor},
+           familyi={I\bibinitperiod},
+           given={Emmanuel\bibnamedelima C.},
+           giveni={E\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=9dbafd2b50b9afd934f84f74c9998aba}{%
+           family={Jervis},
+           familyi={J\bibinitperiod},
+           given={Barrie\bibnamedelima W.},
+           giveni={B\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Pearson Education}%
+      }
+      \strng{namehash}{297d3696756dc2c8156b8f01cd28bed1}
+      \strng{fullhash}{297d3696756dc2c8156b8f01cd28bed1}
+      \strng{bibnamehash}{297d3696756dc2c8156b8f01cd28bed1}
+      \strng{authorbibnamehash}{297d3696756dc2c8156b8f01cd28bed1}
+      \strng{authornamehash}{297d3696756dc2c8156b8f01cd28bed1}
+      \strng{authorfullhash}{297d3696756dc2c8156b8f01cd28bed1}
+      \field{sortinit}{I}
+      \field{sortinithash}{320bc8fe8101b9376f9f21cd507de0e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2nd}
+      \field{isbn}{0201596199}
+      \field{title}{Digital Signal Processing: A Practical Approach}
+      \field{year}{2002}
       \true{nocite}
     \endentry
     \entry{4217047}{inproceedings}{}
