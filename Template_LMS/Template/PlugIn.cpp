@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include ".\plugin.h"
+#include <string.h>
 
 PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffect(_CBFunction,_PlugRef,ParentDlg)
 {
@@ -9,6 +10,8 @@ PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffe
 	LESetNumInput(2);
 	LESetNumOutput(2);
 	
+	// initialize default path
+	strcpy(path, "C://Program Files (x86)//Leaff//NU-Tech//\0");
 	isRunning = false;
 
 	M = 512;	// filter length
@@ -215,8 +218,14 @@ int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID E
 	// copy y2 to OutputData2
 	ippsCopy_64f(y2, OutputData2, FrameSize);
 
-	write_dat("e1.dat", e1, FrameSize, "");
-	write_dat("e2.dat", e2, FrameSize, "");
+	char file_name[MAX_FILE_NAME_LENGTH];
+	strcpy(file_name, path);
+	strcat(file_name, "e1.dat");
+	write_dat(file_name, e1, FrameSize, "");
+
+	strcpy(file_name, path);
+	strcat(file_name, "e2.dat");
+	write_dat(file_name, e2, FrameSize, "");
 
 	/*
 	// filter r111 with h11 and store the result in ytmp
@@ -364,14 +373,24 @@ void __stdcall PlugIn::LEPlugin_Init()
 		c22 = ippsMalloc_64f(M);
 		ippsZero_64f(c22, M);
 	}
+
 	// load filter taps
-	read_dat("c11.dat", c11, M);
+	char file_name[MAX_FILE_NAME_LENGTH];
+	strcpy(file_name, path);
+	strcat(file_name, "c11.dat");
+	read_dat(file_name, c11, M);
 
-	read_dat("c12.dat", c12, M);
+	strcpy(file_name, path);
+	strcat(file_name, "c12.dat");
+	read_dat(file_name, c12, M);
 
-	read_dat("c21.dat", c21, M);
+	strcpy(file_name, path);
+	strcat(file_name, "c21.dat");
+	read_dat(file_name, c21, M);
 
-	read_dat("c22.dat", c22, M);
+	strcpy(file_name, path);
+	strcat(file_name, "c22.dat");
+	read_dat(file_name, c22, M);
 
 	if (h11 == 0)
 	{
@@ -865,6 +884,15 @@ void __stdcall PlugIn::LESetParameter(int Index,void *Data,LPVOID bBroadCastInfo
 		}
 	}
 
+	if (Index == ID_FILTER_PATH)
+	{
+		if (!isRunning)
+		{
+			memcpy(&path, (char*)Data, MAX_FILE_NAME_LENGTH * sizeof(char));
+			CBFunction(this, NUTS_UPDATERTWATCH, ID_FILTER_PATH, 0);
+		}
+	}
+
 	CBFunction(this, NUTS_RELEASESECURETIME, NUTSSECURE, 0);
 
 }
@@ -878,6 +906,12 @@ int  __stdcall PlugIn::LEGetParameter(int Index,void *Data)
 	{
 		memcpy((double*)Data, &mu, sizeof(double));
 	}
+
+	else if (Index == ID_FILTER_PATH)
+	{
+		memcpy((char*)Data, &path, MAX_FILE_NAME_LENGTH * sizeof(char));
+	}
+
 
 	CBFunction(this, NUTS_RELEASESECURETIME, NUTSSECURE, 0);
 	return 0;
@@ -904,6 +938,16 @@ void __stdcall PlugIn::LERTWatchInit()
 	NewWatch.IDVar = ID_MU;
 	sprintf(NewWatch.VarName, "mu\0");
 	CBFunction(this, NUTS_ADDRTWATCH, 0, &NewWatch);
+
+	WatchType NewWatch2;
+
+	memset(&NewWatch2, 0, sizeof(WatchType));
+	NewWatch2.EnableWrite = true;
+	NewWatch2.LenByte = MAX_FILE_NAME_LENGTH * sizeof(char);
+	NewWatch2.TypeVar = WTC_LPCHAR;
+	NewWatch2.IDVar = ID_FILTER_PATH;
+	sprintf(NewWatch2.VarName, "Filter directory");
+	CBFunction(this, NUTS_ADDRTWATCH, TRUE, &NewWatch2);
 }
 
 void __stdcall PlugIn::LESampleRateChange(int NewVal,int TrigType)

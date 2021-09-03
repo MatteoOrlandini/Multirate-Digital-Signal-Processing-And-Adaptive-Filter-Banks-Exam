@@ -9,7 +9,9 @@ PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffe
 
 	LESetNumInput(2);
 	LESetNumOutput(2);
-	
+
+	// initialize default path
+	strcpy(path, "C://Program Files (x86)//Leaff//NU-Tech//\0");
 	isRunning = false;
 
 	//M = 512;	// filter length
@@ -382,20 +384,30 @@ void __stdcall PlugIn::LEPlugin_Init()
 		hrir = ippsMalloc_64f(M);
 		ippsZero_64f(hrir, M);
 	}
+	
 	// load filter taps
-	read_dat("c11.dat", hrir, M);
+	char file_name[MAX_FILE_NAME_LENGTH];
+	strcpy(file_name, path);
+	strcat(file_name, "c11.dat");
+	read_dat(file_name, hrir, M);
 	for (int i = 0; i < M; i++)
 		c11[i].re = hrir[i];
 
-	read_dat("c12.dat", hrir, M);
+	strcpy(file_name, path);
+	strcat(file_name, "c12.dat");
+	read_dat(file_name, hrir, M);
 	for (int i = 0; i < M; i++)
 		c12[i].re = hrir[i];
 
-	read_dat("c21.dat", hrir, M);
+	strcpy(file_name, path);
+	strcat(file_name, "c21.dat");
+	read_dat(file_name, hrir, M);
 	for (int i = 0; i < M; i++)
 		c21[i].re = hrir[i];
 
-	read_dat("c22.dat", hrir, M);
+	strcpy(file_name, path);
+	strcat(file_name, "c22.dat");
+	read_dat(file_name, hrir, M);
 	for (int i = 0; i < M; i++)
 		c22[i].re = hrir[i];
 
@@ -720,6 +732,12 @@ void __stdcall PlugIn::LEPlugin_Delete()
 		temp3 = 0;
 	}
 
+	if (hrir != 0)
+	{
+		ippsFree(hrir);
+		hrir = 0;
+	}
+
 	if (c11 != 0)
 	{
 		ippsFree(c11);
@@ -897,6 +915,15 @@ void __stdcall PlugIn::LESetParameter(int Index,void *Data,LPVOID bBroadCastInfo
 		
 	}
 
+	if (Index == ID_FILTER_PATH)
+	{
+		if (!isRunning)
+		{
+			memcpy(&path, (char*)Data, MAX_FILE_NAME_LENGTH * sizeof(char));
+			CBFunction(this, NUTS_UPDATERTWATCH, ID_FILTER_PATH, 0);
+		}
+	}
+
 	CBFunction(this, NUTS_RELEASESECURETIME, NUTSSECURE, 0);
 }
 
@@ -908,6 +935,11 @@ int  __stdcall PlugIn::LEGetParameter(int Index,void *Data)
 	if (Index == ID_BETA)
 	{
 		memcpy((double*)Data, &beta, sizeof(double));
+	}
+
+	else if (Index == ID_FILTER_PATH)
+	{
+		memcpy((char*)Data, &path, MAX_FILE_NAME_LENGTH * sizeof(char));
 	}
 
 	CBFunction(this, NUTS_RELEASESECURETIME, NUTSSECURE, 0);
@@ -935,6 +967,16 @@ void __stdcall PlugIn::LERTWatchInit()
 	NewWatch.IDVar = ID_BETA;
 	sprintf(NewWatch.VarName, "Beta\0");
 	CBFunction(this, NUTS_ADDRTWATCH, 0, &NewWatch);
+
+	WatchType NewWatch2;
+
+	memset(&NewWatch2, 0, sizeof(WatchType));
+	NewWatch2.EnableWrite = true;
+	NewWatch2.LenByte = MAX_FILE_NAME_LENGTH * sizeof(char);
+	NewWatch2.TypeVar = WTC_LPCHAR;
+	NewWatch2.IDVar = ID_FILTER_PATH;
+	sprintf(NewWatch2.VarName, "Filter directory");
+	CBFunction(this, NUTS_ADDRTWATCH, TRUE, &NewWatch2);
 }
 
 void __stdcall PlugIn::LESampleRateChange(int NewVal,int TrigType)

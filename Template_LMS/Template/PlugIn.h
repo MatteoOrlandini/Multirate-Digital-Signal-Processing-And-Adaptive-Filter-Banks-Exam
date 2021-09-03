@@ -21,6 +21,7 @@
 #define NUTS_NAME	"LMS Filter"
 
 #define ID_MU 0 
+#define ID_FILTER_PATH 1
 
 class PlugIn :	public LEEffect
 {
@@ -74,7 +75,7 @@ private:
 	double* h11, * h12, * h21, * h22;
 	double* r111, * r112, * r211, * r212, * r222, * r221, * r122, * r121;
 	double* r111buff, * r112buff, * r211buff, * r212buff, * r222buff, * r221buff, * r122buff, * r121buff;
-
+	char path[MAX_FILE_NAME_LENGTH];
 	bool isRunning;
 	/*
 	int specSizeh11;

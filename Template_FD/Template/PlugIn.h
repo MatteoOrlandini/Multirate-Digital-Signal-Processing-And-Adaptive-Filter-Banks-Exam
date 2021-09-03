@@ -23,6 +23,7 @@
 #define NUTS_NAME	"Fast Deconvolution"
 
 #define ID_BETA 0
+#define ID_FILTER_PATH 1
 
 
 class PlugIn :	public LEEffect
@@ -102,6 +103,6 @@ private:
 
 	int sizeSpec, sizeInit, sizeBuffer;
 
+	char path[MAX_FILE_NAME_LENGTH];
 	bool isRunning;
-
 };
