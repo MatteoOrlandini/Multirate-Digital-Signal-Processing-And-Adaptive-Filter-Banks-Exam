@@ -99,6 +99,27 @@
       \field{year}{2002}
       \true{nocite}
     \endentry
+    \entry{Intel:IPP}{manual}{}
+      \name{author}{1}{}{%
+        {{hash=840b4a1a32a14a2fe526a1fc31ce6568}{%
+           family={Intel\textsuperscript{\tiny®}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{840b4a1a32a14a2fe526a1fc31ce6568}
+      \strng{fullhash}{840b4a1a32a14a2fe526a1fc31ce6568}
+      \strng{bibnamehash}{840b4a1a32a14a2fe526a1fc31ce6568}
+      \strng{authorbibnamehash}{840b4a1a32a14a2fe526a1fc31ce6568}
+      \strng{authornamehash}{840b4a1a32a14a2fe526a1fc31ce6568}
+      \strng{authorfullhash}{840b4a1a32a14a2fe526a1fc31ce6568}
+      \field{sortinit}{I}
+      \field{sortinithash}{320bc8fe8101b9376f9f21cd507de0e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{12}
+      \field{title}{Intel\textsuperscript{\tiny®} Integrated Performance Primitives}
+      \field{year}{2020}
+      \true{nocite}
+    \endentry
     \entry{4217047}{inproceedings}{}
       \name{author}{3}{}{%
         {{hash=330c8733157c951861b96c031f332d74}{%

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.12.18)  2 SEP 2021 20:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.12.18)  3 SEP 2021 10:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1177,25 +1177,25 @@ l.108 \newpage
 name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.123 \clearpage
+l.124 \clearpage
                  [1] [2
 
 ] [3] [4] [5] [6]
-<Immagini/head.png, id=170, 760.0395pt x 342.078pt>
+<Immagini/head.png, id=173, 760.0395pt x 342.078pt>
 File: Immagini/head.png Graphic file (type png)
 <use Immagini/head.png>
-Package pdftex.def Info: Immagini/head.png  used on input line 276.
+Package pdftex.def Info: Immagini/head.png  used on input line 277.
 (pdftex.def)             Requested size: 390.0pt x 175.5275pt.
  [7 <./Immagini/head.png>] [8] [9
 
 ]
-<Immagini/lms.png, id=197, 532.99126pt x 439.04025pt>
+<Immagini/lms.png, id=200, 532.99126pt x 439.04025pt>
 File: Immagini/lms.png Graphic file (type png)
 <use Immagini/lms.png>
-Package pdftex.def Info: Immagini/lms.png  used on input line 343.
+Package pdftex.def Info: Immagini/lms.png  used on input line 344.
 (pdftex.def)             Requested size: 390.0pt x 321.26044pt.
 
-Overfull \hbox (51.91597pt too wide) in paragraph at lines 350--351
+Overfull \hbox (51.91597pt too wide) in paragraph at lines 351--352
 [] \OT1/cmr/m/n/12 = [][]$ \T1/cmr/m/n/12 con un fil-tro $[] \OT1/cmr/m/n/12 = 
 [][]$
  []
@@ -1203,39 +1203,39 @@ Overfull \hbox (51.91597pt too wide) in paragraph at lines 350--351
 [10
 
  <./Immagini/lms.png>]
-Overfull \hbox (30.73323pt too wide) detected at line 412
+Overfull \hbox (30.73323pt too wide) detected at line 413
 [] [] \OT1/cmr/m/n/12 = [] \U/msa/m/n/12 ~ []
  []
 
 [11] [12] [13] [14] [15]
-<Immagini/ols.jpg, id=289, 249.93375pt x 203.25937pt>
+<Immagini/ols.jpg, id=292, 249.93375pt x 203.25937pt>
 File: Immagini/ols.jpg Graphic file (type jpg)
 <use Immagini/ols.jpg>
-Package pdftex.def Info: Immagini/ols.jpg  used on input line 571.
+Package pdftex.def Info: Immagini/ols.jpg  used on input line 572.
 (pdftex.def)             Requested size: 195.0pt x 158.59128pt.
-<Immagini/ols_diagram.png, id=290, 442.65375pt x 462.72874pt>
+<Immagini/ols_diagram.png, id=293, 442.65375pt x 462.72874pt>
 File: Immagini/ols_diagram.png Graphic file (type png)
 <use Immagini/ols_diagram.png>
-Package pdftex.def Info: Immagini/ols_diagram.png  used on input line 578.
+Package pdftex.def Info: Immagini/ols_diagram.png  used on input line 579.
 (pdftex.def)             Requested size: 195.0pt x 203.84839pt.
  [16 <./Immagini/ols.jpg> <./Immagini/ols_diagram.png>]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 589.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 590.
 
 (c:/Program Files/texlive/2019/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Try loading font information for TS1+pcr on input line 592.
+LaTeX Font Info:    Try loading font information for TS1+pcr on input line 593.
 
 
 (c:/Program Files/texlive/2019/texmf-dist/tex/latex/psnfss/ts1pcr.fd
 File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
 )
-LaTeX Font Info:    Try loading font information for T1+ptm on input line 603.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 604.
 
 (c:/Program Files/texlive/2019/texmf-dist/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 )
-LaTeX Font Info:    Try loading font information for TS1+ptm on input line 603.
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 604.
 
 
 (c:/Program Files/texlive/2019/texmf-dist/tex/latex/psnfss/ts1ptm.fd
@@ -1256,25 +1256,25 @@ File: lstmisc.sty 2019/02/27 1.8b (Carsten Heinz)
 [24
 
 ] [25] [26] [27] [28] [29] [30]
-Overfull \hbox (27.48145pt too wide) in paragraph at lines 1122--1123
+Overfull \hbox (27.48145pt too wide) in paragraph at lines 1123--1124
 \T1/cmr/m/n/12 I vet-to-ri in usci-ta ven-go-no quin-di di nuo-vo ri-por-ta-ti 
 in \T1/cmtt/m/n/12 OutputData1 \T1/cmr/m/n/12 e \T1/cmtt/m/n/12 OutputData2
  []
 
 [31]
-Overfull \hbox (0.13014pt too wide) in paragraph at lines 1147--1148
+Overfull \hbox (0.13014pt too wide) in paragraph at lines 1148--1149
 \T1/cmr/m/n/12 L'RT Watch per va-ria-re il pa-ra-me-tro $\OML/cmm/m/it/12 ^^V$ 
 \T1/cmr/m/n/12 è crea-to nel-la fun-zio-ne \T1/cmtt/m/n/12 LERTWatchInit
  []
 
 [32]
-Overfull \hbox (26.00389pt too wide) in paragraph at lines 1212--1213
+Overfull \hbox (26.00389pt too wide) in paragraph at lines 1213--1214
 []\T1/cmr/m/n/12 Successivamente ven-go-no di-chia-ra-te le va-ria-bi-li in-te-
 re \T1/cmtt/m/n/12 FrameSize \T1/cmr/m/n/12 e \T1/cmtt/m/n/12 SampleRate
  []
 
 [33]
-Overfull \hbox (7.67502pt too wide) in paragraph at lines 1221--1222
+Overfull \hbox (7.67502pt too wide) in paragraph at lines 1222--1223
 []\T1/cmr/m/n/12 Le va-ria-bi-li \T1/cmtt/m/n/12 pSpec\T1/cmr/m/n/12 , \T1/cmtt
 /m/n/12 pMemSpec\T1/cmr/m/n/12 , \T1/cmtt/m/n/12 pMemInit\T1/cmr/m/n/12 , \T1/c
 mtt/m/n/12 pMemBuffer\T1/cmr/m/n/12 , \T1/cmtt/m/n/12 sizeSpec\T1/cmr/m/n/12 , 
@@ -1282,31 +1282,31 @@ mtt/m/n/12 pMemBuffer\T1/cmr/m/n/12 , \T1/cmtt/m/n/12 sizeSpec\T1/cmr/m/n/12 ,
  []
 
 
-Overfull \hbox (0.50842pt too wide) in paragraph at lines 1229--1230
+Overfull \hbox (0.50842pt too wide) in paragraph at lines 1230--1231
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][] 
  []
 
 
-Overfull \hbox (19.36794pt too wide) in paragraph at lines 1244--1245
+Overfull \hbox (19.36794pt too wide) in paragraph at lines 1245--1246
 \T1/cmr/m/n/12 Nel co-strut-to-re ven-go-no ini-zia-liz-za-te le va-ria-bi-li d
 i-chia-ra-te nel-la li-bre-ria \T1/cmtt/m/n/12 Plugin.h
  []
 
 [34] [35] [36] [37] [38] [39]
-Overfull \hbox (0.50842pt too wide) in paragraph at lines 1516--1517
+Overfull \hbox (0.50842pt too wide) in paragraph at lines 1517--1518
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (0.50842pt too wide) in paragraph at lines 1521--1522
+Overfull \hbox (0.50842pt too wide) in paragraph at lines 1522--1523
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 [40] [41] [42] [43] [44] [45]
-Overfull \hbox (0.31285pt too wide) in paragraph at lines 1756--1757
+Overfull \hbox (0.31285pt too wide) in paragraph at lines 1757--1758
 \T1/cmr/m/n/12 mi \T1/cmtt/m/n/12 M - 1 \T1/cmr/m/n/12 va-lo-ri al-l'i-ni-zio d
 el buf-fer suc-ces-si-vo con la fun-zio-ne \T1/cmtt/m/n/12 ippsMove_64fc\T1/cmr
 /m/n/12 . 
@@ -1322,15 +1322,15 @@ nverted-to.pdf>
 (epstopdf)                    size: 66660 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/left_channel_sepa
 ration_FD-eps-converted-to.pdf Immagini/left_channel_separation_FD.eps>
-(epstopdf)             \includegraphics on input line 1874.
+(epstopdf)             \includegraphics on input line 1875.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/left_channel_separation_FD-eps-converted-to.pdf, id=1332, 1028.84375p
+<Immagini/left_channel_separation_FD-eps-converted-to.pdf, id=1335, 1028.84375p
 t x 519.9425pt>
 File: Immagini/left_channel_separation_FD-eps-converted-to.pdf Graphic file (ty
 pe pdf)
 <use Immagini/left_channel_separation_FD-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/left_channel_separation_FD-eps-converted-to.p
-df  used on input line 1874.
+df  used on input line 1875.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 Package epstopdf Info: Source file: <Immagini/right_channel_separation_FD.eps>
 (epstopdf)                    date: 2021-08-13 16:06:18
@@ -1341,15 +1341,15 @@ onverted-to.pdf>
 (epstopdf)                    size: 67313 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/right_channel_sep
 aration_FD-eps-converted-to.pdf Immagini/right_channel_separation_FD.eps>
-(epstopdf)             \includegraphics on input line 1879.
+(epstopdf)             \includegraphics on input line 1880.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/right_channel_separation_FD-eps-converted-to.pdf, id=1333, 1028.84375
+<Immagini/right_channel_separation_FD-eps-converted-to.pdf, id=1336, 1028.84375
 pt x 519.9425pt>
 File: Immagini/right_channel_separation_FD-eps-converted-to.pdf Graphic file (t
 ype pdf)
 <use Immagini/right_channel_separation_FD-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/right_channel_separation_FD-eps-converted-to.
-pdf  used on input line 1879.
+pdf  used on input line 1880.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 
 
@@ -1364,15 +1364,15 @@ onverted-to.pdf>
 (epstopdf)                    size: 14673 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/left_channel_sepa
 ration_LMS-eps-converted-to.pdf Immagini/left_channel_separation_LMS.eps>
-(epstopdf)             \includegraphics on input line 1889.
+(epstopdf)             \includegraphics on input line 1890.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/left_channel_separation_LMS-eps-converted-to.pdf, id=1334, 1028.84375
+<Immagini/left_channel_separation_LMS-eps-converted-to.pdf, id=1337, 1028.84375
 pt x 519.9425pt>
 File: Immagini/left_channel_separation_LMS-eps-converted-to.pdf Graphic file (t
 ype pdf)
 <use Immagini/left_channel_separation_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/left_channel_separation_LMS-eps-converted-to.
-pdf  used on input line 1889.
+pdf  used on input line 1890.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 Package epstopdf Info: Source file: <Immagini/right_channel_separation_LMS.eps>
 
@@ -1384,15 +1384,15 @@ converted-to.pdf>
 (epstopdf)                    size: 14946 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/right_channel_sep
 aration_LMS-eps-converted-to.pdf Immagini/right_channel_separation_LMS.eps>
-(epstopdf)             \includegraphics on input line 1894.
+(epstopdf)             \includegraphics on input line 1895.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/right_channel_separation_LMS-eps-converted-to.pdf, id=1335, 1028.8437
+<Immagini/right_channel_separation_LMS-eps-converted-to.pdf, id=1338, 1028.8437
 5pt x 519.9425pt>
 File: Immagini/right_channel_separation_LMS-eps-converted-to.pdf Graphic file (
 type pdf)
 <use Immagini/right_channel_separation_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/right_channel_separation_LMS-eps-converted-to
-.pdf  used on input line 1894.
+.pdf  used on input line 1895.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -1408,13 +1408,13 @@ Package epstopdf Info: Source file: <Immagini/mse_e1.eps>
 (epstopdf)                    size: 25852 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/mse_e1-eps-conver
 ted-to.pdf Immagini/mse_e1.eps>
-(epstopdf)             \includegraphics on input line 1908.
+(epstopdf)             \includegraphics on input line 1909.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/mse_e1-eps-converted-to.pdf, id=1351, 1028.84375pt x 519.9425pt>
+<Immagini/mse_e1-eps-converted-to.pdf, id=1354, 1028.84375pt x 519.9425pt>
 File: Immagini/mse_e1-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/mse_e1-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/mse_e1-eps-converted-to.pdf  used on input li
-ne 1908.
+ne 1909.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 Package epstopdf Info: Source file: <Immagini/mse_e2.eps>
 (epstopdf)                    date: 2021-08-13 17:20:40
@@ -1424,16 +1424,16 @@ Package epstopdf Info: Source file: <Immagini/mse_e2.eps>
 (epstopdf)                    size: 26008 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/mse_e2-eps-conver
 ted-to.pdf Immagini/mse_e2.eps>
-(epstopdf)             \includegraphics on input line 1913.
+(epstopdf)             \includegraphics on input line 1914.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/mse_e2-eps-converted-to.pdf, id=1352, 1028.84375pt x 519.9425pt>
+<Immagini/mse_e2-eps-converted-to.pdf, id=1355, 1028.84375pt x 519.9425pt>
 File: Immagini/mse_e2-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/mse_e2-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/mse_e2-eps-converted-to.pdf  used on input li
-ne 1913.
+ne 1914.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 
-Underfull \hbox (badness 1817) in paragraph at lines 1917--1917
+Underfull \hbox (badness 1817) in paragraph at lines 1918--1918
 []\T1/cmr/m/n/12 Figura 6: |Con-fron-to del-l'M-SE del ca-na-le (a) si-ni-stro 
 e (b) de-stro
  []
@@ -1449,13 +1449,13 @@ Package epstopdf Info: Source file: <Immagini/H11_FD_LMS.eps>
 (epstopdf)                    size: 40263 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/H11_FD_LMS-eps-co
 nverted-to.pdf Immagini/H11_FD_LMS.eps>
-(epstopdf)             \includegraphics on input line 1924.
+(epstopdf)             \includegraphics on input line 1925.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H11_FD_LMS-eps-converted-to.pdf, id=1353, 1028.84375pt x 519.9425pt>
+<Immagini/H11_FD_LMS-eps-converted-to.pdf, id=1356, 1028.84375pt x 519.9425pt>
 File: Immagini/H11_FD_LMS-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/H11_FD_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H11_FD_LMS-eps-converted-to.pdf  used on inpu
-t line 1924.
+t line 1925.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 Package epstopdf Info: Source file: <Immagini/H12_FD_LMS.eps>
 (epstopdf)                    date: 2021-08-13 16:05:28
@@ -1465,13 +1465,13 @@ Package epstopdf Info: Source file: <Immagini/H12_FD_LMS.eps>
 (epstopdf)                    size: 40775 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/H12_FD_LMS-eps-co
 nverted-to.pdf Immagini/H12_FD_LMS.eps>
-(epstopdf)             \includegraphics on input line 1929.
+(epstopdf)             \includegraphics on input line 1930.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H12_FD_LMS-eps-converted-to.pdf, id=1354, 1028.84375pt x 519.9425pt>
+<Immagini/H12_FD_LMS-eps-converted-to.pdf, id=1357, 1028.84375pt x 519.9425pt>
 File: Immagini/H12_FD_LMS-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/H12_FD_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H12_FD_LMS-eps-converted-to.pdf  used on inpu
-t line 1929.
+t line 1930.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -1484,13 +1484,13 @@ Package epstopdf Info: Source file: <Immagini/H21_FD_LMS.eps>
 (epstopdf)                    size: 40613 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/H21_FD_LMS-eps-co
 nverted-to.pdf Immagini/H21_FD_LMS.eps>
-(epstopdf)             \includegraphics on input line 1939.
+(epstopdf)             \includegraphics on input line 1940.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H21_FD_LMS-eps-converted-to.pdf, id=1355, 1028.84375pt x 519.9425pt>
+<Immagini/H21_FD_LMS-eps-converted-to.pdf, id=1358, 1028.84375pt x 519.9425pt>
 File: Immagini/H21_FD_LMS-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/H21_FD_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H21_FD_LMS-eps-converted-to.pdf  used on inpu
-t line 1939.
+t line 1940.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 Package epstopdf Info: Source file: <Immagini/H22_FD_LMS.eps>
 (epstopdf)                    date: 2021-08-13 16:06:03
@@ -1500,39 +1500,39 @@ Package epstopdf Info: Source file: <Immagini/H22_FD_LMS.eps>
 (epstopdf)                    size: 40040 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/H22_FD_LMS-eps-co
 nverted-to.pdf Immagini/H22_FD_LMS.eps>
-(epstopdf)             \includegraphics on input line 1944.
+(epstopdf)             \includegraphics on input line 1945.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H22_FD_LMS-eps-converted-to.pdf, id=1356, 1028.84375pt x 519.9425pt>
+<Immagini/H22_FD_LMS-eps-converted-to.pdf, id=1359, 1028.84375pt x 519.9425pt>
 File: Immagini/H22_FD_LMS-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/H22_FD_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H22_FD_LMS-eps-converted-to.pdf  used on inpu
-t line 1944.
+t line 1945.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Immagini/H11_paper.png, id=1357, 895.54575pt x 341.47575pt>
+<Immagini/H11_paper.png, id=1360, 895.54575pt x 341.47575pt>
 File: Immagini/H11_paper.png Graphic file (type png)
 <use Immagini/H11_paper.png>
-Package pdftex.def Info: Immagini/H11_paper.png  used on input line 1955.
+Package pdftex.def Info: Immagini/H11_paper.png  used on input line 1956.
 (pdftex.def)             Requested size: 390.0pt x 148.70749pt.
-<Immagini/H12_paper.png, id=1358, 890.72775pt x 311.36325pt>
+<Immagini/H12_paper.png, id=1361, 890.72775pt x 311.36325pt>
 File: Immagini/H12_paper.png Graphic file (type png)
 <use Immagini/H12_paper.png>
-Package pdftex.def Info: Immagini/H12_paper.png  used on input line 1960.
+Package pdftex.def Info: Immagini/H12_paper.png  used on input line 1961.
 (pdftex.def)             Requested size: 390.0pt x 136.3256pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Immagini/H21_paper.png, id=1359, 887.11424pt x 307.74976pt>
+<Immagini/H21_paper.png, id=1362, 887.11424pt x 307.74976pt>
 File: Immagini/H21_paper.png Graphic file (type png)
 <use Immagini/H21_paper.png>
-Package pdftex.def Info: Immagini/H21_paper.png  used on input line 1970.
+Package pdftex.def Info: Immagini/H21_paper.png  used on input line 1971.
 (pdftex.def)             Requested size: 390.0pt x 135.29759pt.
-<Immagini/H22_paper.png, id=1360, 891.93225pt x 320.99925pt>
+<Immagini/H22_paper.png, id=1363, 891.93225pt x 320.99925pt>
 File: Immagini/H22_paper.png Graphic file (type png)
 <use Immagini/H22_paper.png>
-Package pdftex.def Info: Immagini/H22_paper.png  used on input line 1975.
+Package pdftex.def Info: Immagini/H22_paper.png  used on input line 1976.
 (pdftex.def)             Requested size: 390.0pt x 140.35844pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -1545,13 +1545,13 @@ Package epstopdf Info: Source file: <Immagini/x1_y1_FD.eps>
 (epstopdf)                    size: 59434 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/x1_y1_FD-eps-conv
 erted-to.pdf Immagini/x1_y1_FD.eps>
-(epstopdf)             \includegraphics on input line 1988.
+(epstopdf)             \includegraphics on input line 1989.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/x1_y1_FD-eps-converted-to.pdf, id=1367, 1028.84375pt x 519.9425pt>
+<Immagini/x1_y1_FD-eps-converted-to.pdf, id=1370, 1028.84375pt x 519.9425pt>
 File: Immagini/x1_y1_FD-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/x1_y1_FD-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/x1_y1_FD-eps-converted-to.pdf  used on input 
-line 1988.
+line 1989.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 Package epstopdf Info: Source file: <Immagini/x2_y2_FD.eps>
 (epstopdf)                    date: 2021-09-02 16:52:40
@@ -1561,13 +1561,13 @@ Package epstopdf Info: Source file: <Immagini/x2_y2_FD.eps>
 (epstopdf)                    size: 42079 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/x2_y2_FD-eps-conv
 erted-to.pdf Immagini/x2_y2_FD.eps>
-(epstopdf)             \includegraphics on input line 1993.
+(epstopdf)             \includegraphics on input line 1994.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/x2_y2_FD-eps-converted-to.pdf, id=1368, 1028.84375pt x 519.9425pt>
+<Immagini/x2_y2_FD-eps-converted-to.pdf, id=1371, 1028.84375pt x 519.9425pt>
 File: Immagini/x2_y2_FD-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/x2_y2_FD-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/x2_y2_FD-eps-converted-to.pdf  used on input 
-line 1993.
+line 1994.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -1580,13 +1580,13 @@ Package epstopdf Info: Source file: <Immagini/d1_y1_LMS.eps>
 (epstopdf)                    size: 66070 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/d1_y1_LMS-eps-con
 verted-to.pdf Immagini/d1_y1_LMS.eps>
-(epstopdf)             \includegraphics on input line 2003.
+(epstopdf)             \includegraphics on input line 2004.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/d1_y1_LMS-eps-converted-to.pdf, id=1369, 1028.84375pt x 519.9425pt>
+<Immagini/d1_y1_LMS-eps-converted-to.pdf, id=1372, 1028.84375pt x 519.9425pt>
 File: Immagini/d1_y1_LMS-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/d1_y1_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/d1_y1_LMS-eps-converted-to.pdf  used on input
- line 2003.
+ line 2004.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 Package epstopdf Info: Source file: <Immagini/d2_y2_LMS.eps>
 (epstopdf)                    date: 2021-09-02 17:06:45
@@ -1596,13 +1596,13 @@ Package epstopdf Info: Source file: <Immagini/d2_y2_LMS.eps>
 (epstopdf)                    size: 41879 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/d2_y2_LMS-eps-con
 verted-to.pdf Immagini/d2_y2_LMS.eps>
-(epstopdf)             \includegraphics on input line 2008.
+(epstopdf)             \includegraphics on input line 2009.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/d2_y2_LMS-eps-converted-to.pdf, id=1370, 1028.84375pt x 519.9425pt>
+<Immagini/d2_y2_LMS-eps-converted-to.pdf, id=1373, 1028.84375pt x 519.9425pt>
 File: Immagini/d2_y2_LMS-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/d2_y2_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/d2_y2_LMS-eps-converted-to.pdf  used on input
- line 2008.
+ line 2009.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -1620,14 +1620,14 @@ agini/x2_y2_FD-eps-converted-to.pdf>] [59 <./Immagini/d1_y1_LMS-eps-converted-t
 o.pdf> <./Immagini/d2_y2_LMS-eps-converted-to.pdf>] [60
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2044.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2045.
  [61
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2044.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2045.
  (./Relazione.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2044.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2044.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2045.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2045.
 
 Package rerunfilecheck Info: File `Relazione.out' has not changed.
 (rerunfilecheck)             Checksum: C718971A4F27038B99488C494F4BF606;752.
@@ -1636,16 +1636,16 @@ Package logreq Info: Writing requests to 'Relazione.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 31775 strings out of 492623
- 575192 string characters out of 6126681
- 1047369 words of memory out of 5000000
- 34369 multiletter control sequences out of 15000+600000
- 561562 words of font info for 89 fonts, out of 8000000 for 9000
+ 31788 strings out of 492623
+ 575410 string characters out of 6126681
+ 1047960 words of memory out of 5000000
+ 34377 multiletter control sequences out of 15000+600000
+ 563654 words of font info for 93 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,25n,69p,1534b,2409s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Program Files/texlive/2019/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t
-1.enc}{c:/Program Files/texlive/2019/texmf-dist/fonts/enc/dvips/base/8r.enc}{c:
-/Program Files/texlive/2019/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.en
+s1.enc}{c:/Program Files/texlive/2019/texmf-dist/fonts/enc/dvips/cm-super/cm-su
+per-t1.enc}{c:/Program Files/texlive/2019/texmf-dist/fonts/enc/dvips/base/8r.en
 c}<c:/Program Files/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx
 12.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm
 /cmbx8.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts/type1/public/amsfont
@@ -1664,22 +1664,24 @@ s/texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb><c:/Program
 Files/texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfcc1200.pfb><c:/Prog
 ram Files/texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfcc1728.pfb><c:/
 Program Files/texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfcc2074.pfb>
-<c:/Program Files/texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfrm0800.
-pfb><c:/Program Files/texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfrm1
-095.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts/type1/public/cm-super/s
-frm1200.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts/type1/public/cm-sup
-er/sfrm1440.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts/type1/public/cm
--super/sfti1200.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts/type1/publi
-c/cm-super/sfti1728.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts/type1/p
-ublic/cm-super/sftt0800.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts/typ
-e1/public/cm-super/sftt1000.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts
-/type1/public/cm-super/sftt1200.pfb><c:/Program Files/texlive/2019/texmf-dist/f
-onts/type1/urw/courier/ucrr8a.pfb><c:/Program Files/texlive/2019/texmf-dist/fon
-ts/type1/urw/times/utmr8a.pfb>
-Output written on Relazione.pdf (63 pages, 1512726 bytes).
+<c:/Program Files/texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfrm0600.
+pfb><c:/Program Files/texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfrm0
+800.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts/type1/public/cm-super/s
+frm1095.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts/type1/public/cm-sup
+er/sfrm1200.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts/type1/public/cm
+-super/sfrm1440.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts/type1/publi
+c/cm-super/sfti0600.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts/type1/p
+ublic/cm-super/sfti1200.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts/typ
+e1/public/cm-super/sfti1728.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts
+/type1/public/cm-super/sftt0800.pfb><c:/Program Files/texlive/2019/texmf-dist/f
+onts/type1/public/cm-super/sftt1000.pfb><c:/Program Files/texlive/2019/texmf-di
+st/fonts/type1/public/cm-super/sftt1200.pfb><c:/Program Files/texlive/2019/texm
+f-dist/fonts/type1/urw/courier/ucrr8a.pfb><c:/Program Files/texlive/2019/texmf-
+dist/fonts/type1/urw/times/utmr8a.pfb>
+Output written on Relazione.pdf (63 pages, 1543119 bytes).
 PDF statistics:
- 1857 PDF objects out of 2073 (max. 8388607)
- 1692 compressed objects within 17 object streams
- 968 named destinations out of 1000 (max. 500000)
+ 1867 PDF objects out of 2073 (max. 8388607)
+ 1700 compressed objects within 17 object streams
+ 969 named destinations out of 1000 (max. 500000)
  228 words of extra memory for PDF output out of 10000 (max. 10000000)
 
