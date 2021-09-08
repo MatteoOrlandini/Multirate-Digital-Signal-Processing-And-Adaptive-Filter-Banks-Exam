@@ -91,15 +91,15 @@
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxbibnames</bcf:key>
-      <bcf:value>99</bcf:value>
+      <bcf:value>3</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxcitenames</bcf:key>
-      <bcf:value>99</bcf:value>
+      <bcf:value>3</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxsortnames</bcf:key>
-      <bcf:value>99</bcf:value>
+      <bcf:value>3</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxitems</bcf:key>
@@ -1997,19 +1997,35 @@
   <bcf:section number="0">
     <bcf:citekey order="1">Li:comprehensive_comparison</bcf:citekey>
     <bcf:citekey order="2">Intel:IPP</bcf:citekey>
-    <bcf:citekey order="3">Ifeachor:DSP</bcf:citekey>
-    <bcf:citekey order="4">Ferrara:FLMS</bcf:citekey>
-    <bcf:citekey order="5">wand:a_stereo_crosstalk</bcf:citekey>
-    <bcf:citekey order="6">Gardner:HRTF</bcf:citekey>
-    <bcf:citekey order="7">143434</bcf:citekey>
-    <bcf:citekey order="8">4217047</bcf:citekey>
-    <bcf:citekey order="9">kirkeby:deconvolution_regularization</bcf:citekey>
-    <bcf:citekey order="10">kirkeby:deconvolution_analysis</bcf:citekey>
-    <bcf:citekey order="11">kirkeby:deconvolution_design</bcf:citekey>
-    <bcf:citekey order="12">Li:comprehensive_comparison</bcf:citekey>
-    <bcf:citekey order="13">Li:comprehensive_comparison</bcf:citekey>
-    <bcf:citekey order="14">Li:comprehensive_comparison</bcf:citekey>
-    <bcf:citekey order="15">Li:comprehensive_comparison</bcf:citekey>
+    <bcf:citekey order="3">Li:comprehensive_comparison</bcf:citekey>
+    <bcf:citekey order="4">Gonzalez:time_domain</bcf:citekey>
+    <bcf:citekey order="5">Mouchtaris:Inverse_filter</bcf:citekey>
+    <bcf:citekey order="6">143434</bcf:citekey>
+    <bcf:citekey order="7">kirkeby:deconvolution_regularization</bcf:citekey>
+    <bcf:citekey order="8">kirkeby:deconvolution_analysis</bcf:citekey>
+    <bcf:citekey order="9">kirkeby:deconvolution_design</bcf:citekey>
+    <bcf:citekey order="10">wand:a_stereo_crosstalk</bcf:citekey>
+    <bcf:citekey order="11">kirkeby:deconvolution_regularization</bcf:citekey>
+    <bcf:citekey order="12">kirkeby:deconvolution_analysis</bcf:citekey>
+    <bcf:citekey order="13">kirkeby:deconvolution_design</bcf:citekey>
+    <bcf:citekey order="14">Ferrara:FLMS</bcf:citekey>
+    <bcf:citekey order="15">4217047</bcf:citekey>
+    <bcf:citekey order="16">143434</bcf:citekey>
+    <bcf:citekey order="17">wand:a_stereo_crosstalk</bcf:citekey>
+    <bcf:citekey order="18">Ifeachor:DSP</bcf:citekey>
+    <bcf:citekey order="19">Ferrara:FLMS</bcf:citekey>
+    <bcf:citekey order="20">Bai:objective_analysis</bcf:citekey>
+    <bcf:citekey order="21">Kyriakakis:fundamental_technological_limitations</bcf:citekey>
+    <bcf:citekey order="22">wand:a_stereo_crosstalk</bcf:citekey>
+    <bcf:citekey order="23">Gardner:HRTF</bcf:citekey>
+    <bcf:citekey order="24">143434</bcf:citekey>
+    <bcf:citekey order="25">4217047</bcf:citekey>
+    <bcf:citekey order="26">kirkeby:deconvolution_regularization</bcf:citekey>
+    <bcf:citekey order="27">kirkeby:deconvolution_analysis</bcf:citekey>
+    <bcf:citekey order="28">kirkeby:deconvolution_design</bcf:citekey>
+    <bcf:citekey order="29">Li:comprehensive_comparison</bcf:citekey>
+    <bcf:citekey order="30">Li:comprehensive_comparison</bcf:citekey>
+    <bcf:citekey order="31">Li:comprehensive_comparison</bcf:citekey>
     <bcf:citekey order="0" nocite="1">*</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
