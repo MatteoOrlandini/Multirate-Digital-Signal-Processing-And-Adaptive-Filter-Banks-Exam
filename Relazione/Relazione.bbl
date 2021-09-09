@@ -53,15 +53,6 @@
       \verb{doi}
       \verb 10.1121/1.2257986
       \endverb
-      \verb{eprint}
-      \verb https://doi.org/10.1121/1.2257986
-      \endverb
-      \verb{urlraw}
-      \verb https://doi.org/10.1121/1.2257986
-      \endverb
-      \verb{url}
-      \verb https://doi.org/10.1121/1.2257986
-      \endverb
     \endentry
     \entry{Ferrara:FLMS}{article}{}
       \name{author}{1}{}{%

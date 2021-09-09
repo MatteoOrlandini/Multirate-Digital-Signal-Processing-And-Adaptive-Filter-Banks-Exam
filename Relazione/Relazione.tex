@@ -146,9 +146,9 @@ J(\mathbf{h}_n) = \sum_{i = 0}^{n} \lambda^{n-i}e^2[i],
 \end{equation*}
 dove $e$ è l'errore definito come la differenza tra il segnale desiderato e l'uscita del filtro di cancellazione del crosstalk e $\mathbf{h}_n$ è il vettore contenente i coefficienti del filtro all'istante $n$. La funzione costo si riduce a quella dell'LMS quando $\lambda = 1$. Il parametro $\lambda$ è chiamato ``forgetting factor'' e viene tipicamente scelto nell'intervallo tra $0.98$ e $1$. 
 
-La funzione costo viene minimizzata facendo la derivata parziale rispetto a tutti i coefficienti $k$ del filtro di cancellazione del crosstalk $h$ e ponendo il risultato pari a zero.
+La funzione costo viene minimizzata facendo la derivata parziale rispetto a tutti i coefficienti $k$ del filtro di cancellazione del crosstalk $h$ e ponendo il risultato pari a zero, come di seguito:
 \begin{equation*}
-\dfrac{\partial J(\mathbf{h}_n)}{\partial h_n[k]} =  \sum_{i = 0}^{n} 2\lambda^{n-i}e[i]\dfrac{\partial e[i]}{\partial h_n[k]} = - \sum_{i = 0}^{n} 2\lambda^{n-i}e[i]x[i-k] = 0 \quad k = 0, 1, \dots, p
+\dfrac{\partial J(\mathbf{h}_n)}{\partial h_n[k]} =  \sum_{i = 0}^{n} 2\lambda^{n-i}e[i]\dfrac{\partial e[i]}{\partial h_n[k]} = - \sum_{i = 0}^{n} 2\lambda^{n-i}e[i]x[i-k] = 0 \quad k = 0, 1, \dots, p,
 \end{equation*}
 dove $p$ è il numero di coefficienti del filtro $h$. Successivamente, sostituendo $e[i]$ con la definizione di errore si ha:
 \begin{equation}\label{eq:RLS}
@@ -187,7 +187,7 @@ e
 \begin{equation*}
 \alpha[n] = d[n] - \mathbf{x}^T[n]\mathbf{h}_{n-1},
 \end{equation*}
-dove $\alpha[n]$ è l'\textit{errore a priori}, differente dall'\textit{errore a posteriori} mostrato nella formula seguente
+dove $\alpha[n]$ è l'\textit{errore a priori}, differente dall'\textit{errore a posteriori} mostrato nella formula seguente:
 \begin{equation}
 e[n] = d[n] - \mathbf{x}^T[n]\mathbf{h}_{n}.
 \end{equation}
@@ -198,16 +198,16 @@ Un ulteriore algoritmo derivato da LMS è FLMS (Fast Least Mean Square), descrit
 \begin{equation}\label{eq:FLMS1}
 \mathbf{h}_{j+1} = \mathbf{h}_j + 2 \mu \epsilon_j \mathbf{x}_j,
 \end{equation}
-dove $\mathbf{h}_j$ e $\mathbf{x}_j$ sono vettori che rappresentano, rispettivamente, i pesi del filtro e le uscite nella linea di ritardo all'istante $j$.
+dove $\mathbf{h}_j$ e $\mathbf{x}_j$ sono vettori che rappresentano, rispettivamente, i pesi del filtro e le uscite nella linea di ritardo all'istante $j$, e sono definiti come di seguito:
 \begin{equation*}
 \begin{split}
 \mathbf{h}_j^T = [h_{1,j}, h_{2,j}, \dots, h_{n,j} ]\\
-\mathbf{x}_j^T = [x_{j}, x_{j-1}, \dots, x_{j-n+1}]
+\mathbf{x}_j^T = [x_{j}, x_{j-1}, \dots, x_{j-n+1}].
 \end{split} 
 \end{equation*}
-L'errore $\epsilon_j$ è la differenza tra il segnale desiderato $d_j$ e l'uscita $y_j$, dove $y_j = \mathbf{x}_j^T \mathbf{h}_j$. Per implementare l'equivalente dell'algoritmo LMS in frequenza usando un filtro con $n$ tappi è conveniente dividere il segnale in blocchi da $n$ valori. Durante il $k$-esimo blocco, l'uscita del filtro è data da 
+L'errore $\epsilon_j$ è la differenza tra il segnale desiderato $d_j$ e l'uscita $y_j$, dove $y_j = \mathbf{x}_j^T \mathbf{h}_j$. Per implementare l'equivalente dell'algoritmo LMS in frequenza usando un filtro con $n$ tappi è conveniente dividere il segnale in blocchi da $n$ valori. Durante il $k$-esimo blocco, l'uscita del filtro è data da:
 \begin{equation}\label{eq:FLMS2}
-y_{kn+i} = \mathbf{x}^T_{kn+i} \mathbf{h}_k	\quad 0 \leq i \leq n-1
+y_{kn+i} = \mathbf{x}^T_{kn+i} \mathbf{h}_k	\quad 0 \leq i \leq n-1,
 \end{equation}
 dove $\mathbf{h}_k$ è il vettore contenente i coefficienti del filtro nel dominio del tempo durante il $k$-esimo blocco. Dopo aver processato il $k$-esimo blocco, il vettore $\mathbf{h}_k$ viene aggiornato iterando l'equazione~\eqref{eq:FLMS1} su $n$ punti come di seguito:
 \begin{equation}\label{eq:FLMS3}
