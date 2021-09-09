@@ -1,0 +1,562 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.0 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global}
+    \entry{Bai:objective_analysis}{article}{}
+      \name{author}{2}{}{%
+        {{hash=8df00e23ff619eb5675ee6e992fb42ec}{%
+           family={Bai},
+           familyi={B\bibinitperiod},
+           given={Mingsian\bibnamedelima R.},
+           giveni={M\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=6edf562ef928486d59cba76ed24ab908}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Chih-Chung},
+           giveni={C\bibinithyphendelim C\bibinitperiod}}}%
+      }
+      \strng{namehash}{722d0d031d1c604dfca99cac8168339d}
+      \strng{fullhash}{722d0d031d1c604dfca99cac8168339d}
+      \strng{bibnamehash}{722d0d031d1c604dfca99cac8168339d}
+      \strng{authorbibnamehash}{722d0d031d1c604dfca99cac8168339d}
+      \strng{authornamehash}{722d0d031d1c604dfca99cac8168339d}
+      \strng{authorfullhash}{722d0d031d1c604dfca99cac8168339d}
+      \field{sortinit}{B}
+      \field{sortinithash}{276475738cc058478c1677046f857703}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The Journal of the Acoustical Society of America}
+      \field{number}{4}
+      \field{title}{Objective and subjective analysis of effects of listening angle on crosstalk cancellation in spatial sound reproduction}
+      \field{volume}{120}
+      \field{year}{2006}
+      \true{nocite}
+      \field{pages}{1976\bibrangedash 1989}
+      \range{pages}{14}
+      \verb{doi}
+      \verb 10.1121/1.2257986
+      \endverb
+      \verb{eprint}
+      \verb https://doi.org/10.1121/1.2257986
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1121/1.2257986
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1121/1.2257986
+      \endverb
+    \endentry
+    \entry{Ferrara:FLMS}{article}{}
+      \name{author}{1}{}{%
+        {{hash=3d38a68e4804fa5fd0a61c77c981c40e}{%
+           family={Ferrara},
+           familyi={F\bibinitperiod},
+           given={E.},
+           giveni={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{3d38a68e4804fa5fd0a61c77c981c40e}
+      \strng{fullhash}{3d38a68e4804fa5fd0a61c77c981c40e}
+      \strng{bibnamehash}{3d38a68e4804fa5fd0a61c77c981c40e}
+      \strng{authorbibnamehash}{3d38a68e4804fa5fd0a61c77c981c40e}
+      \strng{authornamehash}{3d38a68e4804fa5fd0a61c77c981c40e}
+      \strng{authorfullhash}{3d38a68e4804fa5fd0a61c77c981c40e}
+      \field{sortinit}{F}
+      \field{sortinithash}{669c706c6f1fbf3b5a83d26f1d9e9e72}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Acoustics, Speech, and Signal Processing}
+      \field{title}{Fast implementations of LMS adaptive filters}
+      \field{volume}{28}
+      \field{year}{1980}
+      \true{nocite}
+      \field{pages}{474\bibrangedash 475}
+      \range{pages}{2}
+    \endentry
+    \entry{Gardner:HRTF}{report}{}
+      \name{author}{2}{}{%
+        {{hash=5b1fc211a56a5f1de4b8aef6be7dcb6a}{%
+           family={Gardner},
+           familyi={G\bibinitperiod},
+           given={Bill},
+           giveni={B\bibinitperiod}}}%
+        {{hash=2835b0059a28532b6119ec1d156b7506}{%
+           family={Martin},
+           familyi={M\bibinitperiod},
+           given={Keith},
+           giveni={K\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {MIT Media Lab Perceptual Computing}%
+      }
+      \strng{namehash}{493d5220c3023f74c46b515c0a0c9699}
+      \strng{fullhash}{493d5220c3023f74c46b515c0a0c9699}
+      \strng{bibnamehash}{493d5220c3023f74c46b515c0a0c9699}
+      \strng{authorbibnamehash}{493d5220c3023f74c46b515c0a0c9699}
+      \strng{authornamehash}{493d5220c3023f74c46b515c0a0c9699}
+      \strng{authorfullhash}{493d5220c3023f74c46b515c0a0c9699}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{(update on October 13, 2006). [Online]. Available: \url{http://www.media.mit.edu}}
+      \field{number}{280}
+      \field{title}{HRTF Measurements of a KEMAR Dummy-Head Microphone}
+      \field{type}{techreport}
+      \field{year}{1994}
+      \true{nocite}
+    \endentry
+    \entry{Gonzalez:time_domain}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=1deb2942007bb9fe35e987c2a507055c}{%
+           family={Gonzalez},
+           familyi={G\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=fcc1827d101a2849e5e5a09c18b56139}{%
+           family={Lopez},
+           familyi={L\bibinitperiod},
+           given={J.J.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{d062a0890f29fafc37d109b8f460044f}
+      \strng{fullhash}{d062a0890f29fafc37d109b8f460044f}
+      \strng{bibnamehash}{d062a0890f29fafc37d109b8f460044f}
+      \strng{authorbibnamehash}{d062a0890f29fafc37d109b8f460044f}
+      \strng{authornamehash}{d062a0890f29fafc37d109b8f460044f}
+      \strng{authorfullhash}{d062a0890f29fafc37d109b8f460044f}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2000 IEEE International Conference on Acoustics, Speech, and Signal Processing. Proceedings (Cat. No.00CH37100)}
+      \field{title}{Time domain recursive deconvolution in sound reproduction}
+      \field{volume}{2}
+      \field{year}{2000}
+      \true{nocite}
+      \field{pages}{II833\bibrangedash II836 vol.2}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1109/ICASSP.2000.859089
+      \endverb
+    \endentry
+    \entry{Ifeachor:DSP}{book}{}
+      \name{author}{2}{}{%
+        {{hash=07b2a1c507924a4ebbb66e718f2da5cc}{%
+           family={Ifeachor},
+           familyi={I\bibinitperiod},
+           given={Emmanuel\bibnamedelima C.},
+           giveni={E\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=9dbafd2b50b9afd934f84f74c9998aba}{%
+           family={Jervis},
+           familyi={J\bibinitperiod},
+           given={Barrie\bibnamedelima W.},
+           giveni={B\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Pearson Education}%
+      }
+      \strng{namehash}{297d3696756dc2c8156b8f01cd28bed1}
+      \strng{fullhash}{297d3696756dc2c8156b8f01cd28bed1}
+      \strng{bibnamehash}{297d3696756dc2c8156b8f01cd28bed1}
+      \strng{authorbibnamehash}{297d3696756dc2c8156b8f01cd28bed1}
+      \strng{authornamehash}{297d3696756dc2c8156b8f01cd28bed1}
+      \strng{authorfullhash}{297d3696756dc2c8156b8f01cd28bed1}
+      \field{sortinit}{I}
+      \field{sortinithash}{320bc8fe8101b9376f9f21cd507de0e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2nd}
+      \field{isbn}{0201596199}
+      \field{title}{Digital Signal Processing: A Practical Approach}
+      \field{year}{2002}
+      \true{nocite}
+    \endentry
+    \entry{Intel:IPP}{manual}{}
+      \name{author}{1}{}{%
+        {{hash=840b4a1a32a14a2fe526a1fc31ce6568}{%
+           family={Intel\textsuperscript{\tiny®}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{840b4a1a32a14a2fe526a1fc31ce6568}
+      \strng{fullhash}{840b4a1a32a14a2fe526a1fc31ce6568}
+      \strng{bibnamehash}{840b4a1a32a14a2fe526a1fc31ce6568}
+      \strng{authorbibnamehash}{840b4a1a32a14a2fe526a1fc31ce6568}
+      \strng{authornamehash}{840b4a1a32a14a2fe526a1fc31ce6568}
+      \strng{authorfullhash}{840b4a1a32a14a2fe526a1fc31ce6568}
+      \field{sortinit}{I}
+      \field{sortinithash}{320bc8fe8101b9376f9f21cd507de0e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{12}
+      \field{title}{Intel\textsuperscript{\tiny®} Integrated Performance Primitives}
+      \field{year}{2020}
+      \true{nocite}
+    \endentry
+    \entry{4217047}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{hash=330c8733157c951861b96c031f332d74}{%
+           family={Kim},
+           familyi={K\bibinitperiod},
+           given={Jun\bibnamedelima Seong},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=118925056e861f39cb1791287d676833}{%
+           family={Kim},
+           familyi={K\bibinitperiod},
+           given={Sang\bibnamedelima Gyun},
+           giveni={S\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+        {{hash=4a06639929d0d2f21e2fa121caa8dd26}{%
+           family={Yoo},
+           familyi={Y\bibinitperiod},
+           given={Chang\bibnamedelima D.},
+           giveni={C\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \strng{namehash}{3c3223b471a4c3f8cef1f935648f515c}
+      \strng{fullhash}{e19f641e245cadb40b9a0139ea4aa14d}
+      \strng{bibnamehash}{3c3223b471a4c3f8cef1f935648f515c}
+      \strng{authorbibnamehash}{3c3223b471a4c3f8cef1f935648f515c}
+      \strng{authornamehash}{3c3223b471a4c3f8cef1f935648f515c}
+      \strng{authorfullhash}{e19f641e245cadb40b9a0139ea4aa14d}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2007 IEEE International Conference on Acoustics, Speech and Signal Processing - ICASSP '07}
+      \field{title}{A Novel Adaptive Crosstalk Cancellation using Psychoacoustic Model for 3D Audio}
+      \field{volume}{1}
+      \field{year}{2007}
+      \true{nocite}
+      \field{pages}{I-185-I\bibrangedash 188}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1109/ICASSP.2007.366647
+      \endverb
+    \endentry
+    \entry{kirkeby:deconvolution_analysis}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{hash=2aaa7f7a176d3d4ed5d0303a5579be58}{%
+           family={Kirkeby},
+           familyi={K\bibinitperiod},
+           given={O.},
+           giveni={O\bibinitperiod}}}%
+        {{hash=ea8ced9a959571752969b917929a9583}{%
+           family={Rubak},
+           familyi={R\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod}}}%
+        {{hash=5a71914fbfe680b72a7c8dbe7fe84128}{%
+           family={Farina},
+           familyi={F\bibinitperiod},
+           given={Angelo},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{77356472a235de8c9fb6461f845f1f04}
+      \strng{fullhash}{240cfd147184930319a480d67ad282c0}
+      \strng{bibnamehash}{77356472a235de8c9fb6461f845f1f04}
+      \strng{authorbibnamehash}{77356472a235de8c9fb6461f845f1f04}
+      \strng{authornamehash}{77356472a235de8c9fb6461f845f1f04}
+      \strng{authorfullhash}{240cfd147184930319a480d67ad282c0}
+      \field{extraname}{1}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{0-7803-5612-8}
+      \field{month}{02}
+      \field{title}{Analysis of ill-conditioning of multi-channel deconvolution problems}
+      \field{year}{1999}
+      \true{nocite}
+      \field{pages}{155\bibrangedash 158}
+      \range{pages}{4}
+    \endentry
+    \entry{kirkeby:deconvolution_regularization}{article}{}
+      \name{author}{4}{}{%
+        {{hash=2aaa7f7a176d3d4ed5d0303a5579be58}{%
+           family={Kirkeby},
+           familyi={K\bibinitperiod},
+           given={O.},
+           giveni={O\bibinitperiod}}}%
+        {{hash=1b5d7ff3c46a2f605aaf756d00c1c252}{%
+           family={Nelson},
+           familyi={N\bibinitperiod},
+           given={P.A.},
+           giveni={P\bibinitperiod}}}%
+        {{hash=08758bafdb9130ec0225725f9dd89522}{%
+           family={Hamada},
+           familyi={H\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+        {{hash=559a691e02c0d8ba8df83f94f9c74a50}{%
+           family={Orduna-Bustamante},
+           familyi={O\bibinithyphendelim B\bibinitperiod},
+           given={F.},
+           giveni={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{77356472a235de8c9fb6461f845f1f04}
+      \strng{fullhash}{1d5bf3c2bba36e66c8805f61143d3cfc}
+      \strng{bibnamehash}{77356472a235de8c9fb6461f845f1f04}
+      \strng{authorbibnamehash}{77356472a235de8c9fb6461f845f1f04}
+      \strng{authornamehash}{77356472a235de8c9fb6461f845f1f04}
+      \strng{authorfullhash}{1d5bf3c2bba36e66c8805f61143d3cfc}
+      \field{extraname}{2}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Speech and Audio Processing}
+      \field{number}{2}
+      \field{title}{Fast deconvolution of multichannel systems using regularization}
+      \field{volume}{6}
+      \field{year}{1998}
+      \true{nocite}
+      \field{pages}{189\bibrangedash 194}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1109/89.661479
+      \endverb
+    \endentry
+    \entry{kirkeby:deconvolution_design}{article}{}
+      \name{author}{4}{}{%
+        {{hash=c93fcd74997ec3f1ba120e994f4c5951}{%
+           family={Kirkeby},
+           familyi={K\bibinitperiod},
+           given={Ole},
+           giveni={O\bibinitperiod}}}%
+        {{hash=5d59d5846974b55151e5d06874fb84a5}{%
+           family={Rubak},
+           familyi={R\bibinitperiod},
+           given={Per},
+           giveni={P\bibinitperiod}}}%
+        {{hash=863383fd24e83eff57a68dc09a7d4fce}{%
+           family={Nelson},
+           familyi={N\bibinitperiod},
+           given={Philip},
+           giveni={P\bibinitperiod}}}%
+        {{hash=5a71914fbfe680b72a7c8dbe7fe84128}{%
+           family={Farina},
+           familyi={F\bibinitperiod},
+           given={Angelo},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{cc3dddd6523c1170887740a0b6c740fa}
+      \strng{fullhash}{ee1dbf693e3b6ba0a8255e9088eb313e}
+      \strng{bibnamehash}{cc3dddd6523c1170887740a0b6c740fa}
+      \strng{authorbibnamehash}{cc3dddd6523c1170887740a0b6c740fa}
+      \strng{authornamehash}{cc3dddd6523c1170887740a0b6c740fa}
+      \strng{authorfullhash}{ee1dbf693e3b6ba0a8255e9088eb313e}
+      \field{extraname}{3}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{11}
+      \field{title}{Design of Cross-Talk Cancellation Networks by Using Fast Deconvolution}
+      \field{year}{2000}
+      \true{nocite}
+    \endentry
+    \entry{Kyriakakis:fundamental_technological_limitations}{article}{}
+      \name{author}{1}{}{%
+        {{hash=4de247ac4fc849df115d2bb655f85cf7}{%
+           family={Kyriakakis},
+           familyi={K\bibinitperiod},
+           given={Chris},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{4de247ac4fc849df115d2bb655f85cf7}
+      \strng{fullhash}{4de247ac4fc849df115d2bb655f85cf7}
+      \strng{bibnamehash}{4de247ac4fc849df115d2bb655f85cf7}
+      \strng{authorbibnamehash}{4de247ac4fc849df115d2bb655f85cf7}
+      \strng{authornamehash}{4de247ac4fc849df115d2bb655f85cf7}
+      \strng{authorfullhash}{4de247ac4fc849df115d2bb655f85cf7}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the IEEE}
+      \field{month}{06}
+      \field{title}{Fundamental and Technological Limitations of Immersive Audio Systems}
+      \field{volume}{86}
+      \field{year}{1998}
+      \true{nocite}
+      \field{pages}{941\bibrangedash 951}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1109/5.664281
+      \endverb
+    \endentry
+    \entry{Li:comprehensive_comparison}{inproceedings}{}
+      \name{author}{4}{}{%
+        {{hash=fc63986540b002fd74244549ce74082f}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Dan},
+           giveni={D\bibinitperiod}}}%
+        {{hash=a1db04b9485e3cbb08e125de5db2ff6f}{%
+           family={Fu},
+           familyi={F\bibinitperiod},
+           given={Zhong-Hua},
+           giveni={Z\bibinithyphendelim H\bibinitperiod}}}%
+        {{hash=d9501bb096bed7e71af1f43d9ee08d98}{%
+           family={Xie},
+           familyi={X\bibinitperiod},
+           given={Lei},
+           giveni={L\bibinitperiod}}}%
+        {{hash=571ef82b45c89300cf183470a54910e0}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Yanning},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{b5ced9aa7c79e3e048e3f1b031f76bc1}
+      \strng{fullhash}{db381765d3f365bee3cf30f16e4588f4}
+      \strng{bibnamehash}{b5ced9aa7c79e3e048e3f1b031f76bc1}
+      \strng{authorbibnamehash}{b5ced9aa7c79e3e048e3f1b031f76bc1}
+      \strng{authornamehash}{b5ced9aa7c79e3e048e3f1b031f76bc1}
+      \strng{authorfullhash}{db381765d3f365bee3cf30f16e4588f4}
+      \field{sortinit}{L}
+      \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2012 International Conference on Audio, Language and Image Processing}
+      \field{title}{Comprehensive comparison of the least mean square algorithm and the fast deconvolution algorithm for crosstalk cancellation}
+      \field{year}{2012}
+      \true{nocite}
+      \field{pages}{224\bibrangedash 229}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1109/ICALIP.2012.6376616
+      \endverb
+    \endentry
+    \entry{Mouchtaris:Inverse_filter}{article}{}
+      \name{author}{3}{}{%
+        {{hash=a0355cdd9f916cb9c9215996e5e14395}{%
+           family={Mouchtaris},
+           familyi={M\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=d261f5a57e47822a30375ad76a2cd200}{%
+           family={Reveliotis},
+           familyi={R\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod}}}%
+        {{hash=ac61b9b22835760e8a8ee21ded7477d8}{%
+           family={Kyriakakis},
+           familyi={K\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{f00976dfc04d504b4ca7ecca7b1d5028}
+      \strng{fullhash}{15964ef48e6968a2baf6a3103ff88711}
+      \strng{bibnamehash}{f00976dfc04d504b4ca7ecca7b1d5028}
+      \strng{authorbibnamehash}{f00976dfc04d504b4ca7ecca7b1d5028}
+      \strng{authornamehash}{f00976dfc04d504b4ca7ecca7b1d5028}
+      \strng{authorfullhash}{15964ef48e6968a2baf6a3103ff88711}
+      \field{sortinit}{M}
+      \field{sortinithash}{cfd219b90152c06204fab207bc6c7cab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Multimedia}
+      \field{number}{2}
+      \field{title}{Inverse filter design for immersive audio rendering over loudspeakers}
+      \field{volume}{2}
+      \field{year}{2000}
+      \true{nocite}
+      \field{pages}{77\bibrangedash 87}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1109/6046.845012
+      \endverb
+    \endentry
+    \entry{143434}{article}{}
+      \name{author}{3}{}{%
+        {{hash=1b5d7ff3c46a2f605aaf756d00c1c252}{%
+           family={Nelson},
+           familyi={N\bibinitperiod},
+           given={P.A.},
+           giveni={P\bibinitperiod}}}%
+        {{hash=08758bafdb9130ec0225725f9dd89522}{%
+           family={Hamada},
+           familyi={H\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+        {{hash=877d95e319aaa276d7e538520b2b3c3b}{%
+           family={Elliott},
+           familyi={E\bibinitperiod},
+           given={S.J.},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{68c97d2cd2ab9b09ebb314e9c054077b}
+      \strng{fullhash}{e3c3d6040ead3928651d25de0d744ca1}
+      \strng{bibnamehash}{68c97d2cd2ab9b09ebb314e9c054077b}
+      \strng{authorbibnamehash}{68c97d2cd2ab9b09ebb314e9c054077b}
+      \strng{authornamehash}{68c97d2cd2ab9b09ebb314e9c054077b}
+      \strng{authorfullhash}{e3c3d6040ead3928651d25de0d744ca1}
+      \field{sortinit}{N}
+      \field{sortinithash}{f7242c3ed3dc50029fca1be76c497c7c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Signal Processing}
+      \field{number}{7}
+      \field{title}{Adaptive inverse filters for stereophonic sound reproduction}
+      \field{volume}{40}
+      \field{year}{1992}
+      \true{nocite}
+      \field{pages}{1621\bibrangedash 1632}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1109/78.143434
+      \endverb
+    \endentry
+    \entry{wand:a_stereo_crosstalk}{article}{}
+      \name{author}{2}{}{%
+        {{hash=90363e7455b37d0f07cd7e927b294868}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Lin},
+           giveni={L\bibinitperiod}}}%
+        {{hash=a4530294f0e83d5608005030c6379255}{%
+           family={Fuliang},
+           familyi={F\bibinitperiod},
+           given={Yin},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{ae6400c6479d78892132ff07edc20204}
+      \strng{fullhash}{ae6400c6479d78892132ff07edc20204}
+      \strng{bibnamehash}{ae6400c6479d78892132ff07edc20204}
+      \strng{authorbibnamehash}{ae6400c6479d78892132ff07edc20204}
+      \strng{authornamehash}{ae6400c6479d78892132ff07edc20204}
+      \strng{authorfullhash}{ae6400c6479d78892132ff07edc20204}
+      \field{sortinit}{W}
+      \field{sortinithash}{ecb89ff85896a47dc313960773ac311d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{EURASIP Journal on Advances in Signal Processing}
+      \field{month}{01}
+      \field{title}{A Stereo Crosstalk Cancellation System Based on the Common-Acoustical Pole/Zero Model}
+      \field{volume}{2010}
+      \field{year}{2010}
+      \true{nocite}
+      \verb{doi}
+      \verb 10.1155/2010/719197
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

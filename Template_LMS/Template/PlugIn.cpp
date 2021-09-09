@@ -60,10 +60,13 @@ PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,HWND ParentDlg): LEEffe
 	r212buff = 0;
 	r221buff = 0;
 	r222buff = 0;
+
+	//frameNumber = 0;
 }
 
 int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID ExtraInfo)
 { 
+	//frameNumber++;
 	double* InputData1 = ((double*)Input[0]->DataBuffer);
 	double* OutputData1 = ((double*)Output[0]->DataBuffer);
 	double* InputData2 = ((double*)Input[1]->DataBuffer);
@@ -189,11 +192,11 @@ int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID E
 		//ippsAddC_64f_I(ytmp, y2 + i, 1);
 
 		// e1 = d1 - y1
-		//ippsSub_64f(y1 + i, d1 + i, e1 + i, 1);
+		ippsSub_64f(y1 + i, d1 + i, e1 + i, 1);
 		// e2 = d2 - y2
-		//ippsSub_64f(y2 + i, d2 + i, e2 + i, 1);
-		e1[i] = d1[i] - y1[i];
-		e2[i] = d2[i] - y2[i];
+		ippsSub_64f(y2 + i, d2 + i, e2 + i, 1);
+		//e1[i] = d1[i] - y1[i];
+		//e2[i] = d2[i] - y2[i];
 
 		//if (y1[i] > 1.0)
 		//	printf("\n"); // MATLAB y1(40*4096+297)
@@ -218,6 +221,8 @@ int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID E
 	// copy y2 to OutputData2
 	ippsCopy_64f(y2, OutputData2, FrameSize);
 
+
+	/*
 	char file_name[MAX_FILE_NAME_LENGTH];
 	strcpy(file_name, path);
 	strcat(file_name, "e1.dat");
@@ -226,6 +231,26 @@ int __stdcall PlugIn::LEPlugin_Process(PinType **Input,PinType **Output,LPVOID E
 	strcpy(file_name, path);
 	strcat(file_name, "e2.dat");
 	write_dat(file_name, e2, FrameSize, "");
+	if (frameNumber == 1326)
+	{ 
+		strcpy(file_name, path);
+		strcat(file_name, "h11_lms.dat");
+		write_dat(file_name, h11, M, "");
+
+		strcpy(file_name, path);
+		strcat(file_name, "h12_lms.dat");
+		write_dat(file_name, h12, M, "");
+
+		strcpy(file_name, path);
+		strcat(file_name, "h21_lms.dat");
+		write_dat(file_name, h21, M, "");
+
+		strcpy(file_name, path);
+		strcat(file_name, "h22_lms.dat");
+		write_dat(file_name, h22, M, "");
+	}
+	*/
+	
 
 	/*
 	// filter r111 with h11 and store the result in ytmp

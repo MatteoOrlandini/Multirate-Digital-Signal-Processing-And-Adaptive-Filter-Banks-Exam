@@ -1,0 +1,9 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {italian}{}
+\babel@toc {italian}{}
+\beamer@sectionintoc {1}{Introduzione}{3}{0}{1}
+\beamer@sectionintoc {2}{Stato dell'arte}{5}{0}{2}
+\beamer@sectionintoc {3}{Dataset}{8}{0}{3}
+\beamer@sectionintoc {4}{LMS}{10}{0}{4}
+\beamer@sectionintoc {5}{Fast Deconvolution}{11}{0}{5}
+\beamer@sectionintoc {6}{Risultati}{12}{0}{6}

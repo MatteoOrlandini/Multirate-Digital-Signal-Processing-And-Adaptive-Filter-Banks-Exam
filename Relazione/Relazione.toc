@@ -16,5 +16,5 @@
 \contentsline {subsection}{\numberline {6.3}Fast Deconvolution}{36}{subsection.6.3}% 
 \contentsline {section}{\numberline {7}Risultati}{53}{section.7}% 
 \contentsline {subsection}{\numberline {7.1}Risultati Matlab}{53}{subsection.7.1}% 
-\contentsline {subsection}{\numberline {7.2}Risultati NU-Tech}{64}{subsection.7.2}% 
-\contentsline {section}{\numberline {8}Conclusioni}{68}{section.8}% 
+\contentsline {subsection}{\numberline {7.2}Risultati NU-Tech}{65}{subsection.7.2}% 
+\contentsline {section}{\numberline {8}Conclusioni}{74}{section.8}% 

@@ -71,7 +71,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <OutputFile>C:\Program Files (x86)\Leaff\NU-Tech\PlugIn\debug\Template.dll</OutputFile>
+      <OutputFile>C:\Program Files (x86)\Leaff\NU-Tech\PlugIn\debug\LMS.dll</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

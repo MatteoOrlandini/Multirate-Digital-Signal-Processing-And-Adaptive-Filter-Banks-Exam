@@ -1,0 +1,12 @@
+\frametitle{AUPRC}
+	\begin{block}{Area under precision-recall curve (AUPRC)}
+	Area sottessa dalla curva precision-recall.
+	Questo valore è molto utile quando i dati sono sbilanciati e, in una classificazione binaria, siamo più interessati al riconoscimento di una classe in particolare.
+	\end{block}
+	Per calcolare questo parametro sono state usate le funzioni \texttt{precision\_recall\_curve} e \texttt{sklearn.metrics.auc}.
+	\begin{lstlisting}[language=iPython,firstnumber=1, caption=calcolo della AUPRC per ogni audio, label= auc_tmp,captionpos=b]
+	precision, recall, thresholds = sklearn.metrics.precision_recall_curve (y_true, y_pred)
+	auc_tmp = sklearn.metrics.auc(recall, precision)	
+	auc_list.append(auc_tmp)
+	\end{lstlisting}
+	Infine si fa una media di tutte le AUPRC di ogni audio di test.

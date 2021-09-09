@@ -77,6 +77,7 @@ private:
 	double* r111buff, * r112buff, * r211buff, * r212buff, * r222buff, * r221buff, * r122buff, * r121buff;
 	char path[MAX_FILE_NAME_LENGTH];
 	bool isRunning;
+	//int frameNumber;
 	/*
 	int specSizeh11;
 	int specSizeh12;

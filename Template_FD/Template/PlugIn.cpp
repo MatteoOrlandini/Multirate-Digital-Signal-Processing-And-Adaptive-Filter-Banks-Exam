@@ -571,6 +571,79 @@ void __stdcall PlugIn::LEPlugin_Init()
 		H22[n].im = invtemp.im;
 	}
 
+	/*
+	strcpy(file_name, path);
+	strcat(file_name, "H11_re.dat");
+	double* H11_re;
+	H11_re = ippsMalloc_64f(fftLen);
+	for (int i = 0; i < fftLen; i++)
+		H11_re[i] = H11[i].re;
+	write_dat(file_name, H11_re, fftLen, "");
+	ippsFree(H11_re);
+
+	strcpy(file_name, path);
+	strcat(file_name, "H11_im.dat");
+	double* H11_im;
+	H11_im = ippsMalloc_64f(fftLen);
+	for (int i = 0; i < fftLen; i++)
+		H11_im[i] = H11[i].im;
+	write_dat(file_name, H11_im, fftLen, "");
+	ippsFree(H11_im);
+
+	strcpy(file_name, path);
+	strcat(file_name, "H12_re.dat");
+	double* H12_re;
+	H12_re = ippsMalloc_64f(fftLen);
+	for (int i = 0; i < fftLen; i++)
+		H12_re[i] = H12[i].re;
+	write_dat(file_name, H12_re, fftLen, "");
+	ippsFree(H12_re);
+
+	strcpy(file_name, path);
+	strcat(file_name, "H12_im.dat");
+	double* H12_im;
+	H12_im = ippsMalloc_64f(fftLen);
+	for (int i = 0; i < fftLen; i++)
+		H12_im[i] = H12[i].im;
+	write_dat(file_name, H12_im, fftLen, "");
+	ippsFree(H12_im);
+
+	strcpy(file_name, path);
+	strcat(file_name, "H21_re.dat");
+	double* H21_re;
+	H21_re = ippsMalloc_64f(fftLen);
+	for (int i = 0; i < fftLen; i++)
+		H21_re[i] = H21[i].re;
+	write_dat(file_name, H21_re, fftLen, "");
+	ippsFree(H21_re);
+
+	strcpy(file_name, path);
+	strcat(file_name, "H21_im.dat");
+	double* H21_im;
+	H21_im = ippsMalloc_64f(fftLen);
+	for (int i = 0; i < fftLen; i++)
+		H21_im[i] = H21[i].im;
+	write_dat(file_name, H12_im, fftLen, "");
+	ippsFree(H21_im);
+
+	strcpy(file_name, path);
+	strcat(file_name, "H22_re.dat");
+	double* H22_re;
+	H22_re = ippsMalloc_64f(fftLen);
+	for (int i = 0; i < fftLen; i++)
+		H22_re[i] = H22[i].re;
+	write_dat(file_name, H22_re, fftLen, "");
+	ippsFree(H22_re);
+
+	strcpy(file_name, path);
+	strcat(file_name, "H22_im.dat");
+	double* H22_im;
+	H22_im = ippsMalloc_64f(fftLen);
+	for (int i = 0; i < fftLen; i++)
+		H22_im[i] = H22[i].im;
+	write_dat(file_name, H12_im, fftLen, "");
+	ippsFree(H22_im);
+	*/
 	// extended format to pack format
 	/*
 	H11[0] = H11ext[0].re;

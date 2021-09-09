@@ -279,7 +279,7 @@ Con $Y_1$ e $Y_2$ invece, si indicano i suoni che effettivamente raggiungono l'a
 \end{figure}
 
 Il sistema illustrato in figura~\ref{fig:head} può essere rappresentato nel dominio della frequenza come:
-\begin{equation}
+\begin{equation}\label{eq:Y=CHX}
 \textbf{Y} = \textbf{CHX}
 \end{equation}
 ovvero:
@@ -329,7 +329,7 @@ Il dataset usato è composto ad un ampio set di misurazioni della funzione di tr
 
 Le misurazioni sono state effettuate nella camera anecoica del MIT. Il KEMAR è stato montato in posizione verticale su un giradischi motorizzato che può essere ruotato con precisione sotto il controllo del computer. L'altoparlante è stato montato su un supporto a braccio che ha consentito il posizionamento accurato dell'altoparlante a qualsiasi elevazione rispetto al KEMAR. Pertanto, le misurazioni sono state effettuate un'elevazione alla volta, impostando l'altoparlante all'altezza corretta e quindi ruotando il KEMAR su ciascun azimut.
 
-I dati HRTF vengono archiviati nelle directory per elevazione. Ogni nome di directory ha il formato "elevEE", dove EE è l'angolo di elevazione. All'interno di ogni directory, il nome di ogni file ha il formato "XEEeAAAa.wav" dove X può essere "L" o "R" rispettivamente per la risposta dell'orecchio sinistro e destro, "EE" è l'angolo di elevazione della sorgente in gradi, da -40° a 90°, e AAA è l'azimut della sorgente in gradi, da 0° a 355°. Gli angoli di elevazione e azimut indicano la posizione della sorgente rispetto al KEMAR, in modo che, ad esempio, in corrispondenza dell'elevazione 0 e azimut 0 sia di fronte al KEMAR , l'elevazione 90 è direttamente sopra il KEMAR, elevazione 0 e azimut 90 è a destra del KEMAR. Ad esempio, il file "R-20e270a.wav" è la risposta dell'orecchio destro, con la sorgente 20 gradi sotto il piano orizzontale e 90 gradi a sinistra della testa.
+I dati HRTF vengono archiviati nelle directory per elevazione. Ogni nome di directory ha il formato ``elevEE'', dove ``EE'' è l'angolo di elevazione. All'interno di ogni directory, il nome di ogni file ha il formato ``XEEeAAAa.wav'' dove X può essere ``L'' o ``R'' rispettivamente per la risposta dell'orecchio sinistro e destro, ``EE'' è l'angolo di elevazione della sorgente in gradi, da -40° a 90°, e ``AAA'' è l'azimut della sorgente in gradi, da 0° a 355°. Gli angoli di elevazione e azimut indicano la posizione della sorgente rispetto al KEMAR, in modo che, ad esempio, in corrispondenza dell'elevazione 0 e azimut 0 sia di fronte al KEMAR , l'elevazione 90 è direttamente sopra il KEMAR, elevazione 0 e azimut 90 è a destra del KEMAR. Ad esempio, il file ``R-20e270a.wav'' è la risposta dell'orecchio destro, con la sorgente 20 gradi sotto il piano orizzontale e 90 gradi a sinistra della testa.
 \clearpage
 \section{Descrizione teorica degli algoritmi}
 \label{sec:descrizione_teorica}
@@ -1936,7 +1936,7 @@ void __stdcall PlugIn::LESetParameter(int Index,void *Data,
 
 \section{Risultati}
 \label{sec:risultati}
-In questo capitolo vengono presentati tutti i risultati ottenuti dall'implementazione dei due programmi. Abbiamo confrontato l'algoritmo LSM e FD usando il fattore di separazione dei canali (channel separation factor). Questo fattore è definito come il rapporto tra la potenza del percorso ipsilaterale e quello controlaterale, come mostrato nelle equazioni~\eqref{eq:JL} e~\eqref{eq:JR} rispettivamente per il canale sinistro e destro.
+In questo capitolo vengono presentati tutti i risultati ottenuti dall'implementazione dei due algoritmi. I risultati proposti sono stati valutati usando le HRTF del dataset presentato nel capitolo~\ref{sec:Dataset}. In particolare le HRTF usate sono state misurate con $\pm \SI{30}{\degree}$ di azimuth, a un'altezza di \SI{1.4}{\meter} da terra con \SI{0}{\degree} di elevazione dal KEMAR, tranne per le tabelle~\ref{tab:LMS_result_azimuth} e~\ref{tab:FD_result_azimuth} che mostrano rispettivamente i risultati con un angolo azimutale di $\pm \SI{20}{\degree}$ e $\pm \SI{40}{\degree}$. Per un confronto oggettivo degli algoritmi LSM e FD, abbiamo usato il fattore di separazione dei canali (channel separation factor). Questo fattore è definito come il rapporto tra la potenza del percorso ipsilaterale e quello controlaterale, come mostrato nelle equazioni~\eqref{eq:JL} e~\eqref{eq:JR} rispettivamente per il canale sinistro e destro.
 \begin{equation}\label{eq:JL}
 J_L = E\left\{20\cdot\log_{10} \dfrac{C_{11}H_{11}+C_{12}H_{21}}{C_{21}H_{11}+C_{22}H_{21}}\right\} \quad [\si{\decibel}]
 \end{equation}
@@ -1944,15 +1944,17 @@ J_L = E\left\{20\cdot\log_{10} \dfrac{C_{11}H_{11}+C_{12}H_{21}}{C_{21}H_{11}+C_
 \begin{equation}\label{eq:JR}
 J_R = E\left\{20\cdot\log_{10} \dfrac{C_{22}H_{22}+C_{21}H_{12}}{C_{12}H_{22}+C_{11}H_{12}}\right\} \quad [\si{\decibel}]
 \end{equation}
-dove $E\{\cdot\}$ indica il valore medio su tutte le frequenze. 
+dove $E\{\cdot\}$ indica il valore medio su tutte le frequenze. Entrambi i fattori sono stati calcolati al variare di $\mu$ e $\beta$ per osservare il cambiamento nelle performance degli algoritmi di cancellazione del crosstalk.
 
-Nei successivi due capitoli~\ref{subsec:risultati_matlab} e~\ref{subsec:risultati_nutech} vengono illustrati i risultati ottenuti rispettivamente in Matlab e in NU-Tech.
+Successivamente abbiamo confrontato i segnali di ingresso con le uscite, i filtri di ricostruzione ottenuti da entrambi gli algoritmi e il valore dell'errore dell'algoritmo LMS al variare del tempo. Nei prossimi due capitoli~\ref{subsec:risultati_matlab} e~\ref{subsec:risultati_nutech} vengono illustrati i risultati ottenuti rispettivamente in Matlab e in NU-Tech.
 
 \subsection{Risultati Matlab}
 \label{subsec:risultati_matlab}
 Le tabelle~\ref{tab:LMS_result} e~\ref{tab:FD_result} mostrano i valori di channel separation factor rispettivamente per LMS e FD al variare di $\mu$ e $\beta$. Si può notare dalla tabella~\ref{tab:LMS_result} che il fattore di separazione dei canali aumenta all'aumentare di $\mu$, mentre per la tabella~\ref{tab:FD_result} questo fattore aumenta al diminuire di $\beta$. Entrambi i parametri vengono aggiustati durante l'implementazione pratica, in particolare, il comportamento del $\beta$ per la Fast Deconvolution è in linea con quanto ci si aspetta dalla formula~\eqref{eq:funzione_costo_fd} spiegata nel capitolo~\ref{subsec:FD_teoria}.
 
 Dalle tabelle~\ref{tab:LMS_result} e~\ref{tab:FD_result} si ottengono dei fattori di separazione dei molto simili a quelli proposti in~\cite{Li:comprehensive_comparison}, in cui si ha in media $J_L = \SI{12.6251}{\decibel}$ e $J_R = \SI{16.0611}{\decibel}$ per LMS e $J_L = \SI{12.8147}{\decibel}$ e $J_R = \SI{17.2171}{\decibel}$ per FD. Possiamo dunque affermare che i filtri di cancellazione del crosstalk lavorano in modo corretto.
+
+A differenza del paper di riferimento~\cite{Li:comprehensive_comparison}, in cui il fattore di separazione dei canali è migliore per il canale destro, nel nostro caso otteniamo valori migliori per il canale sinistro. Questo può essere dovuto ad una diversa scelta delle HRIR tra l'implementazione dell'articolo e la nostra. Nelle simulazioni dell'articolo, infatti, è stato utilizzato il valore medio di 10 set di HRTF per calcolare la matrice di cancellazione della diafonia $H$, e successivamente sono stati utilizzati i 10 set originali di HRTF per calcolare i rispettivamente fattori di separazione dei canali.
 
 \begin{table}[h]
 \centering
@@ -1980,16 +1982,42 @@ $0.01$ &  47.657 &  48.661 \\ \bottomrule
 \caption{\label{tab:FD_result}Confronto di $J_R$ e $J_L$ per l'algoritmo Fast Deconvolution per diversi $\beta$.}
 \end{table}
 
+Le tabelle~\ref{tab:LMS_result_azimuth} e~\ref{tab:FD_result_azimuth} mostrano i fattori $J_L$ e $J_R$ per un angolo azimutale di $\pm \SI{20}{\degree}$,  $\pm \SI{30}{\degree}$ e $\pm \SI{40}{\degree}$ rispettivamente per l'algoritmo LMS e FD con $\mu = 10^{-3}$ e $\beta = 0.1$. Da entrambe le tabelle si vede che il fattore di separazione per il canale sinistro continua ad essere migliore di quello destro e si nota che per un azimuth di $\pm \SI{20}{\degree}$ si hanno mediamente le prestazioni migliori. Dalla tabella~\ref{tab:LMS_result_azimuth} si osserva che il fattore di separazione dei canali destro e sinistro per un azimuth di $\pm \SI{30}{\degree}$ è circa lo stesso e dalla~\ref{tab:FD_result_azimuth} si nota che le prestazioni peggiori si hanno per $\SI{30}{\degree}$ di azimuth, al contrario dell'algoritmo LMS in cui le prestazioni peggiori si hanno per $\pm \SI{40}{\degree}$.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c c c}
+\toprule
+Angolo azimutale   & $J_R$ [\si{\decibel}]   & $J_L$ [\si{\decibel}]   \\ \midrule
+$\pm \SI{20}{\degree}$ & 21.511 & 25.532\\
+$\pm \SI{30}{\degree}$ & 22.032 & 21.924  \\
+$\pm \SI{40}{\degree}$ & 19.667 & 23.528 \\ \bottomrule
+\end{tabular}
+\caption{\label{tab:LMS_result_azimuth}Confronto di $J_R$ e $J_L$ per l'algoritmo LMS per diversi angoli azimutali con $\mu = 10^{-3}$.}
+\end{table}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c c c}
+\toprule
+Angolo azimutale   & $J_R$ [\si{\decibel}]   & $J_L$ [\si{\decibel}]   \\ \midrule
+$\pm \SI{20}{\degree}$ &  45.672 &  47.034\\
+$\pm \SI{30}{\degree}$ &  34.908 & 36.532 \\
+$\pm \SI{40}{\degree}$ &  40.523 &  42.098\\ \bottomrule
+\end{tabular}
+\caption{\label{tab:FD_result_azimuth}Confronto di $J_R$ e $J_L$ per l'algoritmo Fast Deconvolution per diversi angoli azimutali con $\beta = 0.1$.}
+\end{table}
+
 La figura~\ref{fig:channel_separation_LMS_FD} mostra l'andamento in frequenza del numeratore e denominatore delle formule~\eqref{eq:JL} e~\eqref{eq:JR} per entrambi gli algoritmi implementati. Poiché le figure sono esposte in \si{\decibel} si può fare la differenza tra il numeratore e il denominatore per ottenere l'effettivo valore di $J_L$ e $J_R$ per ogni frequenza. Si può notare dalla figura~\ref{fig:channel_separation_LMS_FD} che nel fattore di separazione dei canali il numeratore è quasi sempre maggiore del denominatore: questo indica che la separazione dei canali sta avvenendo in modo corretto. 
 
 \begin{figure}[h]
 \begin{subfigure}{1\textwidth}
-	\includegraphics[width=1\textwidth]{Immagini/left_channel_separation_FD}
+	\includegraphics[width=.9\textwidth]{Immagini/left_channel_separation_FD}
 	\caption{}
 	\label{left_channel_separation_FD}
 \end{subfigure}\\
 \begin{subfigure}{1\textwidth}
-	\includegraphics[width=1\textwidth]{Immagini/right_channel_separation_FD}
+	\includegraphics[width=.9\textwidth]{Immagini/right_channel_separation_FD}
 	\caption{}
 	\label{right_channel_separation_FD}
 \end{subfigure}
@@ -2132,7 +2160,7 @@ I risultati ottenuti per ognuno dei due algoritmi con il Nu-Tech sono uguali a q
 \clearpage
 \subsection{Risultati NU-Tech}
 \label{subsec:risultati_nutech}
-Per confermare la correttezza dei programmi sviluppati in NU-Tech, sono confrontati i risultati con quelli ottenuti in Matlab. Le figure~\ref{fig:lms_template_nutech} e~\ref{fig:fd_template_nutech} mostrano come sono collegati i NUTS che eseguono rispettivamente l'algoritmo LMS e FD nel NU-Tech. Nella figura~\ref{fig:lms_template_nutech} si può notare un blocco ``ADelay'' in cui viene inserito un ritardo nel segnale di ingresso, necessario per visualizzare e confrontare con il ``Viewer Mch'' il segnale desiderato, cioè l'ingresso ritardato, e l'uscita.
+Per confermare la correttezza dei programmi sviluppati in NU-Tech, sono confrontati i risultati ottenuti con quelli precedentemente descritti in Matlab. Le figure~\ref{fig:lms_template_nutech} e~\ref{fig:fd_template_nutech} mostrano come sono collegati i NUTS che eseguono rispettivamente l'algoritmo LMS e FD nel NU-Tech. Nella figura~\ref{fig:lms_template_nutech} si può notare un blocco ``ADelay'' in cui viene inserito un ritardo nel segnale di ingresso, necessario per visualizzare e confrontare con il ``Viewer Mch'' il segnale desiderato, cioè l'ingresso ritardato, e l'uscita.
 
 \begin{figure}[h]
 	\centering
@@ -2146,7 +2174,7 @@ Per confermare la correttezza dei programmi sviluppati in NU-Tech, sono confront
 			\caption{}
 			\label{fig:fd_template_nutech}
 	\end{subfigure}
-	\caption{(a) Board del NU-Tech per l'algoritmo (a) LMS e (b) Fast Deconvolution.}
+	\caption{Board del NU-Tech per l'algoritmo (a) LMS e (b) Fast Deconvolution.}
 	\label{fig:template_nutech}
 \end{figure}
 
@@ -2182,11 +2210,108 @@ Le figure~\ref{fig:x1_y1_FD_nutech} e~\ref{fig:x2_y2_FD_nutech} mostrano il conf
 		\label{fig:confronto_ingressi_uscita_LMS_nutech}
 \end{figure}
 
+Le figure~\ref{fig:mse_e1_matlab_nutech} e~\ref{fig:mse_e2_matlab_nutech} illustrano l'andamento nel tempo del mean square error in \si{\decibel} dell'algoritmo LMS implementato in Matlab e in NU-Tech rappresentato da una linea tratteggiata rispettivamente blu e rossa. Si può notare che le due linee si sovrappongono dato che i due algoritmi implementati nei due linguaggi di programmazione si equivalgono.
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/mse_e1_matlab_nutech}
+		\caption{}
+		\label{fig:mse_e1_matlab_nutech}
+	\end{subfigure}\\
+	\begin{subfigure}{1\textwidth}
+			\includegraphics[width=1\textwidth]{Immagini/mse_e2_matlab_nutech}
+			\caption{}
+			\label{fig:mse_e2_matlab_nutech}
+	\end{subfigure}
+	\caption{Confronto dell'MSE del canale (a) sinistro e (b) destro dell'algoritmo LMS.}
+	\label{fig:mse_matlab_nutech}
+\end{figure}
+
+Le figure~\ref{fig:H11_LMS_matlab_nutech},~\ref{fig:H12_LMS_matlab_nutech},~\ref{fig:H21_LMS_matlab_nutech} e~\ref{fig:H22_LMS_matlab_nutech} presentano rispettivamente un confronto tra i filtri di cancellazione del crosstalk  $H_{11}$, $H_{12}$, $H_{21}$ e $H_{22}$ ottenuti in Matlab, linea tratteggiata blu, e in NU-Tech, linea tratteggiata rossa, per l'algoritmo LMS.
+
+Allo stesso modo, le figure~\ref{fig:H11_FD_matlab_nutech},~\ref{fig:H12_FD_matlab_nutech},~\ref{fig:H21_FD_matlab_nutech} e~\ref{fig:H22_FD_matlab_nutech} mostrano i filtri di cancellazione per l'algoritmo Fast Deconvolution. Anche in questo caso si può vedere che i grafici si sovrappongono a dimostrazione della validità di entrambi i programmi.
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/H11_LMS_matlab_nutech}
+		\caption{}
+		\label{fig:H11_LMS_matlab_nutech}
+	\end{subfigure}\\
+	\begin{subfigure}{1\textwidth}
+			\includegraphics[width=1\textwidth]{Immagini/H12_LMS_matlab_nutech}
+			\caption{}
+			\label{fig:H12_LMS_matlab_nutech}
+	\end{subfigure}
+\end{figure}
+
+\begin{figure}[h]
+	\ContinuedFloat
+	\centering
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/H21_LMS_matlab_nutech}
+		\caption{}
+		\label{fig:H21_LMS_matlab_nutech}
+	\end{subfigure}\\
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/H22_LMS_matlab_nutech}
+		\caption{}
+		\label{fig:H22_LMS_matlab_nutech}
+	\end{subfigure}
+		\caption{Confronto dei filtri di cancellazione del crosstalk (a) $H_{11}$, (b) $H_{12}$, (c) $H_{21}$ e (d) $H_{22}$ in Matlab e in NU-Tech per l'algoritmo LMS.}
+		\label{fig:confronto_filtri_matlab_nutech_lms}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/H11_FD_matlab_nutech}
+		\caption{}
+		\label{fig:H11_FD_matlab_nutech}
+	\end{subfigure}\\
+	\begin{subfigure}{1\textwidth}
+			\includegraphics[width=1\textwidth]{Immagini/H12_FD_matlab_nutech}
+			\caption{}
+			\label{fig:H12_FD_matlab_nutech}
+	\end{subfigure}
+\end{figure}
+
+\begin{figure}[h]
+	\ContinuedFloat
+	\centering
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/H21_FD_matlab_nutech}
+		\caption{}
+		\label{fig:H21_FD_matlab_nutech}
+	\end{subfigure}\\
+	\begin{subfigure}{1\textwidth}
+		\includegraphics[width=1\textwidth]{Immagini/H22_FD_matlab_nutech}
+		\caption{}
+		\label{fig:H22_FD_matlab_nutech}
+	\end{subfigure}
+		\caption{Confronto dei filtri di cancellazione del crosstalk (a) $H_{11}$, (b) $H_{12}$, (c) $H_{21}$ e (d) $H_{22}$ in Matlab e in NU-Tech per l'algoritmo Fast Deconvolution.}
+		\label{fig:confronto_filtri_matlab_nutech_fd}
+\end{figure}
+
+Da un ascolto soggettivo possiamo affermare che l'algoritmo migliore è il Fast Deconvolution poiché nello scenario ``statico'' in cui abbiamo lavorato, dato che in ingresso ad entrambi gli algoritmi abbiamo dato una canzone e delle HRTF precedentemente salvate, raggiunge subito la convergenza e si può notare una buona separazione dei due canali. L'algoritmo LMS, invece, poiché adattativo, ha necessità di un certo tempo prima che l'errore tra il segnale desiderato e l'uscita diventi minimo. Questo intervallo è udibile all'orecchio umano e l'ascoltatore potrebbe non sentire in modo fluido i primi istanti di riproduzione.
+
 \clearpage
 
 \section{Conclusioni}
 \label{sec:conclusioni}
-Nelle conclusioni dovete rispiegare brevemente lo scopo della tesina e quello che è stato fatto (che i due algoritmi sono stati implementati prima in matlab e poi in nutech), sintetizzare i risultati che sono stati ottenuti comparati con lo stato dell'arte (non c'è bisogno di fare riferimento a tabelle e figure) e descrivere quali potrebbero essere gli sviluppi futuri (ad esempio svolgere dei test soggettivi formali più approfonditi e misurare direttamente le HRTF considerando il set-up che poi verrà utilizzato per gli esperimenti)
+Lo scopo della tesina era quello di confrontare gli algoritmi LMS e Fast Deconvolution come nel paper~\cite{Li:comprehensive_comparison}. Per fare questo sono prima stati implementati gli algoritmi in Matlab verificando il corretto funzionamento tramite un confronto tra l'uscita e l'ingresso. Notando quindi che l'uscita segue l'ingresso, si può affermare che nell'equazione~\eqref{eq:Y=CHX} la matrice $\mathbf{C}$ è uguale all'inversa di $\mathbf{H}$, dunque $\mathbf{C} = \mathbf{H}^{-1}$, dato che l'ingresso $\mathbf{X}$ è uguale all'uscita $\mathbf{Y}$, cioè $\mathbf{Y} = \mathbf{X}$.
+
+Dato che il programma in Matlab funziona correttamente, si è passato all'implementazione in NU-Tech. Lo sviluppo in Matlab è stato necessario in quanto è un linguaggio ad alto livello e più semplice di C++, questo ci ha permesso di scrivere i programmi in modo più semplice e veloce e di avere dei risultati di riferimento con cui confrontare le uscite prodotte dal NUTS.
+
+Grazie al programma NU-Tech abbiamo sviluppato due NUTS che svolgono gli algoritmi LMS e Fast Deconvolution. Sono inoltre state inserite due funzionalità, cioè quella di permettere all'utente di cambiare dalla board NU-Tech il percorso in cui sono salvate le HRTF e i parametri $\beta$ e $\mu$ che vanno a influire sulla prestazioni dei due algoritmi. Queste funzionalità sono utili all'ascoltatore che non deve conosce nessun linguaggio di programmazione per modificare questi parametri, basta semplicemente usare l'interfaccia grafica messa a disposizione.
+
+I risultati oggettivi ottenuti, cioè il calcolo dei fattori di separazione dei canali sono in linea con~\cite{Li:comprehensive_comparison} tranne per il fatto che il fattore di separazione del canale sinistro è migliore di quello destro, ma questo può essere dovuto alla diversa scelta del dataset delle HRTF.
+
+Da un ascolto soggettivo possiamo affermare che l'algoritmo Fast Deconvolution è migliore rispetto a LMS, soprattutto perché riteniamo che l'intervallo di tempo in cui l'errore deve essere minimizzato nell'algoritmo adattativo possa essere fastidioso per l'ascoltatore. Quando l'algoritmo LMS è a regime non notiamo nessuna differenza con la Fast Deconvolution, nonostante i fattori di separazione dei canali hanno diversi decibel di differenza tra i due algoritmi.
+
+Tra gli sviluppi futuri si potrebbero prendere in considerazione dei test soggettivi più accurati. In condizioni più professionali la percezione dell'audio potrebbe cambiare all'ascolto di persone con un udito più sensibile. Si potrebbe affiancare agli algoritmi di cancellazione del crosstalk un programma che monitora la posizione della testa dell'ascoltatore e modella la stanza in cui si trova~\cite{Bai:objective_analysis}. Dai test di ascolto soggettivi, questo sistema audio interattivo mostra che la percezione del suono migliora notevolmente. Usando questo sistema, le HRTF non saranno più fisse, ma varieranno a seconda della posizione dell'ascoltatore nella stanza.
+
+%Nelle conclusioni dovete rispiegare brevemente lo scopo della tesina e quello che è stato fatto (che i due algoritmi sono stati implementati prima in matlab e poi in nutech), sintetizzare i risultati che sono stati ottenuti comparati con lo stato dell'arte (non c'è bisogno di fare riferimento a tabelle e figure) e descrivere quali potrebbero essere gli sviluppi futuri (ad esempio svolgere dei test soggettivi formali più approfonditi e misurare direttamente le HRTF considerando il set-up che poi verrà utilizzato per gli esperimenti)
+
 %Dai risultati mostrati nel capitolo~\ref{sec:risultati}, si possono fare diverse osservazioni. Si può notare dalla figura~\ref{fig:channel_separation_LMS_FD} che nel fattore di separazione dei canali il numeratore è quasi sempre maggiore del denominatore: questo indica che la separazione dei canali sta avvenendo in modo corretto. 
 
 %Si può osservare dalla figura~\ref{fig:mse_LMS} che all'aumentare del tempo l'errore dell'algorimo LMS diminuisce: questo indica che l'algoritmo produrrà un'uscita sempre più vicina a quella desiderata. 
