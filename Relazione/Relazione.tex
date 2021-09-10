@@ -716,7 +716,7 @@ end
 
 \subsection{Fast Deconvolution}
 \label{subsec:codice_matlab_fd}
-Nella Fast Deconvolution, come per il codice della LMS, si carica il file audio e le risposte impulsive \texttt{c11}, \texttt{c12}, \texttt{c21} e \texttt{c22} come mostrato nei codici~\ref{code:caricamento_audio_lms} e~\ref{code:caricamento_hrir_lms}. A differenza dell'algoritmo LMS, nella Fast Deconvolution si usa un overlap and save quindi occorre scegliere come dividere in blocchi il segnale di ingresso. Si implementa l'overlap and save come descritto nel capitolo~\ref{subsec:FD_teoria}, con dei blocchi di lunghezza $L = 4096$, pari alla lunghezza di default del frame di Nu-Tech, e un overlap al 50\%, quindi $M = L/2 = 2048$. La lunghezza totale del frame con overlap sarà quindi $\text{fs} = L + M - 1 = 4096+2048-1 = 6143$, per una FFT efficiente si sceglie la potenza di 2 più vicina a $6143$, quindi $\text{fftLen} = 2^{13} = 8192$.
+Nella Fast Deconvolution, come per il codice della LMS, si carica il file audio e le risposte impulsive \texttt{c11}, \texttt{c12}, \texttt{c21} e \texttt{c22} come mostrato nei codici~\ref{code:caricamento_audio_lms} e~\ref{code:caricamento_hrir_lms}. A differenza dell'algoritmo LMS, nella Fast Deconvolution si usa un overlap and save quindi occorre scegliere come dividere in blocchi il segnale di ingresso. Si implementa l'overlap and save come descritto nel capitolo~\ref{subsec:FD_teoria}, con dei blocchi di lunghezza $L = 4096$, pari alla lunghezza di default del frame di NU-Tech, e un overlap al 50\%, quindi $M = L/2 = 2048$. La lunghezza totale del frame con overlap sarà quindi $\text{fs} = L + M - 1 = 4096+2048-1 = 6143$, per una FFT efficiente si sceglie la potenza di 2 più vicina a $6143$, quindi $\text{fftLen} = 2^{13} = 8192$.
 
 \begin{lstlisting}[label=code:parametri_ols, caption=Parametri overlap and save, captionpos=b]
 L = 4096;
@@ -831,9 +831,9 @@ end
 \label{sec:codice_c}
 \subsection{NU-Tech}
 \label{subsec:NUTech}
-Il NU-Tech è un software gratuito sviluppato da Leaff Engineering che mette a disposizione una piattaforma DSP per eseguire dei programmi usando il proprio computer. L'utente può scrivere dei programmi nel linguaggio C++ e sviluppare così dei NUTS (NU-Tech Satellites) per inserirli nella GUI(interfaccia grafica) del NU-Tech. L'interfaccia ASIO 2.2 a basso livello garantisce basse latenze permettendo di eseguire il programma sviluppato in real-time.
+Il NU-Tech è un software gratuito sviluppato da Leaff Engineering che mette a disposizione una piattaforma DSP per eseguire dei programmi usando il proprio computer. L'utente può scrivere dei programmi nel linguaggio C++ e sviluppare così dei NUTS (NU-Tech Satellites) per inserirli nella GUI (interfaccia grafica) del NU-Tech. L'interfaccia ASIO 2.2 a basso livello garantisce basse latenze permettendo di eseguire il programma sviluppato in real-time.
 
-Un NUTS è una DLL (dynamic-link library), cioè una libreria che viene caricata dinamicamente in fase di esecuzione del programma. Una libreria a collegamento dinamico è a tutti gli effetti un codice eseguibile che dispone di un punto d'ingresso (entry point) invocato dal sistema operativo subito dopo il caricamento. Per una DLL il punto d'ingresso è mappato per convenzione sulla funzione DllMain (a discrezione, comunque, del compilatore). A differenza di un file eseguibile EXE, la DLL deve uscire dall'entry point non appena ha terminato le inizializzazioni necessarie.
+Un NUTS è una DLL (dynamic-link library), cioè una libreria che viene caricata dinamicamente in fase di esecuzione del programma. Una libreria a collegamento dinamico è a tutti gli effetti un codice eseguibile che dispone di un punto d'ingresso (entry point) invocato dal sistema operativo subito dopo il caricamento. A differenza di un file eseguibile EXE, la DLL deve uscire dall'entry point non appena ha terminato le inizializzazioni necessarie.
 
 La modalità ``DirectSound'' del NU-Tech, usata in questo progetto, fa uso di Microsoft DirectSound per acquisire suoni da dispositivi di input e riprodurre suoni attraverso vari dispositivi di riproduzione utilizzando effetti di posizionamento tridimensionali avanzati e filtri per eco, distorsione, riverbero e altri effetti. 
 
@@ -925,7 +925,7 @@ Nel file \texttt{PlugIn.cpp} sono presenti le funzioni:
 Plugin : viene chiamata quando il NUTS viene eliminato dalla board del NUTECH
 \end{itemize}
 Nel costruttore vengono inizializzate a zero le variabili precedentemente definite.
-\texttt{Framesize} e \texttt{Samplerate} vengono ricavati tramite la \texttt{CBFunction} e vengono impostati due pin di input e due pin di output, rispettivamente con la funzione \texttt{LESetNumInput(2)} e con \texttt{LESetNumOutput(2)}. Inizialmente la variabile booleana \texttt{isRunning} viene inizializzata falsa e \texttt{path} contiene il percorso di installazione del programma Nu-Tech.
+\texttt{Framesize} e \texttt{Samplerate} vengono ricavati tramite la \texttt{CBFunction} e vengono impostati due pin di input e due pin di output, rispettivamente con la funzione \texttt{LESetNumInput(2)} e con \texttt{LESetNumOutput(2)}. Inizialmente la variabile booleana \texttt{isRunning} viene inizializzata falsa e \texttt{path} contiene il percorso di installazione del programma NU-Tech.
 \begin{lstlisting}[language=cpp, label=code:costr, caption = Costruttore, breaklines = false, captionpos = b]
 PlugIn::PlugIn(InterfaceType _CBFunction,void * _PlugRef,
 	HWND ParentDlg): LEEffect(_CBFunction,_PlugRef,ParentDlg)
@@ -1209,7 +1209,7 @@ void __stdcall PlugIn::LERTWatchInit()
 	CBFunction(this, NUTS_ADDRTWATCH, TRUE, &NewWatch2);
 }
 \end{lstlisting}
-Per cambiare correttamente il parametro \texttt{mu} e il percorso \texttt{path} dalla finestra del NU-TECH è necessario usare le funzioni \texttt{LEGetParameter} e \texttt{LESetParameter}, rispettivamente illustrate nei codici~\ref{code:get_rtwatch_lms} e~\ref{code:set_rtwatch_lms}. Nella prima funzione, \texttt{memcpy} copia \texttt{sizeof(double)} byte dalla locazione puntata da \texttt{\&mu} a quella puntata da \texttt{Data}. Nella seconda funzione avviene l'opposto, cioè si copia il valore immesso dall'utente nella variabile \texttt{mu}. In modo analogo viene copiata la variabile \texttt{path} nella locazione di memoria puntata da \texttt{Data} e viceversa. Questo accade solo se la variabile booleana \texttt{isRunning} è falsa, cioè se il programma non è in esecuzione. Il controllo descritto è necessario per non cambiare il valore $\mu$ durante l'esecuzione dell'algoritmo adattativo.
+Per cambiare correttamente il parametro \texttt{mu} e il percorso \texttt{path} dalla finestra del NU-Tech è necessario usare le funzioni \texttt{LEGetParameter} e \texttt{LESetParameter}, rispettivamente illustrate nei codici~\ref{code:get_rtwatch_lms} e~\ref{code:set_rtwatch_lms}. Nella prima funzione, \texttt{memcpy} copia \texttt{sizeof(double)} byte dalla locazione puntata da \texttt{\&mu} a quella puntata da \texttt{Data}. Nella seconda funzione avviene l'opposto, cioè si copia il valore immesso dall'utente nella variabile \texttt{mu}. In modo analogo viene copiata la variabile \texttt{path} nella locazione di memoria puntata da \texttt{Data} e viceversa. Questo accade solo se la variabile booleana \texttt{isRunning} è falsa, cioè se il programma non è in esecuzione. Il controllo descritto è necessario per non cambiare il valore $\mu$ durante l'esecuzione dell'algoritmo adattativo.
 
 \begin{lstlisting}[language=cpp, label=code:get_rtwatch_lms, caption = Funzione \texttt{LEGetParameter}, breaklines = false, captionpos = b]
 int  __stdcall PlugIn::LEGetParameter(int Index,void *Data)
@@ -1309,7 +1309,7 @@ int fftLen, fftOrd;
 char path[MAX_FILE_NAME_LENGTH];
 bool isRunning;
 \end{lstlisting}
-Nel costruttore vengono inizializzate le variabili dichiarate nella libreria \texttt{Plugin.h} come mostrato nel codice~\ref{code:costruttore}. Si ottengono il \texttt{FrameSize} e il \texttt{SampleRate} usando la funzione \texttt{CBFunction} che permette di interagire con il Nu-Tech. Vengono impostati due pin di input e due pin di output, rispettivamente con la funzione \texttt{LESetNumInput(2)} e con \texttt{LESetNumOutput(2)}. La variabile \texttt{L} è pari alla lunghezza del frame, cioè di default $4096$, l'overlap \texttt{M} è pari alla metà di \texttt{L}, quindi la lunghezza di tutto il buffer è \texttt{fs = L + M - 1}. Viene inizializzato il percorso di default \texttt{path} in cui sono salvate le HRIR come quello della cartella di installazione del Nu-Tech. La variabile booleana \texttt{isRunning} è inizializzata falsa.
+Nel costruttore vengono inizializzate le variabili dichiarate nella libreria \texttt{Plugin.h} come mostrato nel codice~\ref{code:costruttore}. Si ottengono il \texttt{FrameSize} e il \texttt{SampleRate} usando la funzione \texttt{CBFunction} che permette di interagire con il NU-Tech. Vengono impostati due pin di input e due pin di output, rispettivamente con la funzione \texttt{LESetNumInput(2)} e con \texttt{LESetNumOutput(2)}. La variabile \texttt{L} è pari alla lunghezza del frame, cioè di default $4096$, l'overlap \texttt{M} è pari alla metà di \texttt{L}, quindi la lunghezza di tutto il buffer è \texttt{fs = L + M - 1}. Viene inizializzato il percorso di default \texttt{path} in cui sono salvate le HRIR come quello della cartella di installazione del NU-Tech. La variabile booleana \texttt{isRunning} è inizializzata falsa.
 
 \begin{lstlisting}[language=cpp, label=code:costruttore, caption = Costruttore, breaklines = false, captionpos = b]
 PlugIn::PlugIn(InterfaceType _CBFunction, void * _PlugRef, 
@@ -1876,7 +1876,7 @@ void __stdcall PlugIn::LERTWatchInit()
 	CBFunction(this, NUTS_ADDRTWATCH, TRUE, &NewWatch2);
 }
 \end{lstlisting}
-Il parametro $\beta$ e il percorso \texttt{path} possono essere variati dall'utente direttamente dal NU-TECH. Si usa \texttt{LEGetParameter} per portare le variabili nella board del NU-TECH come precedentemente illustrato nel codice~\ref{code:get_rtwatch_lms}.
+Il parametro $\beta$ e il percorso \texttt{path} possono essere variati dall'utente direttamente dal NU-Tech. Si usa \texttt{LEGetParameter} per portare le variabili nella board del NU-Tech come precedentemente illustrato nel codice~\ref{code:get_rtwatch_lms}.
 
 \begin{lstlisting}[language=cpp, label=code:get_rtwatch_fd, caption = Funzione \texttt{LEGetParameter}, breaklines = false, captionpos = b]
 int  __stdcall PlugIn::LEGetParameter(int Index,void *Data)
@@ -2156,7 +2156,7 @@ Dal confronto tra l'uscita desiderata e l'ingresso in figura~\ref{fig:confronto_
 	\label{fig:confronto_ingressi_uscite_LMS_FD}
 \end{figure}
 
-I risultati ottenuti per ognuno dei due algoritmi con il Nu-Tech sono uguali a quelli prodotti dal Matlab, questo ci permette di affermare che gli algoritmi sviluppati nei due diversi linguaggi di programmazione sono equivalenti e producono le stesse uscite.
+I risultati ottenuti per ognuno dei due algoritmi con il NU-Tech sono uguali a quelli prodotti dal Matlab, questo ci permette di affermare che gli algoritmi sviluppati nei due diversi linguaggi di programmazione sono equivalenti e producono le stesse uscite.
 \clearpage
 \subsection{Risultati NU-Tech}
 \label{subsec:risultati_nutech}
