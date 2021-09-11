@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.12.18)  10 SEP 2021 18:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.12.18)  11 SEP 2021 12:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1198,44 +1198,44 @@ Package pdftex.def Info: Immagini/lms.png  used on input line 342.
 [10
 
  <./Immagini/lms.png>]
-Overfull \hbox (30.73323pt too wide) detected at line 419
+Overfull \hbox (30.73323pt too wide) detected at line 417
 [] [] \OT1/cmr/m/n/12 = [] \U/msa/m/n/12 ~ []
  []
 
 [11] [12] [13] [14] [15]
-<Immagini/ols.jpg, id=325, 249.93375pt x 203.25937pt>
+<Immagini/ols.jpg, id=326, 249.93375pt x 203.25937pt>
 File: Immagini/ols.jpg Graphic file (type jpg)
 <use Immagini/ols.jpg>
-Package pdftex.def Info: Immagini/ols.jpg  used on input line 578.
-(pdftex.def)             Requested size: 195.0pt x 158.59128pt.
-<Immagini/ols_diagram.png, id=326, 442.65375pt x 462.72874pt>
+Package pdftex.def Info: Immagini/ols.jpg  used on input line 576.
+(pdftex.def)             Requested size: 272.99881pt x 222.03835pt.
+<Immagini/ols_diagram.png, id=327, 442.65375pt x 462.72874pt>
 File: Immagini/ols_diagram.png Graphic file (type png)
 <use Immagini/ols_diagram.png>
-Package pdftex.def Info: Immagini/ols_diagram.png  used on input line 585.
-(pdftex.def)             Requested size: 195.0pt x 203.84839pt.
+Package pdftex.def Info: Immagini/ols_diagram.png  used on input line 583.
+(pdftex.def)             Requested size: 272.99881pt x 285.392pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [16 <./Immagini/ols.jpg>] [17 <./Immagini/ols_diagram.png>]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 596.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 594.
 
 
 (c:/Program Files/texlive/2019/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Try loading font information for TS1+pcr on input line 599.
+LaTeX Font Info:    Try loading font information for TS1+pcr on input line 597.
 
 
 (c:/Program Files/texlive/2019/texmf-dist/tex/latex/psnfss/ts1pcr.fd
 File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
 )
-LaTeX Font Info:    Try loading font information for T1+ptm on input line 610.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 608.
 
 (c:/Program Files/texlive/2019/texmf-dist/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 )
-LaTeX Font Info:    Try loading font information for TS1+ptm on input line 610.
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 608.
 
 
 (c:/Program Files/texlive/2019/texmf-dist/tex/latex/psnfss/ts1ptm.fd
@@ -1256,26 +1256,26 @@ File: lstlang1.sty 2019/02/27 1.8b listings language file
 File: lstmisc.sty 2019/02/27 1.8b (Carsten Heinz)
 )
 [26] [27] [28] [29] [30] [31] [32]
-Overfull \hbox (27.48145pt too wide) in paragraph at lines 1161--1162
+Overfull \hbox (27.48145pt too wide) in paragraph at lines 1159--1160
 \T1/cmr/m/n/12 I vet-to-ri in usci-ta ven-go-no quin-di di nuo-vo ri-por-ta-ti 
 in \T1/cmtt/m/n/12 OutputData1 \T1/cmr/m/n/12 e \T1/cmtt/m/n/12 OutputData2
  []
 
 [33] [34]
-Overfull \hbox (7.87236pt too wide) in paragraph at lines 1212--1213
+Overfull \hbox (7.87236pt too wide) in paragraph at lines 1210--1211
 \T1/cmr/m/n/12 del NU-Tech è ne-ces-sa-rio usa-re le fun-zio-ni \T1/cmtt/m/n/12
  LEGetParameter \T1/cmr/m/n/12 e \T1/cmtt/m/n/12 LESetParameter\T1/cmr/m/n/12 ,
 
  []
 
 [35]
-Overfull \hbox (26.00389pt too wide) in paragraph at lines 1279--1280
+Overfull \hbox (26.00389pt too wide) in paragraph at lines 1277--1278
 []\T1/cmr/m/n/12 Successivamente ven-go-no di-chia-ra-te le va-ria-bi-li in-te-
 re \T1/cmtt/m/n/12 FrameSize \T1/cmr/m/n/12 e \T1/cmtt/m/n/12 SampleRate
  []
 
 [36]
-Overfull \hbox (7.67502pt too wide) in paragraph at lines 1288--1289
+Overfull \hbox (7.67502pt too wide) in paragraph at lines 1286--1287
 []\T1/cmr/m/n/12 Le va-ria-bi-li \T1/cmtt/m/n/12 pSpec\T1/cmr/m/n/12 , \T1/cmtt
 /m/n/12 pMemSpec\T1/cmr/m/n/12 , \T1/cmtt/m/n/12 pMemInit\T1/cmr/m/n/12 , \T1/c
 mtt/m/n/12 pMemBuffer\T1/cmr/m/n/12 , \T1/cmtt/m/n/12 sizeSpec\T1/cmr/m/n/12 , 
@@ -1283,31 +1283,31 @@ mtt/m/n/12 pMemBuffer\T1/cmr/m/n/12 , \T1/cmtt/m/n/12 sizeSpec\T1/cmr/m/n/12 ,
  []
 
 
-Overfull \hbox (0.50842pt too wide) in paragraph at lines 1296--1297
+Overfull \hbox (0.50842pt too wide) in paragraph at lines 1294--1295
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][] 
  []
 
 
-Overfull \hbox (19.36794pt too wide) in paragraph at lines 1312--1313
+Overfull \hbox (19.36794pt too wide) in paragraph at lines 1310--1311
 \T1/cmr/m/n/12 Nel co-strut-to-re ven-go-no ini-zia-liz-za-te le va-ria-bi-li d
 i-chia-ra-te nel-la li-bre-ria \T1/cmtt/m/n/12 Plugin.h
  []
 
 [37] [38] [39] [40] [41] [42] [43]
-Overfull \hbox (0.50842pt too wide) in paragraph at lines 1596--1597
+Overfull \hbox (0.50842pt too wide) in paragraph at lines 1594--1595
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (0.50842pt too wide) in paragraph at lines 1601--1602
+Overfull \hbox (0.50842pt too wide) in paragraph at lines 1599--1600
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 [44] [45] [46] [47] [48] [49]
-Overfull \hbox (0.31285pt too wide) in paragraph at lines 1836--1837
+Overfull \hbox (0.31285pt too wide) in paragraph at lines 1834--1835
 \T1/cmr/m/n/12 mi \T1/cmtt/m/n/12 M - 1 \T1/cmr/m/n/12 va-lo-ri al-l'i-ni-zio d
 el buf-fer suc-ces-si-vo con la fun-zio-ne \T1/cmtt/m/n/12 ippsMove_64fc\T1/cmr
 /m/n/12 . 
@@ -1332,15 +1332,15 @@ nverted-to.pdf>
 (epstopdf)                    size: 66660 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/left_channel_sepa
 ration_FD-eps-converted-to.pdf Immagini/left_channel_separation_FD.eps>
-(epstopdf)             \includegraphics on input line 2015.
+(epstopdf)             \includegraphics on input line 2013.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/left_channel_separation_FD-eps-converted-to.pdf, id=1507, 1028.84375p
+<Immagini/left_channel_separation_FD-eps-converted-to.pdf, id=1508, 1028.84375p
 t x 519.9425pt>
 File: Immagini/left_channel_separation_FD-eps-converted-to.pdf Graphic file (ty
 pe pdf)
 <use Immagini/left_channel_separation_FD-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/left_channel_separation_FD-eps-converted-to.p
-df  used on input line 2015.
+df  used on input line 2013.
 (pdftex.def)             Requested size: 350.99762pt x 177.38107pt.
 Package epstopdf Info: Source file: <Immagini/right_channel_separation_FD.eps>
 (epstopdf)                    date: 2021-08-13 16:06:18
@@ -1351,15 +1351,15 @@ onverted-to.pdf>
 (epstopdf)                    size: 67313 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/right_channel_sep
 aration_FD-eps-converted-to.pdf Immagini/right_channel_separation_FD.eps>
-(epstopdf)             \includegraphics on input line 2020.
+(epstopdf)             \includegraphics on input line 2018.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/right_channel_separation_FD-eps-converted-to.pdf, id=1508, 1028.84375
+<Immagini/right_channel_separation_FD-eps-converted-to.pdf, id=1509, 1028.84375
 pt x 519.9425pt>
 File: Immagini/right_channel_separation_FD-eps-converted-to.pdf Graphic file (t
 ype pdf)
 <use Immagini/right_channel_separation_FD-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/right_channel_separation_FD-eps-converted-to.
-pdf  used on input line 2020.
+pdf  used on input line 2018.
 (pdftex.def)             Requested size: 350.99762pt x 177.38107pt.
 
 
@@ -1374,15 +1374,15 @@ onverted-to.pdf>
 (epstopdf)                    size: 14673 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/left_channel_sepa
 ration_LMS-eps-converted-to.pdf Immagini/left_channel_separation_LMS.eps>
-(epstopdf)             \includegraphics on input line 2030.
+(epstopdf)             \includegraphics on input line 2028.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/left_channel_separation_LMS-eps-converted-to.pdf, id=1509, 1028.84375
+<Immagini/left_channel_separation_LMS-eps-converted-to.pdf, id=1510, 1028.84375
 pt x 519.9425pt>
 File: Immagini/left_channel_separation_LMS-eps-converted-to.pdf Graphic file (t
 ype pdf)
 <use Immagini/left_channel_separation_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/left_channel_separation_LMS-eps-converted-to.
-pdf  used on input line 2030.
+pdf  used on input line 2028.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 Package epstopdf Info: Source file: <Immagini/right_channel_separation_LMS.eps>
 
@@ -1394,15 +1394,15 @@ converted-to.pdf>
 (epstopdf)                    size: 14946 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/right_channel_sep
 aration_LMS-eps-converted-to.pdf Immagini/right_channel_separation_LMS.eps>
-(epstopdf)             \includegraphics on input line 2035.
+(epstopdf)             \includegraphics on input line 2033.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/right_channel_separation_LMS-eps-converted-to.pdf, id=1510, 1028.8437
+<Immagini/right_channel_separation_LMS-eps-converted-to.pdf, id=1511, 1028.8437
 5pt x 519.9425pt>
 File: Immagini/right_channel_separation_LMS-eps-converted-to.pdf Graphic file (
 type pdf)
 <use Immagini/right_channel_separation_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/right_channel_separation_LMS-eps-converted-to
-.pdf  used on input line 2035.
+.pdf  used on input line 2033.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -1415,13 +1415,13 @@ Package epstopdf Info: Source file: <Immagini/mse_e1.eps>
 (epstopdf)                    size: 25852 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/mse_e1-eps-conver
 ted-to.pdf Immagini/mse_e1.eps>
-(epstopdf)             \includegraphics on input line 2049.
+(epstopdf)             \includegraphics on input line 2047.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/mse_e1-eps-converted-to.pdf, id=1517, 1028.84375pt x 519.9425pt>
+<Immagini/mse_e1-eps-converted-to.pdf, id=1518, 1028.84375pt x 519.9425pt>
 File: Immagini/mse_e1-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/mse_e1-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/mse_e1-eps-converted-to.pdf  used on input li
-ne 2049.
+ne 2047.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 Package epstopdf Info: Source file: <Immagini/mse_e2.eps>
 (epstopdf)                    date: 2021-08-13 17:20:40
@@ -1431,16 +1431,16 @@ Package epstopdf Info: Source file: <Immagini/mse_e2.eps>
 (epstopdf)                    size: 26008 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/mse_e2-eps-conver
 ted-to.pdf Immagini/mse_e2.eps>
-(epstopdf)             \includegraphics on input line 2054.
+(epstopdf)             \includegraphics on input line 2052.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/mse_e2-eps-converted-to.pdf, id=1518, 1028.84375pt x 519.9425pt>
+<Immagini/mse_e2-eps-converted-to.pdf, id=1519, 1028.84375pt x 519.9425pt>
 File: Immagini/mse_e2-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/mse_e2-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/mse_e2-eps-converted-to.pdf  used on input li
-ne 2054.
+ne 2052.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 
-Underfull \hbox (badness 1817) in paragraph at lines 2058--2058
+Underfull \hbox (badness 1817) in paragraph at lines 2056--2056
 []\T1/cmr/m/n/12 Figura 6: |Con-fron-to del-l'M-SE del ca-na-le (a) si-ni-stro 
 e (b) de-stro
  []
@@ -1456,13 +1456,13 @@ Package epstopdf Info: Source file: <Immagini/H11_FD_LMS.eps>
 (epstopdf)                    size: 40275 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/H11_FD_LMS-eps-co
 nverted-to.pdf Immagini/H11_FD_LMS.eps>
-(epstopdf)             \includegraphics on input line 2065.
+(epstopdf)             \includegraphics on input line 2063.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H11_FD_LMS-eps-converted-to.pdf, id=1519, 1028.84375pt x 519.9425pt>
+<Immagini/H11_FD_LMS-eps-converted-to.pdf, id=1520, 1028.84375pt x 519.9425pt>
 File: Immagini/H11_FD_LMS-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/H11_FD_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H11_FD_LMS-eps-converted-to.pdf  used on inpu
-t line 2065.
+t line 2063.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 Package epstopdf Info: Source file: <Immagini/H12_FD_LMS.eps>
 (epstopdf)                    date: 2021-09-09 12:04:20
@@ -1472,13 +1472,13 @@ Package epstopdf Info: Source file: <Immagini/H12_FD_LMS.eps>
 (epstopdf)                    size: 40784 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/H12_FD_LMS-eps-co
 nverted-to.pdf Immagini/H12_FD_LMS.eps>
-(epstopdf)             \includegraphics on input line 2070.
+(epstopdf)             \includegraphics on input line 2068.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H12_FD_LMS-eps-converted-to.pdf, id=1520, 1028.84375pt x 519.9425pt>
+<Immagini/H12_FD_LMS-eps-converted-to.pdf, id=1521, 1028.84375pt x 519.9425pt>
 File: Immagini/H12_FD_LMS-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/H12_FD_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H12_FD_LMS-eps-converted-to.pdf  used on inpu
-t line 2070.
+t line 2068.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -1491,13 +1491,13 @@ Package epstopdf Info: Source file: <Immagini/H21_FD_LMS.eps>
 (epstopdf)                    size: 40624 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/H21_FD_LMS-eps-co
 nverted-to.pdf Immagini/H21_FD_LMS.eps>
-(epstopdf)             \includegraphics on input line 2080.
+(epstopdf)             \includegraphics on input line 2078.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H21_FD_LMS-eps-converted-to.pdf, id=1521, 1028.84375pt x 519.9425pt>
+<Immagini/H21_FD_LMS-eps-converted-to.pdf, id=1522, 1028.84375pt x 519.9425pt>
 File: Immagini/H21_FD_LMS-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/H21_FD_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H21_FD_LMS-eps-converted-to.pdf  used on inpu
-t line 2080.
+t line 2078.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 Package epstopdf Info: Source file: <Immagini/H22_FD_LMS.eps>
 (epstopdf)                    date: 2021-09-09 12:03:55
@@ -1507,39 +1507,39 @@ Package epstopdf Info: Source file: <Immagini/H22_FD_LMS.eps>
 (epstopdf)                    size: 40051 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/H22_FD_LMS-eps-co
 nverted-to.pdf Immagini/H22_FD_LMS.eps>
-(epstopdf)             \includegraphics on input line 2085.
+(epstopdf)             \includegraphics on input line 2083.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H22_FD_LMS-eps-converted-to.pdf, id=1522, 1028.84375pt x 519.9425pt>
+<Immagini/H22_FD_LMS-eps-converted-to.pdf, id=1523, 1028.84375pt x 519.9425pt>
 File: Immagini/H22_FD_LMS-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/H22_FD_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H22_FD_LMS-eps-converted-to.pdf  used on inpu
-t line 2085.
+t line 2083.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Immagini/H11_paper.png, id=1523, 895.54575pt x 341.47575pt>
+<Immagini/H11_paper.png, id=1524, 895.54575pt x 341.47575pt>
 File: Immagini/H11_paper.png Graphic file (type png)
 <use Immagini/H11_paper.png>
-Package pdftex.def Info: Immagini/H11_paper.png  used on input line 2096.
+Package pdftex.def Info: Immagini/H11_paper.png  used on input line 2094.
 (pdftex.def)             Requested size: 390.0pt x 148.70749pt.
-<Immagini/H12_paper.png, id=1524, 890.72775pt x 311.36325pt>
+<Immagini/H12_paper.png, id=1525, 890.72775pt x 311.36325pt>
 File: Immagini/H12_paper.png Graphic file (type png)
 <use Immagini/H12_paper.png>
-Package pdftex.def Info: Immagini/H12_paper.png  used on input line 2101.
+Package pdftex.def Info: Immagini/H12_paper.png  used on input line 2099.
 (pdftex.def)             Requested size: 390.0pt x 136.3256pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Immagini/H21_paper.png, id=1525, 887.11424pt x 307.74976pt>
+<Immagini/H21_paper.png, id=1526, 887.11424pt x 307.74976pt>
 File: Immagini/H21_paper.png Graphic file (type png)
 <use Immagini/H21_paper.png>
-Package pdftex.def Info: Immagini/H21_paper.png  used on input line 2111.
+Package pdftex.def Info: Immagini/H21_paper.png  used on input line 2109.
 (pdftex.def)             Requested size: 390.0pt x 135.29759pt.
-<Immagini/H22_paper.png, id=1526, 891.93225pt x 320.99925pt>
+<Immagini/H22_paper.png, id=1527, 891.93225pt x 320.99925pt>
 File: Immagini/H22_paper.png Graphic file (type png)
 <use Immagini/H22_paper.png>
-Package pdftex.def Info: Immagini/H22_paper.png  used on input line 2116.
+Package pdftex.def Info: Immagini/H22_paper.png  used on input line 2114.
 (pdftex.def)             Requested size: 390.0pt x 140.35844pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -1552,13 +1552,13 @@ Package epstopdf Info: Source file: <Immagini/x1_y1_FD.eps>
 (epstopdf)                    size: 39502 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/x1_y1_FD-eps-conv
 erted-to.pdf Immagini/x1_y1_FD.eps>
-(epstopdf)             \includegraphics on input line 2131.
+(epstopdf)             \includegraphics on input line 2129.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/x1_y1_FD-eps-converted-to.pdf, id=1534, 1028.84375pt x 519.9425pt>
+<Immagini/x1_y1_FD-eps-converted-to.pdf, id=1535, 1028.84375pt x 519.9425pt>
 File: Immagini/x1_y1_FD-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/x1_y1_FD-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/x1_y1_FD-eps-converted-to.pdf  used on input 
-line 2131.
+line 2129.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 Package epstopdf Info: Source file: <Immagini/x2_y2_FD.eps>
 (epstopdf)                    date: 2021-09-09 09:28:10
@@ -1568,13 +1568,13 @@ Package epstopdf Info: Source file: <Immagini/x2_y2_FD.eps>
 (epstopdf)                    size: 41431 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/x2_y2_FD-eps-conv
 erted-to.pdf Immagini/x2_y2_FD.eps>
-(epstopdf)             \includegraphics on input line 2136.
+(epstopdf)             \includegraphics on input line 2134.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/x2_y2_FD-eps-converted-to.pdf, id=1535, 1028.84375pt x 519.9425pt>
+<Immagini/x2_y2_FD-eps-converted-to.pdf, id=1536, 1028.84375pt x 519.9425pt>
 File: Immagini/x2_y2_FD-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/x2_y2_FD-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/x2_y2_FD-eps-converted-to.pdf  used on input 
-line 2136.
+line 2134.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -1587,13 +1587,13 @@ Package epstopdf Info: Source file: <Immagini/d1_y1_LMS.eps>
 (epstopdf)                    size: 39016 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/d1_y1_LMS-eps-con
 verted-to.pdf Immagini/d1_y1_LMS.eps>
-(epstopdf)             \includegraphics on input line 2146.
+(epstopdf)             \includegraphics on input line 2144.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/d1_y1_LMS-eps-converted-to.pdf, id=1536, 1028.84375pt x 519.9425pt>
+<Immagini/d1_y1_LMS-eps-converted-to.pdf, id=1537, 1028.84375pt x 519.9425pt>
 File: Immagini/d1_y1_LMS-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/d1_y1_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/d1_y1_LMS-eps-converted-to.pdf  used on input
- line 2146.
+ line 2144.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 Package epstopdf Info: Source file: <Immagini/d2_y2_LMS.eps>
 (epstopdf)                    date: 2021-09-09 09:40:21
@@ -1603,13 +1603,13 @@ Package epstopdf Info: Source file: <Immagini/d2_y2_LMS.eps>
 (epstopdf)                    size: 41771 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/d2_y2_LMS-eps-con
 verted-to.pdf Immagini/d2_y2_LMS.eps>
-(epstopdf)             \includegraphics on input line 2151.
+(epstopdf)             \includegraphics on input line 2149.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/d2_y2_LMS-eps-converted-to.pdf, id=1537, 1028.84375pt x 519.9425pt>
+<Immagini/d2_y2_LMS-eps-converted-to.pdf, id=1538, 1028.84375pt x 519.9425pt>
 File: Immagini/d2_y2_LMS-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/d2_y2_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/d2_y2_LMS-eps-converted-to.pdf  used on input
- line 2151.
+ line 2149.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -1625,47 +1625,47 @@ ni/H11_paper.png> <./Immagini/H12_paper.png>] [62 <./Immagini/H21_paper.png> <.
 /Immagini/H22_paper.png>] [63 <./Immagini/x1_y1_FD-eps-converted-to.pdf> <./Imm
 agini/x2_y2_FD-eps-converted-to.pdf>] [64 <./Immagini/d1_y1_LMS-eps-converted-t
 o.pdf> <./Immagini/d2_y2_LMS-eps-converted-to.pdf>]
-<Immagini/lms_template_nutech.png, id=1704, 1028.34187pt x 578.16pt>
+<Immagini/lms_template_nutech.png, id=1705, 1028.34187pt x 578.16pt>
 File: Immagini/lms_template_nutech.png Graphic file (type png)
 <use Immagini/lms_template_nutech.png>
 Package pdftex.def Info: Immagini/lms_template_nutech.png  used on input line 2
-168.
+166.
 (pdftex.def)             Requested size: 390.0pt x 219.2708pt.
-<Immagini/fd_template_nutech.png, id=1705, 1028.34187pt x 578.16pt>
+<Immagini/fd_template_nutech.png, id=1706, 1028.34187pt x 578.16pt>
 File: Immagini/fd_template_nutech.png Graphic file (type png)
 <use Immagini/fd_template_nutech.png>
 Package pdftex.def Info: Immagini/fd_template_nutech.png  used on input line 21
-73.
+71.
 (pdftex.def)             Requested size: 390.0pt x 219.2708pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Immagini/x1_y1_FD_nutech.png, id=1714, 1014.03844pt x 459.96844pt>
+<Immagini/x1_y1_FD_nutech.png, id=1715, 1014.03844pt x 459.96844pt>
 File: Immagini/x1_y1_FD_nutech.png Graphic file (type png)
 <use Immagini/x1_y1_FD_nutech.png>
-Package pdftex.def Info: Immagini/x1_y1_FD_nutech.png  used on input line 2185.
+Package pdftex.def Info: Immagini/x1_y1_FD_nutech.png  used on input line 2183.
 
 (pdftex.def)             Requested size: 390.0pt x 176.9024pt.
-<Immagini/x2_y2_FD_nutech.png, id=1715, 1020.81375pt x 462.22687pt>
+<Immagini/x2_y2_FD_nutech.png, id=1716, 1020.81375pt x 462.22687pt>
 File: Immagini/x2_y2_FD_nutech.png Graphic file (type png)
 <use Immagini/x2_y2_FD_nutech.png>
-Package pdftex.def Info: Immagini/x2_y2_FD_nutech.png  used on input line 2190.
+Package pdftex.def Info: Immagini/x2_y2_FD_nutech.png  used on input line 2188.
 
 (pdftex.def)             Requested size: 390.0pt x 176.59314pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Immagini/d1_y1_LMS_nutech.png, id=1716, 1024.57782pt x 463.7325pt>
+<Immagini/d1_y1_LMS_nutech.png, id=1717, 1024.57782pt x 463.7325pt>
 File: Immagini/d1_y1_LMS_nutech.png Graphic file (type png)
 <use Immagini/d1_y1_LMS_nutech.png>
-Package pdftex.def Info: Immagini/d1_y1_LMS_nutech.png  used on input line 2200
+Package pdftex.def Info: Immagini/d1_y1_LMS_nutech.png  used on input line 2198
 .
 (pdftex.def)             Requested size: 390.0pt x 176.51736pt.
-<Immagini/d2_y2_LMS_nutech.png, id=1717, 1017.8025pt x 461.47406pt>
+<Immagini/d2_y2_LMS_nutech.png, id=1718, 1017.8025pt x 461.47406pt>
 File: Immagini/d2_y2_LMS_nutech.png Graphic file (type png)
 <use Immagini/d2_y2_LMS_nutech.png>
-Package pdftex.def Info: Immagini/d2_y2_LMS_nutech.png  used on input line 2205
+Package pdftex.def Info: Immagini/d2_y2_LMS_nutech.png  used on input line 2203
 .
 (pdftex.def)             Requested size: 390.0pt x 176.82658pt.
 
@@ -1680,15 +1680,15 @@ d-to.pdf>
 (epstopdf)                    size: 24340 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/mse_e1_matlab_nut
 ech-eps-converted-to.pdf Immagini/mse_e1_matlab_nutech.eps>
-(epstopdf)             \includegraphics on input line 2217.
+(epstopdf)             \includegraphics on input line 2215.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/mse_e1_matlab_nutech-eps-converted-to.pdf, id=1720, 1028.84375pt x 51
+<Immagini/mse_e1_matlab_nutech-eps-converted-to.pdf, id=1721, 1028.84375pt x 51
 9.9425pt>
 File: Immagini/mse_e1_matlab_nutech-eps-converted-to.pdf Graphic file (type pdf
 )
 <use Immagini/mse_e1_matlab_nutech-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/mse_e1_matlab_nutech-eps-converted-to.pdf  us
-ed on input line 2217.
+ed on input line 2215.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 Package epstopdf Info: Source file: <Immagini/mse_e2_matlab_nutech.eps>
 (epstopdf)                    date: 2021-09-09 11:02:53
@@ -1699,18 +1699,18 @@ d-to.pdf>
 (epstopdf)                    size: 24585 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/mse_e2_matlab_nut
 ech-eps-converted-to.pdf Immagini/mse_e2_matlab_nutech.eps>
-(epstopdf)             \includegraphics on input line 2222.
+(epstopdf)             \includegraphics on input line 2220.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/mse_e2_matlab_nutech-eps-converted-to.pdf, id=1721, 1028.84375pt x 51
+<Immagini/mse_e2_matlab_nutech-eps-converted-to.pdf, id=1722, 1028.84375pt x 51
 9.9425pt>
 File: Immagini/mse_e2_matlab_nutech-eps-converted-to.pdf Graphic file (type pdf
 )
 <use Immagini/mse_e2_matlab_nutech-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/mse_e2_matlab_nutech-eps-converted-to.pdf  us
-ed on input line 2222.
+ed on input line 2220.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 
-Underfull \hbox (badness 1308) in paragraph at lines 2226--2226
+Underfull \hbox (badness 1308) in paragraph at lines 2224--2224
 []\T1/cmr/m/n/12 Figura 12: |Con-fron-to del-l'M-SE del ca-na-le (a) si-ni-stro
  e (b) de-stro
  []
@@ -1727,15 +1727,15 @@ ed-to.pdf>
 (epstopdf)                    size: 13257 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/H11_LMS_matlab_nu
 tech-eps-converted-to.pdf Immagini/H11_LMS_matlab_nutech.eps>
-(epstopdf)             \includegraphics on input line 2236.
+(epstopdf)             \includegraphics on input line 2234.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H11_LMS_matlab_nutech-eps-converted-to.pdf, id=1730, 1028.84375pt x 5
+<Immagini/H11_LMS_matlab_nutech-eps-converted-to.pdf, id=1731, 1028.84375pt x 5
 19.9425pt>
 File: Immagini/H11_LMS_matlab_nutech-eps-converted-to.pdf Graphic file (type pd
 f)
 <use Immagini/H11_LMS_matlab_nutech-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H11_LMS_matlab_nutech-eps-converted-to.pdf  u
-sed on input line 2236.
+sed on input line 2234.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 Package epstopdf Info: Source file: <Immagini/H12_LMS_matlab_nutech.eps>
 (epstopdf)                    date: 2021-09-09 12:59:38
@@ -1746,15 +1746,15 @@ ed-to.pdf>
 (epstopdf)                    size: 13328 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/H12_LMS_matlab_nu
 tech-eps-converted-to.pdf Immagini/H12_LMS_matlab_nutech.eps>
-(epstopdf)             \includegraphics on input line 2241.
+(epstopdf)             \includegraphics on input line 2239.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H12_LMS_matlab_nutech-eps-converted-to.pdf, id=1731, 1028.84375pt x 5
+<Immagini/H12_LMS_matlab_nutech-eps-converted-to.pdf, id=1732, 1028.84375pt x 5
 19.9425pt>
 File: Immagini/H12_LMS_matlab_nutech-eps-converted-to.pdf Graphic file (type pd
 f)
 <use Immagini/H12_LMS_matlab_nutech-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H12_LMS_matlab_nutech-eps-converted-to.pdf  u
-sed on input line 2241.
+sed on input line 2239.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -1768,15 +1768,15 @@ ed-to.pdf>
 (epstopdf)                    size: 13324 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/H21_LMS_matlab_nu
 tech-eps-converted-to.pdf Immagini/H21_LMS_matlab_nutech.eps>
-(epstopdf)             \includegraphics on input line 2251.
+(epstopdf)             \includegraphics on input line 2249.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H21_LMS_matlab_nutech-eps-converted-to.pdf, id=1732, 1028.84375pt x 5
+<Immagini/H21_LMS_matlab_nutech-eps-converted-to.pdf, id=1733, 1028.84375pt x 5
 19.9425pt>
 File: Immagini/H21_LMS_matlab_nutech-eps-converted-to.pdf Graphic file (type pd
 f)
 <use Immagini/H21_LMS_matlab_nutech-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H21_LMS_matlab_nutech-eps-converted-to.pdf  u
-sed on input line 2251.
+sed on input line 2249.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 Package epstopdf Info: Source file: <Immagini/H22_LMS_matlab_nutech.eps>
 (epstopdf)                    date: 2021-09-09 12:59:08
@@ -1787,15 +1787,15 @@ ed-to.pdf>
 (epstopdf)                    size: 13336 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/H22_LMS_matlab_nu
 tech-eps-converted-to.pdf Immagini/H22_LMS_matlab_nutech.eps>
-(epstopdf)             \includegraphics on input line 2256.
+(epstopdf)             \includegraphics on input line 2254.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H22_LMS_matlab_nutech-eps-converted-to.pdf, id=1733, 1028.84375pt x 5
+<Immagini/H22_LMS_matlab_nutech-eps-converted-to.pdf, id=1734, 1028.84375pt x 5
 19.9425pt>
 File: Immagini/H22_LMS_matlab_nutech-eps-converted-to.pdf Graphic file (type pd
 f)
 <use Immagini/H22_LMS_matlab_nutech-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H22_LMS_matlab_nutech-eps-converted-to.pdf  u
-sed on input line 2256.
+sed on input line 2254.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -1809,15 +1809,15 @@ d-to.pdf>
 (epstopdf)                    size: 68487 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/H11_FD_matlab_nut
 ech-eps-converted-to.pdf Immagini/H11_FD_matlab_nutech.eps>
-(epstopdf)             \includegraphics on input line 2267.
+(epstopdf)             \includegraphics on input line 2265.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H11_FD_matlab_nutech-eps-converted-to.pdf, id=1734, 1028.84375pt x 51
+<Immagini/H11_FD_matlab_nutech-eps-converted-to.pdf, id=1735, 1028.84375pt x 51
 9.9425pt>
 File: Immagini/H11_FD_matlab_nutech-eps-converted-to.pdf Graphic file (type pdf
 )
 <use Immagini/H11_FD_matlab_nutech-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H11_FD_matlab_nutech-eps-converted-to.pdf  us
-ed on input line 2267.
+ed on input line 2265.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 Package epstopdf Info: Source file: <Immagini/H12_FD_matlab_nutech.eps>
 (epstopdf)                    date: 2021-09-09 12:58:38
@@ -1828,15 +1828,15 @@ d-to.pdf>
 (epstopdf)                    size: 69348 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/H12_FD_matlab_nut
 ech-eps-converted-to.pdf Immagini/H12_FD_matlab_nutech.eps>
-(epstopdf)             \includegraphics on input line 2272.
+(epstopdf)             \includegraphics on input line 2270.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H12_FD_matlab_nutech-eps-converted-to.pdf, id=1735, 1028.84375pt x 51
+<Immagini/H12_FD_matlab_nutech-eps-converted-to.pdf, id=1736, 1028.84375pt x 51
 9.9425pt>
 File: Immagini/H12_FD_matlab_nutech-eps-converted-to.pdf Graphic file (type pdf
 )
 <use Immagini/H12_FD_matlab_nutech-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H12_FD_matlab_nutech-eps-converted-to.pdf  us
-ed on input line 2272.
+ed on input line 2270.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -1850,15 +1850,15 @@ d-to.pdf>
 (epstopdf)                    size: 69294 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/H21_FD_matlab_nut
 ech-eps-converted-to.pdf Immagini/H21_FD_matlab_nutech.eps>
-(epstopdf)             \includegraphics on input line 2282.
+(epstopdf)             \includegraphics on input line 2280.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H21_FD_matlab_nutech-eps-converted-to.pdf, id=1736, 1028.84375pt x 51
+<Immagini/H21_FD_matlab_nutech-eps-converted-to.pdf, id=1737, 1028.84375pt x 51
 9.9425pt>
 File: Immagini/H21_FD_matlab_nutech-eps-converted-to.pdf Graphic file (type pdf
 )
 <use Immagini/H21_FD_matlab_nutech-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H21_FD_matlab_nutech-eps-converted-to.pdf  us
-ed on input line 2282.
+ed on input line 2280.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 Package epstopdf Info: Source file: <Immagini/H22_FD_matlab_nutech.eps>
 (epstopdf)                    date: 2021-09-09 12:58:06
@@ -1869,15 +1869,15 @@ d-to.pdf>
 (epstopdf)                    size: 68282 bytes
 (epstopdf)             Command: <repstopdf --outfile=Immagini/H22_FD_matlab_nut
 ech-eps-converted-to.pdf Immagini/H22_FD_matlab_nutech.eps>
-(epstopdf)             \includegraphics on input line 2287.
+(epstopdf)             \includegraphics on input line 2285.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H22_FD_matlab_nutech-eps-converted-to.pdf, id=1737, 1028.84375pt x 51
+<Immagini/H22_FD_matlab_nutech-eps-converted-to.pdf, id=1738, 1028.84375pt x 51
 9.9425pt>
 File: Immagini/H22_FD_matlab_nutech-eps-converted-to.pdf Graphic file (type pdf
 )
 <use Immagini/H22_FD_matlab_nutech-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H22_FD_matlab_nutech-eps-converted-to.pdf  us
-ed on input line 2287.
+ed on input line 2285.
 (pdftex.def)             Requested size: 390.0pt x 197.09625pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -1897,19 +1897,19 @@ converted-to.pdf> <./Immagini/H12_FD_matlab_nutech-eps-converted-to.pdf>]
 atlab_nutech-eps-converted-to.pdf>] [74
 
 ]
-Overfull \hbox (10.96254pt too wide) in paragraph at lines 2337--2337
+Overfull \hbox (10.96254pt too wide) in paragraph at lines 2335--2335
 []\T1/cmr/m/n/12 Bill Gard-ner e Keith Mar-tin. \T1/cmr/m/it/12 HRTF Mea-su-re-
 men-ts of a KE-MAR Dummy-
  []
 
 
-Overfull \hbox (0.35216pt too wide) in paragraph at lines 2337--2337
+Overfull \hbox (0.35216pt too wide) in paragraph at lines 2335--2335
 \T1/cmr/m/n/12 sound re-pro-duc-tion^^T. In: \T1/cmr/m/it/12 2000 IEEE In-ter-n
 a-tio-nal Con-fe-ren-ce on Acou-
  []
 
 
-Overfull \hbox (0.88707pt too wide) in paragraph at lines 2337--2337
+Overfull \hbox (0.88707pt too wide) in paragraph at lines 2335--2335
 \T1/cmr/m/it/12 stics, Speech, and Si-gnal Pro-ces-sing. Pro-cee-dings (Cat. No
 .00CH37100)\T1/cmr/m/n/12 .
  []
@@ -1917,12 +1917,12 @@ Overfull \hbox (0.88707pt too wide) in paragraph at lines 2337--2337
 [75
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2338.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2336.
  [76]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2338.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2336.
  (./Relazione.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2338.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2338.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2336.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2336.
 
 Package rerunfilecheck Info: File `Relazione.out' has not changed.
 (rerunfilecheck)             Checksum: C1A1A8D3F6D9E914875B5F03FC427D2D;942.
@@ -1973,10 +1973,10 @@ onts/type1/public/cm-super/sftt1000.pfb><c:/Program Files/texlive/2019/texmf-di
 st/fonts/type1/public/cm-super/sftt1200.pfb><c:/Program Files/texlive/2019/texm
 f-dist/fonts/type1/urw/courier/ucrr8a.pfb><c:/Program Files/texlive/2019/texmf-
 dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on Relazione.pdf (78 pages, 2580135 bytes).
+Output written on Relazione.pdf (78 pages, 2580187 bytes).
 PDF statistics:
- 2227 PDF objects out of 2487 (max. 8388607)
- 2001 compressed objects within 21 object streams
+ 2228 PDF objects out of 2487 (max. 8388607)
+ 2002 compressed objects within 21 object streams
  1087 named destinations out of 1200 (max. 500000)
  332 words of extra memory for PDF output out of 10000 (max. 10000000)
 

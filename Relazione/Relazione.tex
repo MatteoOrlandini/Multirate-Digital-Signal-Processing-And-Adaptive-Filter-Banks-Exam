@@ -352,20 +352,18 @@ In generale, si può scrivere l'uscita $y[n]$ del filtraggio nell'$n$-esimo ista
 \end{equation*}
 con un filtro $\mathbf{b[n]}$ di lunghezza $M$ con coefficienti del tipo:
 \begin{equation*}
-\mathbf{b[n]} =  \left[b_{0}[n], b_{1}[n], \dots,\\ b_{M-1}[n]\right]^T
+\mathbf{b[n]} =  \left[b_{0}[n], b_{1}[n], \dots, b_{M-1}[n]\right]^T
 \end{equation*}
 come:
 \begin{equation}\label{eq:filtraggio_prodotto_scalare}
 y[n] = \sum_{j=0}^{M-1}b_{j}[n]a[n-j] = \mathbf{b}^T[\mathbf{n}] \cdot \mathbf{a}[\mathbf{n}].
 \end{equation}
 
-Il filtraggio dei segnali di riferimento $x_i[n]$ con le hrir $c_{lm}$ è dato dalla seguente equazione
+Il filtraggio dei segnali di riferimento $x_i[n]$ con le hrir $c_{lm}$ è dato dalla seguente equazione:
 \begin{equation}\label{eq:r_ilm}
 r_{ilm}[n]=\sum_{j=0}^{M-1}c_{lm}[j]x_i[n-j].
 \end{equation}
-
 Si può applicare la formula~\eqref{eq:filtraggio_prodotto_scalare} all'equazione~\eqref{eq:r_ilm} per calcolare le $r_{ilm}[n]$ nel seguente modo:
-
 \begin{equation}\label{eq:r_ilm_prodotto_scalare}
 r_{ilm}[n]=\sum_{j=0}^{M-1}c_{lm,j}[n]x_i[n-j] = \mathbf{c_{lm}}^T[\mathbf{n}] \cdot \mathbf{x_i}[\mathbf{n}].
 \end{equation}
@@ -379,7 +377,7 @@ dove $i,l,m$ assumono i valori 1 o 2 e $\circledast$ rappresenta la convoluzione
 \begin{equation}\label{eq:errore_lms}
 J=E[e[n]^2]=E[(d[n]-y[n])^2]
 \end{equation}
-dove $e[n]$, $d[n]$ e $y[n]$ sono definiti come
+dove $e[n]$, $d[n]$ e $y[n]$ sono definiti come:
 \begin{equation}
 e[n]=
 \begin{bmatrix}
@@ -395,7 +393,7 @@ y[n]=
 \begin{bmatrix}
 y_1[n]\\
 y_2[n]
-\end{bmatrix}
+\end{bmatrix}.
 \end{equation}
 La minimizzazione di $J$ avviene con il metodo steepest descend.
 Nel dominio del tempo discreto il sistema si può scrivere come
@@ -472,40 +470,40 @@ La deconvoluzione~\cite{kirkeby:deconvolution_regularization}~\cite{kirkeby:deco
 %In acustica e audio, la deconvoluzione a singolo canale è particolarmente utile poiché può compensare la risposta di trasduttori imperfetti come cuffie, altoparlanti e amplificatori. La deconvoluzione multicanale è necessaria nella progettazione di sistemi di cancellazione della diafonia e sistemi di imaging di sorgenti virtuali.%~\cite{kirkeby:deconvolution_analysis}
 %Nel progetto siamo interessati alle tecniche di deconvoluzione allo scopo di progettare filtri digitali per la riproduzione del suono su due canali. Più specificamente, dato un set di altoparlanti S, l'obiettivo è riprodurre un campo sonoro desiderato nei punti R dello spazio nel modo più accurato possibile. Questo principio è applicato dai cosiddetti sistemi di cancellazione della diafonia che vengono utilizzati per riprodurre registrazioni binaurali su due altoparlanti. In questo caso, viene utilizzata una matrice $2 \times 2$ di filtri digitali per compensare sia la risposta ambientale che la risposta degli altoparlanti, e anche per annullare la diafonia dall'altoparlante sinistro all'orecchio destro e viceversa. Un problema correlato è quello di ottenere una perfetta ``dereverberazione'' della risposta di una stanza in una posizione del microfono utilizzando due filtri digitali per calcolare l'ingresso a due altoparlanti. La fast deconvolution un metodo molto veloce per calcolare una matrice di filtri digitali che può essere utilizzata per controllare le uscite di un impianto multicanale. Questo metodo è tipicamente più veloce di diversi ordini di grandezza rispetto ai metodi nel dominio del tempo. Combina i principi dell'inversione dei minimi quadrati nel dominio della frequenza e il metodo di regolarizzazione di ordine zero che viene tradizionalmente utilizzato quando ci si trova di fronte a un problema di inversione mal condizionata.%~\cite{kirkeby:deconvolution_regularization}
 %La regolarizzazione dipendente dalla frequenza viene utilizzata per prevenire picchi elevati nella risposta in ampiezza dei filtri ottimali. Un ritardo di modellazione viene utilizzato per garantire che la rete di cancellazione del cross-talk funzioni bene non solo in termini di ampiezza, ma anche in termini di fase. L'algoritmo presuppone che sia possibile utilizzare filtri ottimali lunghi, e funziona bene solo quando due parametri di regolarizzazione, un fattore di forma e un fattore di guadagno, sono impostati in modo appropriato. In pratica, i valori dei due parametri di regolarizzazione sono determinati più facilmente da esperimenti per tentativi.%~\cite{kirkeby:deconvolution_design}
-Consideriamo una funzione costo del tipo
+Consideriamo una funzione costo del tipo:
 \begin{equation}\label{eq:funzione_costo_fd}
 J = E + \beta V(f)
 \end{equation}
-dove $E$ è una misura dell'errore della pressione sonora
+dove $E$ è una misura dell'errore della pressione sonora:
 \begin{equation}\label{eq:errore_fd}
 E = | Y_1 - X_1 |^2  + | Y_2 - X_2 |^2
 \end{equation}
-e $V$ è una funzione della frequenza che indica il costo computazionale. Il numero $\beta \geq 0$ è un parametro di regolarizzazione che determina quanto peso
-assegnare alla funzione $V$. La regolarizzazione dipendente dalla frequenza viene utilizzata per prevenire picchi elevati nella risposta in ampiezza dei filtri ottimali. Poiché non sappiamo a priori se la matrice $C$ è non singolare per determinate frequenze, la matrice $H$ di cancellazione del crosstalk può contenere valori molto alti. All'aumentare di $\beta$ da zero a infinito, $J$ cambia gradualmente dalla minimizzazione della sola funzione di errore $E$ alla minimizzazione dello sforzo computazionale $V$.
+e $V(f)$ è una funzione della frequenza che indica il costo computazionale. Il numero $\beta \geq 0$ è un parametro di regolarizzazione che determina quanto peso
+assegnare alla funzione $V(f)$. La regolarizzazione dipendente dalla frequenza viene utilizzata per prevenire picchi elevati nella risposta in ampiezza dei filtri ottimali. Poiché non sappiamo a priori se la matrice $C$ è non singolare per determinate frequenze, la matrice $H$ di cancellazione del crosstalk può contenere valori molto alti. All'aumentare di $\beta$ da zero a infinito, $J$ cambia gradualmente dalla minimizzazione della sola funzione di errore $E$ alla minimizzazione dello sforzo computazionale $V$.
 
-Siano $S$ i segnali trasferiti agli altoparlanti facendo passare il segnale $X$ attraverso la matrice di cancellazione del crosstalk $H$. Otteniamo
+Siano $S$ i segnali trasferiti agli altoparlanti facendo passare il segnale $X$ attraverso la matrice di cancellazione del crosstalk $H$. Otteniamo:
 \begin{equation}
 V(f) = S_b ^{+} S_b
 \end{equation}
 con
 \begin{equation}
-S_b = BS = BHX
+S_b = BS = BHX,
 \end{equation}
-dove $B$ è una matrice $2 \times 2$ e il simbolo $^+$ indica l'inversa generalizzata della matrice $S_b$. La soluzione approssimata della funzione $J$ è definita da 
+dove $B$ è una matrice $2 \times 2$ e il simbolo $^+$ indica l'inversa generalizzata della matrice $S_b$. La soluzione approssimata della funzione $J$ è definita da:
 \begin{equation}\label{eq:H_FD}
-H(z) = \left[C^T (z^{-1}) C(z) + \beta B^T B)\right]^{-1} C^T(z^{-1})
+H(z) = \left[C^T (z^{-1}) C(z) + \beta B^T B)\right]^{-1} C^T(z^{-1}),
 \end{equation}
-dove l'apice $^T$ denota la trasposta della matrice. Se la matrice $B$ è uguale alla matrice identità $I$, si ottiene $S_b = S$, dunque l'equazione~\eqref{eq:H_FD} diventa
+dove l'apice $^T$ denota la trasposta della matrice. Se la matrice $B$ è uguale alla matrice identità $I$, si ottiene $S_b = S$, dunque l'equazione~\eqref{eq:H_FD} diventa:
 \begin{equation}\label{eq:H_FD2}
-H(z) = \left[C^T (z^{-1}) C(z) + \beta I)\right]^{-1} C^T(z^{-1}) z^{-m}
+H(z) = \left[C^T (z^{-1}) C(z) + \beta I)\right]^{-1} C^T(z^{-1}) z^{-m},
 \end{equation}
 dove la componente $z^{-m}$ implementa un ritardo di $m$ campioni. Un ritardo di modellazione viene utilizzato per garantire che la rete di cancellazione del cross-talk funzioni bene non solo in termini di ampiezza, ma anche in termini di fase.
 
-Le equazioni~\eqref{eq:H_FD} e~\eqref{eq:H_FD2} rappresentano una espressione di $H(z)$ nel dominio continuo della frequenza. Se, come nel nostro caso, il dominio della frequenza è discreto, occorre usare la formula~\eqref{eq:H_FD3}, in cui il valore di $H[k]$ è dato da
+Le equazioni~\eqref{eq:H_FD} e~\eqref{eq:H_FD2} rappresentano una espressione di $H(z)$ nel dominio continuo della frequenza. Se, come nel nostro caso, il dominio della frequenza è discreto, occorre usare la formula~\eqref{eq:H_FD3}, in cui il valore di $H[k]$ è dato da:
 \begin{equation}\label{eq:H_FD3}
-H[k] = \left[C^H[k] C[k] + \beta I)\right]^{-1} C^H[k]
+H[k] = \left[C^H[k] C[k] + \beta I)\right]^{-1} C^H[k],
 \end{equation}
-dove $k$ indica la $k$-esima frequenza corrispondente a $\exp(j2\pi k/N)$ e l'apice~$^H$ denota l'operatore Hermitiano che fa la trasposta coniugata del suo argomento. Dall'equazione si può osservare che ponendo $\beta = 0$ si ottiene $H = C^{-1}$. In questo caso, poiché $Y = CHX = C C^{-1} X = IX = X$, si ottiene in uscita il segnale d'ingresso.
+dove $k$ indica la $k$-esima frequenza corrispondente a $\exp(j2\pi k/N)$ e l'apice~$^H$ denota l'operatore Hermitiano che fa la trasposta coniugata del suo argomento. Dall'equazione~\eqref{eq:H_FD3} si può osservare che ponendo $\beta = 0$ si ottiene $H = C^{-1}$. In questo caso, poiché $Y = CHX = C C^{-1} X = IX = X$, si ottiene in uscita il segnale d'ingresso.
 
 L'equazione~\eqref{eq:H_FD3} si ricava dalla~\eqref{eq:H_FD2} notando che la trasformata di Fourier a tempo discreto è la valutazione della trasformata zeta sul cerchio unitario, quindi ponendo $z = e^{j\omega}$ si ottiene la DTFT. Si noti che un generico segnale $X(z^{-1}) = X(e^{-j\omega}) = X^*(e^{j\omega})$ corrisponde nel dominio discreto della frequenza a $X^*[k]$ e nel tempo discreto all'inversione temporale $x[-n]$. Come precedentemente detto, l'operatore Hermitiano fa la trasposta coniugata del suo argomento, quindi si può capire perché $C^T(z^{-1})$ diventa $C^H[k]$ nell'equazione~\eqref{eq:H_FD3}.
 
@@ -517,7 +515,7 @@ Il ritardo di $m$ campioni $z^{-m}$ viene esplicitato nella risposta impulsiva c
 \item si implementa uno shift ciclico di $m$ campioni per ogni elemento di $h_{ij}[n]$ con $i = 1, 2$ e $j = 1, 2$.
 \end{enumerate}
 
-Dato che l'uscita $Y$ è data da
+Dato che l'uscita $Y$ è data da:
 \begin{equation}\label{eq:y_matrix}
 Y = CHX = 
 \begin{bmatrix}
@@ -529,7 +527,7 @@ H_{11}\\
 H_{21}\\
 H_{12}\\
 H_{22}\\
-\end{bmatrix}
+\end{bmatrix},
 \end{equation}
 nell'implementazione pratica non si può calcolare tutta l'uscita con la sola operazione matriciale~\eqref{eq:y_matrix}, occorre usare la tecnica dell'overlap and save per filtrare l'ingresso $X$ con i filtri $C$ e $H$. L'overlap and save è utile per eseguire un filtraggio in real time con un filtro a risposta impulsiva finita. Questa tecnica viene usata per fare la convoluzione a blocchi tra un segnale di ingresso $x[n]$ molto lungo e un filtro FIR $h[n]$:
 \begin{equation}
@@ -537,15 +535,15 @@ y[n] = x[n] * h[n] = \sum_{m=-\infty}^{+\infty} {h[m] \cdot x[n-m]} = \sum_{m=1}
 \end{equation}
 poiché $h[m] \neq 0$ solo per $m \in [1, M]$.
 
-L'overlap and save permette di calcolare dei blocchi di $y[n]$ di lunghezza $L$ e concatenarli insieme per formare il segnale di uscita completo. Si definisce il $k$-esimo blocco d'ingresso come
+L'overlap and save permette di calcolare dei blocchi di $y[n]$ di lunghezza $L$ e concatenarli insieme per formare il segnale di uscita completo. Si definisce il $k$-esimo blocco d'ingresso come:
 \begin{equation}
 x_k[n] = 
 \begin{cases}
 x[n+kL], & 1 \leq n \leq L + M - 1\\
 0 & \text{altrove}
-\end{cases}
+\end{cases},
 \end{equation}
-quindi il $k$-esimo blocco di uscita è dato da 
+quindi il $k$-esimo blocco di uscita è dato da:
 \begin{equation}
 y_k[n] = x_k[n] * h[n] = \sum_{m=1}^{M} {h[m] \cdot x_k[n-m]}.
 \end{equation}
@@ -575,14 +573,14 @@ Un'implementazione più efficiente è invece quella descritta di seguito e mostr
 
 \begin{figure}[h]
 	\centering	
-	\includegraphics[width=.5\textwidth]{Immagini/ols}
+	\includegraphics[width=.7\textwidth]{Immagini/ols}
 	\caption{Metodo Overlap and Save}
 	\label{fig:ols}
 \end{figure}
 
 \begin{figure}[h]
 	\centering	
-	\includegraphics[width=.5\textwidth]{Immagini/ols_diagram}
+	\includegraphics[width=.7\textwidth]{Immagini/ols_diagram}
 	\caption{Diagramma dell'implementazione dell'Overlap and Save}
 	\label{fig:ols_digramma}
 \end{figure}
