@@ -78,11 +78,50 @@ inverso prima di riprodurre il segnale binaurale attraverso gli altoparlanti.
 \end{frame}
 
 \begin{frame}
-\frametitle{Algoritmi adattativi}
-\end{frame}	
+\begin{itemize}
+\item Supponendo che i percorsi di trasferimento acustico dagli altoparlanti alle
+orecchie siano noti, il metodo di implementazione \textbf{diretto} calcola il filtro di cancellazione della diafonia invertendo le funzioni di trasferimento HRTF.
+\item Nei metodi di implementazione \textbf{adattivi}, il filtro di cancellazione della diafonia è calcolato adattando i relativi coefficienti usando i segnali di feedback
+ricevuti da microfoni in miniatura collocati nelle orecchie dell'utente.
+\item I metodi diretti o adattativi possono essere implementati nel dominio del
+\textbf{tempo} o della \textbf{frequenza}.
+\item I primi sono generalmente
+dispendiosi dal punto di vista computazionale, mentre i secondi hanno una
+complessità inferiore. Gli algoritmi nel dominio del tempo
+hanno prestazioni migliori di quelli nel dominio della frequenza, data la stessa
+lunghezza del filtro di cancellazione.
+\end{itemize}
+
+\end{frame}
 
 \begin{frame}
+\frametitle{Algoritmi nel dominio del tempo}
+\begin{block}{LMS}
+Noto per la sua
+semplicità e robustezza ed è ampiamente utilizzato, anche se la sua velocità
+di convergenza è lenta.
+$$J=E[e[n]^2]=E[(d[n]-y[n])^2]$$
+\end{block}
+
+\begin{block}{RLS}
+Si ottiene pesando in modo esponenziale i dati in modo da rimuovere
+gradualmente gli effetti dei vecchi dati sui coefficienti del filtro e permettere il tracciamento di segnali che variano lentamente. $$J(\mathbf{h}_n) = \sum_{i = 0}^{n} \lambda^{n-i}e^2[i]$$
+\end{block}
+
+\end{frame}	
+\begin{frame}
 \frametitle{Algoritmi nel dominio della frequenza}
+\begin{block}{Fast Deconvolution}
+La Fast Deconvolution è un metodo molto veloce per calcolare una matrice
+di filtri digitali che può essere utilizzata per controllare le uscite di un
+impianto multicanale.
+$$J = E + \beta V(f)$$
+\end{block}
+
+\begin{block}{FLMS}
+Un algoritmo derivato da LMS è FLMS (Fast Least Mean Square), viene implementato nel dominio della frequenza e richiede uno sforzo computazionale minore rispetto alla sua controparte nel dominio
+del tempo.
+\end{block}
 \end{frame}	
 	
 \section{Dataset}
@@ -143,7 +182,7 @@ Il segnale ricevuto ad ogni orecchio è dato da:
 y_i[n]=r_{1i1}[n] \circledast h_{11}[n]+r_{1i2}[n] \circledast h_{21}[n]+
 r_{2i1}[n] \circledast h_{12}[n]+r_{2i2}[n] \circledast h_{22}[n].
 \end{equation}
- Il criterio dell'algoritmo LMS è la minimizzazione della funzione costo
+Il criterio dell'algoritmo LMS è la minimizzazione della funzione costo
 \begin{equation}\label{eq:errore_lms}
 J=E[e[n]^2]=E[(d[n]-y[n])^2]
 \end{equation}
@@ -228,7 +267,7 @@ H[k] = \left[C^H[k] C[k] + \beta I)\right]^{-1} C^H[k]
 \end{equation}
 dove $k$ indica la $k$-esima frequenza corrispondente a $\exp(j2\pi k/N)$ e l'apice~$^H$ denota l'operatore Hermitiano. 
 
-Dall'equazione~\eqref{eq:H_FD3} si può osservare che ponendo $\beta = 0$ si ottiene $H = C^{-1}$. In questo caso, poiché $Y = CHX = C C^{-1} X = IX = X$, si ottiene in uscita il segnale d'ingresso.
+%Dall'equazione~\eqref{eq:H_FD3} si può osservare che ponendo $\beta = 0$ si ottiene $H = C^{-1}$. In questo caso, poiché $Y = CHX = C C^{-1} X = IX = X$, si ottiene in uscita il segnale d'ingresso.
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Overlap and Save}
@@ -261,6 +300,38 @@ nell'implementazione pratica non si può calcolare tutta l'uscita con la sola ope
 	\caption{Diagramma dell'implementazione dell'Overlap and Save}
 	\label{fig:ols_digramma}
 \end{figure}
+\end{frame}
+
+\section{Implementazione NU-Tech}
+\begin{frame}
+\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}{LMS}
+\begin{enumerate}
+\item Inizializzazione delle variabili nel costruttore.
+\item Allocazione delle variabili e lettura delle HRIR nella Init.
+\item Costruzione segnale desiderato traslando il segnale di ingresso di $\tau$ campioni nella Process.
+\item Filtraggio dei segnali $x_i[n]$ con le HRIR $c_{lm}$ usando l'equazione~\eqref{eq:r_ilm_prodotto_scalare}.
+\item Calcolo delle uscite con la formula~\eqref{eq:y_i_lms}.
+\item Calcolo dell'errore come la differenza fra il segnale desiderato e l'uscita effettiva.
+\item Aggiornamento dei tappi del filtro di ricostruzione con la formula~\eqref{eq:aggiornamento_lms}.
+\item Deallocazione della memoria nella Delete.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Fast Deconvolution}
+\begin{enumerate}
+\item Inizializzazione delle variabili nel costruttore.
+\item Allocazione delle variabili e lettura delle HRIR nella Init.
+\item Calcolo della FFT a fftLen punti delle HRIR.
+\item Calcolo della matrice $\mathbf{H}$ con la formula~\eqref{eq:H_FD3}.
+\item Costruzione del buffer di ingresso con $f_s$ campioni per l'overlap and save nella Process.
+\item Calcolo della FFT a fftLen punti del buffer di ingresso.
+\item Calcolo del buffer di uscita moltiplicando il buffer di ingresso per le HRTF.
+\item Aggiornamento dell'uscita scartando i primi $f_s$ campioni del buffer.
+\item Deallocazione della memoria nella Delete.
+\end{enumerate} 
 \end{frame}
 
 \section{Risultati}

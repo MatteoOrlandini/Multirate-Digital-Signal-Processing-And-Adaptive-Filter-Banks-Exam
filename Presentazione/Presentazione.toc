@@ -3,7 +3,8 @@
 \babel@toc {italian}{}
 \beamer@sectionintoc {1}{Introduzione}{3}{0}{1}
 \beamer@sectionintoc {2}{Stato dell'arte}{5}{0}{2}
-\beamer@sectionintoc {3}{Dataset}{8}{0}{3}
-\beamer@sectionintoc {4}{LMS}{10}{0}{4}
-\beamer@sectionintoc {5}{Fast Deconvolution}{14}{0}{5}
-\beamer@sectionintoc {6}{Risultati}{21}{0}{6}
+\beamer@sectionintoc {3}{Dataset}{9}{0}{3}
+\beamer@sectionintoc {4}{LMS}{11}{0}{4}
+\beamer@sectionintoc {5}{Fast Deconvolution}{15}{0}{5}
+\beamer@sectionintoc {6}{Implementazione NU-Tech}{21}{0}{6}
+\beamer@sectionintoc {7}{Risultati}{24}{0}{7}

@@ -130,9 +130,9 @@ Il concetto di cancellazione ed equalizzazione della diafonia è stato introdott
 
 Supponendo che i percorsi di trasferimento acustico dagli altoparlanti alle orecchie siano noti, il metodo di implementazione diretto calcola il filtro di cancellazione della diafonia invertendo direttamente le funzioni di trasferimento HRTF. Solitamente viene utilizzato un manichino di una testa con dei microfoni all'interno per stimare queste funzioni.
 
-Il metodo della stima diretta può essere implementato nel dominio del tempo~\cite{Gonzalez:time_domain},~\cite{Mouchtaris:Inverse_filter},~\cite{143434} o della frequenza~\cite{kirkeby:deconvolution_regularization},~\cite{kirkeby:deconvolution_analysis},~\cite{kirkeby:deconvolution_design}. I primi sono generalmente dispendiosi dal punto di vista computazionale, mentre i secondi hanno una complessità inferiore. D'altra parte, gli algoritmi nel dominio del tempo hanno prestazioni migliori di quelli nel dominio della frequenza, data la stessa lunghezza del filtro di cancellazione~\cite{wand:a_stereo_crosstalk}.
+Il metodo della stima diretta può essere implementato nel dominio del tempo~\cite{Gonzalez:time_domain},~\cite{Mouchtaris:Inverse_filter} o della frequenza~\cite{kirkeby:deconvolution_analysis},~\cite{kirkeby:deconvolution_regularization},~\cite{kirkeby:deconvolution_design}. I primi sono generalmente dispendiosi dal punto di vista computazionale, mentre i secondi hanno una complessità inferiore. D'altra parte, gli algoritmi nel dominio del tempo hanno prestazioni migliori di quelli nel dominio della frequenza, data la stessa lunghezza del filtro di cancellazione~\cite{wand:a_stereo_crosstalk}.
 
-Ad esempio, il metodo nel dominio della frequenza chiamato Fast Deconvolution~\cite{kirkeby:deconvolution_regularization},~\cite{kirkeby:deconvolution_analysis},~\cite{kirkeby:deconvolution_design}, che è stato dimostrato essere molto utile e facile da usare in diversi casi pratici, può subire un effetto di convoluzione circolare quando i filtri inversi non sono sufficientemente lunghi rispetto alla durata del percorso acustico.
+Ad esempio, il metodo nel dominio della frequenza chiamato Fast Deconvolution~\cite{kirkeby:deconvolution_analysis},~\cite{kirkeby:deconvolution_regularization},~\cite{kirkeby:deconvolution_design}, che è stato dimostrato essere molto utile e facile da usare in diversi casi pratici, può subire un effetto di convoluzione circolare quando i filtri inversi non sono sufficientemente lunghi rispetto alla durata del percorso acustico.
 
 Nei metodi di implementazione adattivi, il filtro di cancellazione della  diafonia è calcolato adattando i relativi coefficienti usando i segnali di feedback ricevuti da microfoni in miniatura collocati nelle orecchie dell'utente~\cite{Ferrara:FLMS},~\cite{4217047},~\cite{143434},~\cite{wand:a_stereo_crosstalk}. Molti metodi adattativi impiegano tipicamente qualche variazione degli algoritmi LMS o RLS (Recursive Least Squares). L'algoritmo LMS cerca di ridurre una funzione costo $J$ pari all'errore quadratico medio tra il segnale desiderato e l'uscita:
 \begin{equation*}
@@ -434,7 +434,7 @@ Usando~\eqref{eq:r_ilm}, l'equazione~\eqref{eq:y_lms} diventa
 	h_{22}[n]  
 \end{bmatrix} 
 \end{equation}
-Per ottenere l'errore si calcola la differenza fra il segnale desiderato è l'uscita effettiva.
+Per ottenere l'errore si calcola la differenza fra il segnale desiderato e l'uscita effettiva.
 \[
 e_1^{(1)} = d_1 - (r_{111} \circledast h_{11} + r_{112} \circledast h_{21} + r_{211} \circledast h_{12} + r_{212} \circledast h_{22})
 \]
