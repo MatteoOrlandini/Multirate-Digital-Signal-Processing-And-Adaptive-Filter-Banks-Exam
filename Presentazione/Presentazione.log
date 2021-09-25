@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.12.18)  18 SEP 2021 12:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.12.18)  25 SEP 2021 16:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1720,12 +1720,12 @@ sl/10.95 h[]\OT1/cmss/m/n/10.95 [\OT1/mathkerncmss/m/sl/10.95 n\OT1/cmss/m/n/10
 
 
 ]
-<Immagini/ols.jpg, id=612, 249.93375pt x 203.25937pt>
+<Immagini/ols.jpg, id=606, 249.93375pt x 203.25937pt>
 File: Immagini/ols.jpg Graphic file (type jpg)
 <use Immagini/ols.jpg>
 Package pdftex.def Info: Immagini/ols.jpg  used on input line 303.
 (pdftex.def)             Requested size: 184.3758pt x 149.95055pt.
-<Immagini/ols_diagram.png, id=613, 442.65375pt x 462.72874pt>
+<Immagini/ols_diagram.png, id=607, 442.65375pt x 462.72874pt>
 File: Immagini/ols_diagram.png Graphic file (type png)
 <use Immagini/ols_diagram.png>
 Package pdftex.def Info: Immagini/ols_diagram.png  used on input line 303.
@@ -1778,7 +1778,7 @@ nverted-to.pdf>
 ration_FD-eps-converted-to.pdf Immagini/left_channel_separation_FD.eps>
 (epstopdf)             \includegraphics on input line 436.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/left_channel_separation_FD-eps-converted-to.pdf, id=906, 1028.84375pt
+<Immagini/left_channel_separation_FD-eps-converted-to.pdf, id=900, 1028.84375pt
  x 519.9425pt>
 File: Immagini/left_channel_separation_FD-eps-converted-to.pdf Graphic file (ty
 pe pdf)
@@ -1797,7 +1797,7 @@ onverted-to.pdf>
 aration_FD-eps-converted-to.pdf Immagini/right_channel_separation_FD.eps>
 (epstopdf)             \includegraphics on input line 436.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/right_channel_separation_FD-eps-converted-to.pdf, id=907, 1028.84375p
+<Immagini/right_channel_separation_FD-eps-converted-to.pdf, id=901, 1028.84375p
 t x 519.9425pt>
 File: Immagini/right_channel_separation_FD-eps-converted-to.pdf Graphic file (t
 ype pdf)
@@ -1816,7 +1816,7 @@ onverted-to.pdf>
 ration_LMS-eps-converted-to.pdf Immagini/left_channel_separation_LMS.eps>
 (epstopdf)             \includegraphics on input line 436.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/left_channel_separation_LMS-eps-converted-to.pdf, id=908, 1028.84375p
+<Immagini/left_channel_separation_LMS-eps-converted-to.pdf, id=902, 1028.84375p
 t x 519.9425pt>
 File: Immagini/left_channel_separation_LMS-eps-converted-to.pdf Graphic file (t
 ype pdf)
@@ -1836,7 +1836,7 @@ converted-to.pdf>
 aration_LMS-eps-converted-to.pdf Immagini/right_channel_separation_LMS.eps>
 (epstopdf)             \includegraphics on input line 436.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/right_channel_separation_LMS-eps-converted-to.pdf, id=909, 1028.84375
+<Immagini/right_channel_separation_LMS-eps-converted-to.pdf, id=903, 1028.84375
 pt x 519.9425pt>
 File: Immagini/right_channel_separation_LMS-eps-converted-to.pdf Graphic file (
 type pdf)
@@ -1860,7 +1860,7 @@ Package epstopdf Info: Source file: <Immagini/mse_e1.eps>
 ted-to.pdf Immagini/mse_e1.eps>
 (epstopdf)             \includegraphics on input line 454.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/mse_e1-eps-converted-to.pdf, id=982, 1028.84375pt x 519.9425pt>
+<Immagini/mse_e1-eps-converted-to.pdf, id=976, 1028.84375pt x 519.9425pt>
 File: Immagini/mse_e1-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/mse_e1-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/mse_e1-eps-converted-to.pdf  used on input li
@@ -1876,7 +1876,7 @@ Package epstopdf Info: Source file: <Immagini/mse_e2.eps>
 ted-to.pdf Immagini/mse_e2.eps>
 (epstopdf)             \includegraphics on input line 454.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/mse_e2-eps-converted-to.pdf, id=983, 1028.84375pt x 519.9425pt>
+<Immagini/mse_e2-eps-converted-to.pdf, id=977, 1028.84375pt x 519.9425pt>
 File: Immagini/mse_e2-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/mse_e2-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/mse_e2-eps-converted-to.pdf  used on input li
@@ -1896,7 +1896,7 @@ Package epstopdf Info: Source file: <Immagini/H11_FD_LMS.eps>
 nverted-to.pdf Immagini/H11_FD_LMS.eps>
 (epstopdf)             \includegraphics on input line 485.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H11_FD_LMS-eps-converted-to.pdf, id=1033, 1028.84375pt x 519.9425pt>
+<Immagini/H11_FD_LMS-eps-converted-to.pdf, id=1027, 1028.84375pt x 519.9425pt>
 File: Immagini/H11_FD_LMS-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/H11_FD_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H11_FD_LMS-eps-converted-to.pdf  used on inpu
@@ -1912,7 +1912,7 @@ Package epstopdf Info: Source file: <Immagini/H12_FD_LMS.eps>
 nverted-to.pdf Immagini/H12_FD_LMS.eps>
 (epstopdf)             \includegraphics on input line 485.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H12_FD_LMS-eps-converted-to.pdf, id=1034, 1028.84375pt x 519.9425pt>
+<Immagini/H12_FD_LMS-eps-converted-to.pdf, id=1028, 1028.84375pt x 519.9425pt>
 File: Immagini/H12_FD_LMS-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/H12_FD_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H12_FD_LMS-eps-converted-to.pdf  used on inpu
@@ -1928,7 +1928,7 @@ Package epstopdf Info: Source file: <Immagini/H21_FD_LMS.eps>
 nverted-to.pdf Immagini/H21_FD_LMS.eps>
 (epstopdf)             \includegraphics on input line 485.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H21_FD_LMS-eps-converted-to.pdf, id=1035, 1028.84375pt x 519.9425pt>
+<Immagini/H21_FD_LMS-eps-converted-to.pdf, id=1029, 1028.84375pt x 519.9425pt>
 File: Immagini/H21_FD_LMS-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/H21_FD_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H21_FD_LMS-eps-converted-to.pdf  used on inpu
@@ -1944,7 +1944,7 @@ Package epstopdf Info: Source file: <Immagini/H22_FD_LMS.eps>
 nverted-to.pdf Immagini/H22_FD_LMS.eps>
 (epstopdf)             \includegraphics on input line 485.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H22_FD_LMS-eps-converted-to.pdf, id=1036, 1028.84375pt x 519.9425pt>
+<Immagini/H22_FD_LMS-eps-converted-to.pdf, id=1030, 1028.84375pt x 519.9425pt>
 File: Immagini/H22_FD_LMS-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/H22_FD_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/H22_FD_LMS-eps-converted-to.pdf  used on inpu
@@ -1965,7 +1965,7 @@ Package epstopdf Info: Source file: <Immagini/x1_y1_FD.eps>
 erted-to.pdf Immagini/x1_y1_FD.eps>
 (epstopdf)             \includegraphics on input line 516.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/x1_y1_FD-eps-converted-to.pdf, id=1107, 1028.84375pt x 519.9425pt>
+<Immagini/x1_y1_FD-eps-converted-to.pdf, id=1101, 1028.84375pt x 519.9425pt>
 File: Immagini/x1_y1_FD-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/x1_y1_FD-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/x1_y1_FD-eps-converted-to.pdf  used on input 
@@ -1981,7 +1981,7 @@ Package epstopdf Info: Source file: <Immagini/x2_y2_FD.eps>
 erted-to.pdf Immagini/x2_y2_FD.eps>
 (epstopdf)             \includegraphics on input line 516.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/x2_y2_FD-eps-converted-to.pdf, id=1108, 1028.84375pt x 519.9425pt>
+<Immagini/x2_y2_FD-eps-converted-to.pdf, id=1102, 1028.84375pt x 519.9425pt>
 File: Immagini/x2_y2_FD-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/x2_y2_FD-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/x2_y2_FD-eps-converted-to.pdf  used on input 
@@ -1997,7 +1997,7 @@ Package epstopdf Info: Source file: <Immagini/d1_y1_LMS.eps>
 verted-to.pdf Immagini/d1_y1_LMS.eps>
 (epstopdf)             \includegraphics on input line 516.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/d1_y1_LMS-eps-converted-to.pdf, id=1109, 1028.84375pt x 519.9425pt>
+<Immagini/d1_y1_LMS-eps-converted-to.pdf, id=1103, 1028.84375pt x 519.9425pt>
 File: Immagini/d1_y1_LMS-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/d1_y1_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/d1_y1_LMS-eps-converted-to.pdf  used on input
@@ -2013,7 +2013,7 @@ Package epstopdf Info: Source file: <Immagini/d2_y2_LMS.eps>
 verted-to.pdf Immagini/d2_y2_LMS.eps>
 (epstopdf)             \includegraphics on input line 516.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/d2_y2_LMS-eps-converted-to.pdf, id=1110, 1028.84375pt x 519.9425pt>
+<Immagini/d2_y2_LMS-eps-converted-to.pdf, id=1104, 1028.84375pt x 519.9425pt>
 File: Immagini/d2_y2_LMS-eps-converted-to.pdf Graphic file (type pdf)
 <use Immagini/d2_y2_LMS-eps-converted-to.pdf>
 Package pdftex.def Info: Immagini/d2_y2_LMS-eps-converted-to.pdf  used on input
@@ -2024,23 +2024,23 @@ Package pdftex.def Info: Immagini/d2_y2_LMS-eps-converted-to.pdf  used on input
  <./Immagini/x1_y1_FD-eps-converted-to.pdf> <./Immagini/x2_y2_FD-eps-converted-
 to.pdf> <./Immagini/d1_y1_LMS-eps-converted-to.pdf> <./Immagini/d2_y2_LMS-eps-c
 onverted-to.pdf>]
-<Immagini/x1_y1_FD_nutech.png, id=1181, 1014.03844pt x 459.96844pt>
+<Immagini/x1_y1_FD_nutech.png, id=1175, 1014.03844pt x 459.96844pt>
 File: Immagini/x1_y1_FD_nutech.png Graphic file (type png)
 <use Immagini/x1_y1_FD_nutech.png>
 Package pdftex.def Info: Immagini/x1_y1_FD_nutech.png  used on input line 547.
 (pdftex.def)             Requested size: 138.2795pt x 62.7177pt.
-<Immagini/x2_y2_FD_nutech.png, id=1182, 1020.81375pt x 462.22687pt>
+<Immagini/x2_y2_FD_nutech.png, id=1176, 1020.81375pt x 462.22687pt>
 File: Immagini/x2_y2_FD_nutech.png Graphic file (type png)
 <use Immagini/x2_y2_FD_nutech.png>
 Package pdftex.def Info: Immagini/x2_y2_FD_nutech.png  used on input line 547.
 (pdftex.def)             Requested size: 138.2795pt x 62.60951pt.
-<Immagini/d1_y1_LMS_nutech.png, id=1183, 1024.57782pt x 463.7325pt>
+<Immagini/d1_y1_LMS_nutech.png, id=1177, 1024.57782pt x 463.7325pt>
 File: Immagini/d1_y1_LMS_nutech.png Graphic file (type png)
 <use Immagini/d1_y1_LMS_nutech.png>
 Package pdftex.def Info: Immagini/d1_y1_LMS_nutech.png  used on input line 547.
 
 (pdftex.def)             Requested size: 138.2795pt x 62.58702pt.
-<Immagini/d2_y2_LMS_nutech.png, id=1184, 1017.8025pt x 461.47406pt>
+<Immagini/d2_y2_LMS_nutech.png, id=1178, 1017.8025pt x 461.47406pt>
 File: Immagini/d2_y2_LMS_nutech.png Graphic file (type png)
 <use Immagini/d2_y2_LMS_nutech.png>
 Package pdftex.def Info: Immagini/d2_y2_LMS_nutech.png  used on input line 547.
@@ -2065,7 +2065,7 @@ d-to.pdf>
 ech-eps-converted-to.pdf Immagini/mse_e1_matlab_nutech.eps>
 (epstopdf)             \includegraphics on input line 566.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/mse_e1_matlab_nutech-eps-converted-to.pdf, id=1227, 1028.84375pt x 51
+<Immagini/mse_e1_matlab_nutech-eps-converted-to.pdf, id=1221, 1028.84375pt x 51
 9.9425pt>
 File: Immagini/mse_e1_matlab_nutech-eps-converted-to.pdf Graphic file (type pdf
 )
@@ -2084,7 +2084,7 @@ d-to.pdf>
 ech-eps-converted-to.pdf Immagini/mse_e2_matlab_nutech.eps>
 (epstopdf)             \includegraphics on input line 566.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/mse_e2_matlab_nutech-eps-converted-to.pdf, id=1228, 1028.84375pt x 51
+<Immagini/mse_e2_matlab_nutech-eps-converted-to.pdf, id=1222, 1028.84375pt x 51
 9.9425pt>
 File: Immagini/mse_e2_matlab_nutech-eps-converted-to.pdf Graphic file (type pdf
 )
@@ -2107,7 +2107,7 @@ ed-to.pdf>
 tech-eps-converted-to.pdf Immagini/H11_LMS_matlab_nutech.eps>
 (epstopdf)             \includegraphics on input line 597.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H11_LMS_matlab_nutech-eps-converted-to.pdf, id=1278, 1028.84375pt x 5
+<Immagini/H11_LMS_matlab_nutech-eps-converted-to.pdf, id=1272, 1028.84375pt x 5
 19.9425pt>
 File: Immagini/H11_LMS_matlab_nutech-eps-converted-to.pdf Graphic file (type pd
 f)
@@ -2126,7 +2126,7 @@ ed-to.pdf>
 tech-eps-converted-to.pdf Immagini/H12_LMS_matlab_nutech.eps>
 (epstopdf)             \includegraphics on input line 597.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H12_LMS_matlab_nutech-eps-converted-to.pdf, id=1279, 1028.84375pt x 5
+<Immagini/H12_LMS_matlab_nutech-eps-converted-to.pdf, id=1273, 1028.84375pt x 5
 19.9425pt>
 File: Immagini/H12_LMS_matlab_nutech-eps-converted-to.pdf Graphic file (type pd
 f)
@@ -2145,7 +2145,7 @@ ed-to.pdf>
 tech-eps-converted-to.pdf Immagini/H21_LMS_matlab_nutech.eps>
 (epstopdf)             \includegraphics on input line 597.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H21_LMS_matlab_nutech-eps-converted-to.pdf, id=1280, 1028.84375pt x 5
+<Immagini/H21_LMS_matlab_nutech-eps-converted-to.pdf, id=1274, 1028.84375pt x 5
 19.9425pt>
 File: Immagini/H21_LMS_matlab_nutech-eps-converted-to.pdf Graphic file (type pd
 f)
@@ -2164,7 +2164,7 @@ ed-to.pdf>
 tech-eps-converted-to.pdf Immagini/H22_LMS_matlab_nutech.eps>
 (epstopdf)             \includegraphics on input line 597.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H22_LMS_matlab_nutech-eps-converted-to.pdf, id=1281, 1028.84375pt x 5
+<Immagini/H22_LMS_matlab_nutech-eps-converted-to.pdf, id=1275, 1028.84375pt x 5
 19.9425pt>
 File: Immagini/H22_LMS_matlab_nutech-eps-converted-to.pdf Graphic file (type pd
 f)
@@ -2188,7 +2188,7 @@ d-to.pdf>
 ech-eps-converted-to.pdf Immagini/H11_FD_matlab_nutech.eps>
 (epstopdf)             \includegraphics on input line 628.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H11_FD_matlab_nutech-eps-converted-to.pdf, id=1351, 1028.84375pt x 51
+<Immagini/H11_FD_matlab_nutech-eps-converted-to.pdf, id=1345, 1028.84375pt x 51
 9.9425pt>
 File: Immagini/H11_FD_matlab_nutech-eps-converted-to.pdf Graphic file (type pdf
 )
@@ -2207,7 +2207,7 @@ d-to.pdf>
 ech-eps-converted-to.pdf Immagini/H12_FD_matlab_nutech.eps>
 (epstopdf)             \includegraphics on input line 628.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H12_FD_matlab_nutech-eps-converted-to.pdf, id=1352, 1028.84375pt x 51
+<Immagini/H12_FD_matlab_nutech-eps-converted-to.pdf, id=1346, 1028.84375pt x 51
 9.9425pt>
 File: Immagini/H12_FD_matlab_nutech-eps-converted-to.pdf Graphic file (type pdf
 )
@@ -2226,7 +2226,7 @@ d-to.pdf>
 ech-eps-converted-to.pdf Immagini/H21_FD_matlab_nutech.eps>
 (epstopdf)             \includegraphics on input line 628.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H21_FD_matlab_nutech-eps-converted-to.pdf, id=1353, 1028.84375pt x 51
+<Immagini/H21_FD_matlab_nutech-eps-converted-to.pdf, id=1347, 1028.84375pt x 51
 9.9425pt>
 File: Immagini/H21_FD_matlab_nutech-eps-converted-to.pdf Graphic file (type pdf
 )
@@ -2245,7 +2245,7 @@ d-to.pdf>
 ech-eps-converted-to.pdf Immagini/H22_FD_matlab_nutech.eps>
 (epstopdf)             \includegraphics on input line 628.
 Package epstopdf Info: Output file is already uptodate.
-<Immagini/H22_FD_matlab_nutech-eps-converted-to.pdf, id=1354, 1028.84375pt x 51
+<Immagini/H22_FD_matlab_nutech-eps-converted-to.pdf, id=1348, 1028.84375pt x 51
 9.9425pt>
 File: Immagini/H22_FD_matlab_nutech-eps-converted-to.pdf Graphic file (type pdf
 )
@@ -2307,6 +2307,14 @@ Package rerunfilecheck Info: File `Presentazione.out' has not changed.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
+
+LaTeX Warning: There were undefined references.
+
+
+Package biblatex Warning: Please (re)run Biber on the file:
+(biblatex)                Presentazione
+(biblatex)                and rerun LaTeX afterwards.
+
 Package logreq Info: Writing requests to 'Presentazione.run.xml'.
 \openout1 = `Presentazione.run.xml'.
 
@@ -2318,7 +2326,7 @@ Here is how much of TeX's memory you used:
  43901 multiletter control sequences out of 15000+600000
  560377 words of font info for 92 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 65i,17n,100p,934b,1632s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 65i,17n,100p,934b,1618s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Program Files/texlive/2019/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t
 1.enc}<c:/Program Files/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmex10.pfb><c:/Program Files/texlive/2019/texmf-dist/fonts/type1/public/amsfont
@@ -2349,10 +2357,10 @@ s/type1/public/cm-super/sfss1440.pfb><c:/Program Files/texlive/2019/texmf-dist/
 fonts/type1/public/cm-super/sfsx0800.pfb><c:/Program Files/texlive/2019/texmf-d
 ist/fonts/type1/public/cm-super/sfsx1095.pfb><c:/Program Files/texlive/2019/tex
 mf-dist/fonts/type1/public/cm-super/sftt0900.pfb>
-Output written on Presentazione.pdf (38 pages, 1879667 bytes).
+Output written on Presentazione.pdf (38 pages, 1879505 bytes).
 PDF statistics:
- 1696 PDF objects out of 1728 (max. 8388607)
- 1483 compressed objects within 15 object streams
+ 1693 PDF objects out of 1728 (max. 8388607)
+ 1480 compressed objects within 15 object streams
  186 named destinations out of 1000 (max. 500000)
  262 words of extra memory for PDF output out of 10000 (max. 10000000)
 
