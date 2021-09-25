@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.12.18)  25 SEP 2021 16:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.12.18)  25 SEP 2021 21:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2307,14 +2307,6 @@ Package rerunfilecheck Info: File `Presentazione.out' has not changed.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-
-LaTeX Warning: There were undefined references.
-
-
-Package biblatex Warning: Please (re)run Biber on the file:
-(biblatex)                Presentazione
-(biblatex)                and rerun LaTeX afterwards.
-
 Package logreq Info: Writing requests to 'Presentazione.run.xml'.
 \openout1 = `Presentazione.run.xml'.
 
@@ -2322,7 +2314,7 @@ Package logreq Info: Writing requests to 'Presentazione.run.xml'.
 Here is how much of TeX's memory you used:
  40838 strings out of 492623
  801740 string characters out of 6126681
- 1218844 words of memory out of 5000000
+ 1218678 words of memory out of 5000000
  43901 multiletter control sequences out of 15000+600000
  560377 words of font info for 92 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
