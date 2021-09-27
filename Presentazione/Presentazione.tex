@@ -341,7 +341,7 @@ nell'implementazione pratica non si può calcolare tutta l'uscita con la sola ope
 \item Costruzione del buffer di ingresso con $f_s$ campioni per l'overlap and save nella Process.
 \item Calcolo della FFT a fftLen punti del buffer di ingresso.
 \item Calcolo del buffer di uscita moltiplicando il buffer di ingresso per le HRTF.
-\item Aggiornamento dell'uscita scartando i primi $f_s$ campioni del buffer.
+\item Aggiornamento dell'uscita scartando i primi $M$ campioni del buffer.
 \item Deallocazione della memoria nella Delete.
 \end{enumerate} 
 \end{frame}
