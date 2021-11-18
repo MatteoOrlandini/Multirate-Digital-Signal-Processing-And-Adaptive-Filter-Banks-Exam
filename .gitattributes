@@ -15,6 +15,7 @@
 *.run linguist-detectable=false
 *.synctex linguist-detectable=false
 *.sty linguist-detectable=false
+*.tex linguist-detectable=false
 *.toc linguist-detectable=false
 *.h linguist-detectable=true
 *.c linguist-detectable=true
