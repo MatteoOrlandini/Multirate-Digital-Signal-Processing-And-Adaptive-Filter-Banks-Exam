@@ -8,3 +8,4 @@
 *.tex linguist-detectable=false
 *.h linguist-detectable=true
 *.c linguist-detectable=true
+*.cpp linguist-detectable=true
